@@ -1,21 +1,22 @@
 Multi-Resolution Image Store -- A Case of Size-Tiered Object Storage Systems
 
-In many scenarios, the access pattern and the size of structured data presents
-a property that matches the property of the storage hierarchy. For example, in
-an image storage system, the attributes and thumbnails of stored images are
-small in size but frequently accessed, which makes them fits well in small but
-fast and expensive top-tiered storage devices, such as NVRAM and SSD. Whereas
-the images are big but less accessed, which makes them suitable for large but
-slow and inexpensive bottom-tiered storage deives, such as HDD and tape.
+In many scenarios, the access patterns and the sizes of structured objects
+presents a property that matches the property of the storage hierarchy. For
+example, in an image storage system, the attributes and thumbnails of stored
+images are small in size but frequently accessed, which makes them fits well in
+small but fast and expensive top-tiered storage devices, such as NVRAM and SSD.
+Whereas the images are big but less accessed, which makes them suitable for
+large but slow and inexpensive bottom-tiered storage devices, such as HDD and
+tape.
 
 For small objects, throughput is important in term of op/sec. They tend to be
 accessed randomly because of their small sizes and the implication that they
-are likely to be metadata and attributes. Top-tiered deivces, e.g., NVRAM,
-exhibit great IOPS performance, and they allow storage to be consumed in finer
+are likely to be metadata and attributes. Top-tiered devices, e.g., NVRAM,
+exhibit great IOPS performance, and they allow storage to be used in finer
 granularity which causes less inner fragmentation as well. But for large
 objects, throughput is more important in terms of mb/s. Their I/Os tend to be
 more sequential as well. Bottom-tiered devices, e.g., HDD, are large in
-capacity and exhibit satisficatory throughput for sequential I/Os. 
+capacity and exhibit satisfactory throughput for sequential I/Os. 
 
 When objects present such a size-tiered property, a corresponding size-tiered
 storage system can provide good trade-off between cost and performance as it
@@ -29,9 +30,10 @@ named MRIS (Multi-Resolution Image Store). MRIS aims at storing large amount of
 images, as well as their metadata and smaller versions (such as thumbnails),
 efficiently. We plan to use KVDB, which can be aware of multi-tier storage
 techniques as indicated in Rick's SOCC11 paper (GTSSL), as the infrastructure
-for MRIS. KVDB can provide us with favorable extra functions including
-transaction and snapshot. Hopefully, we can make these functions to be
-figurablable features of MRIS, which can therefore be more flexible.
+for MRIS. KVDB can also provide us with favorable extra functions including
+transaction, snapshotting and versioning.  Hopefully, we can turn these
+functions to configurable features of MRIS, which can therefore be more
+flexible.
 
 - The inner data structure of KVDB can be aware of multi-tier storage (GTSSL)
 	as used in Rick's SOCC paper.
