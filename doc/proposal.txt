@@ -34,38 +34,3 @@ for MRIS. KVDB can also provide us with favorable extra functions including
 transaction, snapshotting and versioning.  Hopefully, we can turn these
 functions to configurable features of MRIS, which can therefore be more
 flexible.
-
-- The inner data structure of KVDB can be aware of multi-tier storage (GTSSL)
-	as used in Rick's SOCC paper.
-
-Idea
-- Exploit Advantages of Different Storage Devices (NVRAM, SSD, HDD, and SMR)
-
-- Efficient Metadata Management
-	Metadata is usually small in size and more frequently accessed; and raw
-	data is generally larger. In the scenario of an image store, raw data is
-	the raw images; metadata can be their thumbnails and the attributes
-	describing images. 
-
-Pros
-- device-aware
-
-Small frequently accessed data is stored in top tiers, such as RAM and SSD.
-Whereas large less popular data is stored in bottom tiers. 
-
-Transactional Image Store
-
-Features
-- Transaction
-
-Key techniques
-- Use KVDB as the infrastructure
-- The inner data structure of KVDB can be aware of multi-tier storage (GTSSL)
-	as used in Rick's SOCC paper.
-
-Key words
-- Tiered Storage
-
-References
-- An Efficient Multi-Tier Tablet Server Storage Architecture
-- Finding a needle in Haystack: Facebook's photo storage
