@@ -1,4 +1,3 @@
-
 - The inner data structure of KVDB can be aware of multi-tier storage (GTSSL)
 	as used in Rick's SOCC paper.
 
@@ -35,3 +34,14 @@ References
 - Finding a needle in Haystack: Facebook's photo storage
 
 + Extent-based addressing VS. block addressing
+
+The main problem was that although the free list was initially ordered for
+optimal access, it quickly became scrambled as files were created and removed.
+Eventually the free list became entirely random, causing files to have their
+blocks allocated randomly over the disk. -- cite FFS.
+
+
+FFS has the same idea by allowing blocks to be further dividable to fragments,
+which is an optimization for small files.
+
+In file trunk is rare -- need cite.
