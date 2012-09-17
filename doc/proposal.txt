@@ -7,7 +7,8 @@ images are small in size but frequently accessed, which makes them fits well in
 small but fast and expensive top-tiered storage devices, such as NVRAM and SSD.
 Whereas the images are big but less accessed, which makes them suitable for
 large but slow and inexpensive bottom-tiered storage devices, such as HDD and
-tape.
+tape. Moreover, slow seeks can usually be amortized by fast sequential access
+followed.
 
 For small objects, throughput is important in term of op/sec. They tend to be
 accessed randomly because of their small sizes and the implication that they
@@ -34,3 +35,7 @@ for MRIS. KVDB can also provide us with favorable extra functions including
 transaction, snapshotting and versioning.  Hopefully, we can turn these
 functions to configurable features of MRIS, which can therefore be more
 flexible.
+
+[References]
+KVDB: From Tuples to Files: a Fast Transactional System Store and File System
+GTSSL: An Efficient Multi-Tier Tablet Server Storage Architecture
