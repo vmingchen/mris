@@ -15,3 +15,9 @@ stroage techniques into our storage system.
 TODO: KVFS
 
 TODO: GTSSL
+
+TODO: All Sizes are Wrong
+
+TODO: Rump file system
+
+TODO: Gostor
