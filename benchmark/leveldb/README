@@ -1,1 +1,4 @@
 Source code copied from leveldb. The original README is moved to README.leveldb
+
+# Benchmark
+See db/db_bench.cc for supported MRIS benchmarks

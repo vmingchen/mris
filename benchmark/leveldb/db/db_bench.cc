@@ -19,6 +19,9 @@
 #include "util/testutil.h"
 
 // Comma-separated list of operations to run in the specified order
+//   MRIS benchmarks:
+//      mris_seq_wt   -- write N MRI in sequential key order in async mode
+//      mris_ran_wt   -- write N MRI in random key order in async mode
 //   Actual benchmarks:
 //      fillseq       -- write N values in sequential key order in async mode
 //      fillrandom    -- write N values in random key order in async mode
@@ -60,17 +63,21 @@ static const char* FLAGS_benchmarks =
     "acquireload,"
     ;
 
+// Ming: MRIS workloads is never mixed with default leveldb workloads
+static bool FLAGS_mris = false;
+
 // Ming: the number of layers
-static const int FLAGS_max_layers = 4;
-static int FLAGS_num_layers = 2;
+static const int MRIS_max_layers = 4;
 
 // Ming: the data we generate is at most 10MB large
 static const int FLAGS_max_obj_size = 10485760;
 
-// Ming: size of MRI
-static int Mris_sizes[][FLAGS_max_layers] = {
-  {4096, 65536, 0, 0},
-  {4096, 65536, 1048576, 0},
+// Ming: configurations of MRI layers
+static int MRIS_sizes[][MRIS_max_layers+1] = {
+  {0, 0, 0, 0, 0},
+  {1024, 16384, 0, 0, 2},
+  {4096, 65536, 0, 0, 2},
+  {4096, 65536, 1048576, 0, 3},
 };
 
 // Number of key/values to place in database
@@ -336,20 +343,45 @@ class Benchmark {
   int reads_;
   int heap_counter_;
 
+  // =========== MRIS members ===========
+  int mris_index_;
+  int mris_nlayer_;
+  // return the image size at the i-th layer
+  int MrisImageSizeAt(int i) {
+    return MRIS_sizes[mris_index_][i];
+  }
+
   void PrintHeader() {
     const int kKeySize = 16;
     PrintEnvironment();
-    fprintf(stdout, "Keys:       %d bytes each\n", kKeySize);
-    fprintf(stdout, "Values:     %d bytes each (%d bytes after compression)\n",
-            FLAGS_value_size,
-            static_cast<int>(FLAGS_value_size * FLAGS_compression_ratio + 0.5));
-    fprintf(stdout, "Entries:    %d\n", num_);
-    fprintf(stdout, "RawSize:    %.1f MB (estimated)\n",
-            ((static_cast<int64_t>(kKeySize + FLAGS_value_size) * num_)
-             / 1048576.0));
-    fprintf(stdout, "FileSize:   %.1f MB (estimated)\n",
-            (((kKeySize + FLAGS_value_size * FLAGS_compression_ratio) * num_)
-             / 1048576.0));
+    if (FLAGS_mris) { 
+      fprintf(stdout, "Keys:       %d bytes each\n", kKeySize);
+      fprintf(stdout, "Values:     %d resolutions\n", mris_nlayer_);
+      int raw_size = 0;
+      int file_size = 0;
+      for (int i = 0; i < mris_nlayer_; ++i) {
+        int vsz = MrisImageSizeAt(i);
+        int psz = static_cast<int>(vsz * FLAGS_compression_ratio + 0.5);
+        fprintf(stdout, "            %d byte (%d after compression)\n", vsz, psz);
+        raw_size += (kKeySize + vsz);
+        file_size += (kKeySize + psz);
+      }
+      fprintf(stdout, "Entries:    %d\n", num_);
+      fprintf(stdout, "RawSize:    %.2f MB (estimated)\n", raw_size/1048576.0);
+      fprintf(stdout, "FileSize:   %.2f MB (estimated)\n", file_size/1048576.0);
+    } else {
+      fprintf(stdout, "Keys:       %d bytes each\n", kKeySize);
+      fprintf(stdout, "Values:     %d bytes each (%d bytes after compression)\n",
+              FLAGS_value_size,
+              static_cast<int>(FLAGS_value_size * FLAGS_compression_ratio + 0.5));
+      fprintf(stdout, "Entries:    %d\n", num_);
+      fprintf(stdout, "RawSize:    %.1f MB (estimated)\n",
+              ((static_cast<int64_t>(kKeySize + FLAGS_value_size) * num_)
+               / 1048576.0));
+      fprintf(stdout, "FileSize:   %.1f MB (estimated)\n",
+              (((kKeySize + FLAGS_value_size * FLAGS_compression_ratio) * num_)
+               / 1048576.0));
+    }
     PrintWarnings();
     fprintf(stdout, "------------------------------------------------\n");
   }
@@ -421,7 +453,9 @@ class Benchmark {
     value_size_(FLAGS_value_size),
     entries_per_batch_(1),
     reads_(FLAGS_reads < 0 ? FLAGS_num : FLAGS_reads),
-    heap_counter_(0) {
+    heap_counter_(0),
+    mris_index_(-1),
+    mris_nlayer_(-1) {
     std::vector<std::string> files;
     Env::Default()->GetChildren(FLAGS_db, &files);
     for (int i = 0; i < files.size(); i++) {
@@ -431,6 +465,16 @@ class Benchmark {
     }
     if (!FLAGS_use_existing_db) {
       DestroyDB(FLAGS_db, Options());
+    }
+    // Ming: set mris_index_ when it is running MRIS workloads
+    if (FLAGS_mris) {
+      assert(value_size_ < sizeof(MRIS_sizes)/sizeof(MRIS_sizes[0]));
+      mris_index_ = value_size_;
+      mris_nlayer_ = MRIS_sizes[mris_index_][MRIS_max_layers];
+      assert(mris_nlayer_ <= MRIS_max_layers);
+      for (int i = 0; i < mris_nlayer_; ++i) {
+        assert(MRIS_sizes[mris_index_][i] != 0);
+      }
     }
   }
 
@@ -467,7 +511,13 @@ class Benchmark {
       bool fresh_db = false;
       int num_threads = FLAGS_threads;
 
-      if (name == Slice("fillseq")) {
+      if (name == Slice("mris_seq_wt")) {
+        fresh_db = true;
+        method = &Benchmark::MrisWriteSeq;
+      } else if (name == Slice("mris_ran_wt")) {
+        fresh_db = true;
+        method = &Benchmark::MrisWriteRandom;
+      } else if (name == Slice("fillseq")) {
         fresh_db = true;
         method = &Benchmark::WriteSeq;
       } else if (name == Slice("fillbatch")) {
@@ -774,20 +824,14 @@ class Benchmark {
     MrisWrite(thread, false);
   }
 
-  // Ming: write @num_ Mri
+  // Ming: write @num_ MRI
   void MrisWrite(ThreadState* thread, bool seq) {
+    assert(FLAGS_mris);
     if (num_ != FLAGS_num) {
       char msg[100];
       snprintf(msg, sizeof(msg), "(%d ops)", num_);
       thread->stats.AddMessage(msg);
     }
-
-    // Ming: verify data
-    assert(value_size_ < sizeof(Mris_sizes)/sizeof(Mris_sizes[0]));
-    for (int k = 0; k < FLAGS_num_layers; ++k) {
-      assert(Mris_sizes[value_size_][k] != 0);
-    }
-    assert(Mris_sizes[value_size_][FLAGS_num_layers] == 0);
 
     RandomGenerator gen;
     WriteBatch batch;
@@ -796,12 +840,13 @@ class Benchmark {
     for (int i = 0; i < num_; i+= entries_per_batch_) {
       batch.Clear();
       for (int j = 0; j < entries_per_batch_; j++) {
-        for (int k = 0; k < FLAGS_num_layers; ++k) {
+        for (int k = 0; k < mris_nlayer_; ++k) {
           const int l = seq ? i+j : (thread->rand.Next() % num_);
           char key[100];
-          snprintf(key, sizeof(key), "%016d%01d", l, k);
-          batch.Put(key, gen.Generate(Mris_sizes[value_size_][k]));
-          bytes += Mris_sizes[value_size_][k] + strlen(key);
+          int vsz = MrisImageSizeAt(k); // value (image) size
+          snprintf(key, sizeof(key), "%015d%01d", l, k); // keysize = 16
+          batch.Put(key, gen.Generate(vsz));
+          bytes += (vsz + strlen(key));
           thread->stats.FinishedSingleOp();
         }
       }
@@ -1023,7 +1068,14 @@ int main(int argc, char** argv) {
     } else if (sscanf(argv[i], "--threads=%d%c", &n, &junk) == 1) {
       FLAGS_threads = n;
     } else if (sscanf(argv[i], "--value_size=%d%c", &n, &junk) == 1) {
-      FLAGS_value_size = n;
+      // Ming: negative value means MRIS workloads
+      if (n < 0) {
+        FLAGS_value_size = -n;
+        FLAGS_mris = true;
+      } else {
+        FLAGS_value_size = n;
+        FLAGS_mris = false;
+      }
     } else if (sscanf(argv[i], "--write_buffer_size=%d%c", &n, &junk) == 1) {
       FLAGS_write_buffer_size = n;
     } else if (sscanf(argv[i], "--cache_size=%d%c", &n, &junk) == 1) {

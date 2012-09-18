@@ -57,7 +57,8 @@ BENCHMARKS = db_bench_sqlite3 db_bench_tree_db
 LIBRARY = libleveldb.a
 MEMENVLIBRARY = libmemenv.a
 
-default: all
+#default: all
+default: db_bench
 
 # Should we build shared libraries?
 ifneq ($(PLATFORM_SHARED_EXT),)
@@ -99,8 +100,13 @@ $(LIBRARY): $(LIBOBJECTS)
 	rm -f $@
 	$(AR) -rs $@ $(LIBOBJECTS)
 
+## MRIS targets 
 bench_histogram: db_bench
 	./db_bench --histogram=1
+
+mris_seq_wt: db_bench all
+	./db_bench --histogram=1 --num=10 --benchmarks=mris_seq_wt --value_size=-1 \
+		--compression_ratio=0.9 --threads=1
 
 db_bench: db/db_bench.o $(LIBOBJECTS) $(TESTUTIL)
 	$(CXX) db/db_bench.o $(LIBOBJECTS) $(TESTUTIL) -o $@  $(LDFLAGS)
