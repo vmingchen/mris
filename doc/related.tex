@@ -1,0 +1,31 @@
+hFS \ref{eurosys_hfs} also treats data differently based on their size and
+type. Metadata and small files are stored separately in a log partition like
+log-structured filesystem; data blocks of large regular files are stored in a
+partition in a FFS-like fashion. Our work provides a different user interface,
+which is an object store instead of a POSIX filesystem. Our work also focus
+more on different block storage techniques, which is under the filesystem
+layer.
+
+TableFS \ref{tablefs} also proposed to use NoSQL store metadata and small
+files. However, TableFS is filesystem, which exposes POSIX interface to users,
+whereas our store is an object store that not restricted by the POSIX
+interface.  They do not privide extra functionalities like transaction and
+journaling and they also did not consider using hybrid stroage media in their
+work.
+
+hFAD \ref{Seltzer09hfad} described an tag-based object store API that supports
+full text search and it focused more on user interface. As our work is also
+able to provide tagging and text searching of metadata, we are more focused on
+workload specific performance optimization. Moreover, the design of hFAD is
+above block level storage, whereas our work integrate hybrid block levle
+stroage techniques into our storage system.
+
+TODO: KVFS
+
+TODO: GTSSL
+
+TODO: All Sizes are Wrong
+
+TODO: Rump file system
+
+TODO: Gostor
