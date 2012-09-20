@@ -1,3 +1,6 @@
-*.swp
+.*
 *.o
+*.ko
+*.cmd
+*.swp
 tags
