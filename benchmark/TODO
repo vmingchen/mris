@@ -1,0 +1,28 @@
+# Benchmark operations:
+
+## Basic 
+	Write: 
+		Sequential	-> seq_wt
+		Batch		-> bat_wt
+		Random		-> ran_wt
+
+	Update:
+		Sequential	-> seq_up
+		Random		-> ran_up
+		
+	Read: 
+		Sequential	-> seq_rd
+		Reverse		-> rev_rd
+		Random		-> ran_rd
+		Miss		-> mis_rd
+
+	Delete:
+		Sequential	-> seq_dt
+		Random		-> ran_dt
+
+## Synthetic
+	Haystack model
+	Wikipedia
+
+## Real
+	TODO
