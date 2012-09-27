@@ -6,6 +6,9 @@ which is an object store instead of a POSIX filesystem. Our work also focus
 more on different block storage techniques, which is under the filesystem
 layer.
 
+\ref{fast_12_deindirection} also treats metadata and data differently, and
+store them in virtual blocks and physical blocks respectively.
+
 TableFS \ref{tablefs} also proposed to use NoSQL store metadata and small
 files. However, TableFS is filesystem, which exposes POSIX interface to users,
 whereas our store is an object store that not restricted by the POSIX
