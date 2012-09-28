@@ -3,3 +3,4 @@
 * Collect statistics from Wikipedia images objects
 * Come up with a cost model about how Flash size can be smaller [Thanks to Vasily]
 * Use unionfs for differetiating small and large files
+* Setup GTSSL mchen@story.fsl.cs.sunysb.edu:/scm/fslgit/staticfs-rick
