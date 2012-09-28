@@ -34,16 +34,16 @@ awk -v name="$1" -v out1="$2" -v out2="$3" '
 	{
 		if (NF != 4) {
 			nerror += 1;
-			continue;
-		}
-		nlines += 1;
-		nsector = int(($4 + 511)/512);
-		nrequest += $3;
-		requests[nsector] += $3;
-		if (tolower($2) ~ /.(jpg|png|gif)/){
-			nimagelines += 1;
-			nimage += $3;
-			images[nsector] += $3;
+		} else {
+			nlines += 1;
+			nsector = int(($4 + 511)/512);
+			nrequest += $3;
+			requests[nsector] += $3;
+			if (tolower($2) ~ /.(jpg|png|gif)/){
+				nimagelines += 1;
+				nimage += $3;
+				images[nsector] += $3;
+			}
 		}
 	}
 	END {
@@ -52,9 +52,12 @@ awk -v name="$1" -v out1="$2" -v out2="$3" '
 		for (n in requests) {
 			printf("%d\t%d\n", n, requests[n]) >> out1;
 		}
+		printf("####### %s done #####\n", name) >> out1;
+
 		printf("####### %s %d %d/%d %d/%d #####\n", name, nerror,
 				nimagelines, nlines, nimage, nrequest) >> out2;
 		for (n in images) {
 			printf("%d\t%d\n", n, images[n]) >> out2;
 		}
+		printf("####### %s done #####\n", name) >> out2;
 	}' -

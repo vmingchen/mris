@@ -1,5 +1,7 @@
 Wikipedia workloads by analyzing data from http://dumps.wikimedia.org/other/pagecounts-raw/
 
+Processed data are the first week of
+http://dumps.wikimedia.org/other/pagecounts-raw/2012/2012-01/
+
 It is possible that the object size is 0. (failure?)
 
-./plot.sh infile
