@@ -65,22 +65,27 @@ for i in `seq $nfiles`; do
 	echo "========== processing $name =========="
 
 	# only process pagecount file if it is not processed before
-	if grep -q "done" "image-$id.out"; then
+	if grep -s -q "done" "image-$id.out"; then
 		continue
 	fi
 
-	# only download file when it does not exist yet
+	# check if we need to download file
+	download=y
 	if [ -f "$data_dir/$name" ]; then
 		# check MD5
 		md52=`md5sum $data_dir/$name | awk '{print $1;}'`
 		if [ "x$md52" = "x$md5" ]; then
+			download=n
 			echo "========== $name already exists =========="
-		else
-			echo "========== downloading $name =========="
-			download_file $name $md5
-			echo "========== download done =========="
 		fi
 	fi
+	
+	if [ "x$download" = "xy" ]; then
+		echo "========== downloading $name =========="
+		download_file $name $md5
+		echo "========== download done =========="
+	fi
+
 
 	echo "========== parsing $name =========="
 	zcat "$data_dir/$name" | ./parse_raw.sh "$name" \
