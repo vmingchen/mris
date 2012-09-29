@@ -3,5 +3,17 @@ Wikipedia workloads by analyzing data from http://dumps.wikimedia.org/other/page
 Processed data are the first week of
 http://dumps.wikimedia.org/other/pagecounts-raw/2012/2012-01/
 
-It is possible that the object size is 0. (failure?)
+Note: 
+It is possible that the object size is 0. (non-exist files?)
 
+== md5sums.txt 
+contains filename and MD5 for all files from
+http://dumps.wikimedia.org/other/pagecounts-raw/2012/2012-01/md5sums.txt
+md5week1.txt contains file from the first week. 
+
+== plot_single.sh
+plot frequency distribution of requested image size from a single file, which
+correspond to one hour of request of the Wikipedia website.
+
+== plot_many.sh
+plot frequency distribution of requested image size from a weeks' file.

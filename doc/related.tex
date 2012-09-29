@@ -37,3 +37,15 @@ TODO: Gostor
 Since multimedia files are primarily accessed sequentially, it may not be
 necessary to provide for efficient random access to every large file.
 \ref{evans2002study}.
+
+\ref{kvworkload_sigmetrics} strong locality metrics, such as keys accessed many
+millions of times a day, do not always suf- fice for a high hit rate; and there
+is still room for efficiency and hit rate improvements in Memcached’s
+implementation.  We found that the salient size characteristics follow
+power-law distributions, sim- ilar to other storage and Web-serving systems
+
+Why not cache in block level? Because block layer lacks the knowledge of
+objects and files.  
+
+It may even be worthwhile to investigate not caching large objects at all, to
+increase overall hit rates \ref{kvworkload_sigmetrics}.

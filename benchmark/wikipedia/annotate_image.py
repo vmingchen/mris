@@ -1,4 +1,7 @@
 #!/bin/env python
+'''
+Calculate statistics of file sizes (logarithmic).
+'''
 import sys
 import math
 import get_hist

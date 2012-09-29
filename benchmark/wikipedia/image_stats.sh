@@ -3,7 +3,8 @@
 #
 #         USAGE:  ./image_stats.sh 
 # 
-#   DESCRIPTION:  Get image statistics from Wikipedia.
+#   DESCRIPTION:  Get image statistics from Wikipedia. The results are saved in
+#   data/. The downloaded files are saved on dolphin.
 #		- Distribution of image object size in sectors
 #		- Distribution of object size in sectors
 #		- Number of total request

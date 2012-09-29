@@ -30,6 +30,7 @@ else
 fi
 echo "no: $no"
 
+# prepare data for plotting
 ./annotate_image.py image-$no.dat > $no.res
 
 cat > image.p <<EOF
