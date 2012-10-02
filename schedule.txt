@@ -1,0 +1,5 @@
+Oct.1 - Oct.7: 
+	- Find a KV store use multiple drives, or verify that people do save images
+	on KV store;
+
+	- Design a simple and small test workload
