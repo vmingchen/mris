@@ -1,4 +1,8 @@
-Wikipedia workloads by analyzing data from http://dumps.wikimedia.org/other/pagecounts-raw/
+Wikipedia workloads by analyzing data from
+http://dumps.wikimedia.org/other/pagecounts-raw/
+
+Wikipedia is the #5 website in the world, serving 492 million people every
+month.
 
 Processed data are the first week of
 http://dumps.wikimedia.org/other/pagecounts-raw/2012/2012-01/
