@@ -1,0 +1,18 @@
+Class Proposal of CSE602
+Question about proposal 1:
+
+* Multi-resolution Image Storage
+Summary: Rejected
+
+The class understands the idea of the project, however, the majority feels like
+the application and use case for the final system are not evident.
+
+	- You must present a use-case for the system to demonstrate that the
+	resulting system will be of clear benefit to that scenario.
+
+	- When presenting the proposal, you should more concretely explain which
+	storage layers will be included in the hierarchy that you will use and how
+	your system will exploit the specific properties of the available layers.
+
+	- Come up with a cost model, how this tiered storage can achieve the same
+	performance with less cache.
