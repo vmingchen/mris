@@ -49,3 +49,10 @@ objects and files.
 
 It may even be worthwhile to investigate not caching large objects at all, to
 increase overall hit rates \ref{kvworkload_sigmetrics}.
+
+Forney et al. \ref{Forney2002fast} proposed storage aware caching for
+heterogeneous storage systems. They made memory cache aware of the different
+replacement costs and partitioned the cache for different storage devices.
+However, their study is set in a different context which is a network-attached
+disk system.  They did not consider data placement among different drives,
+     which is an important strategy employed by our study.
