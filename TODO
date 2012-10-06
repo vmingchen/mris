@@ -1,6 +1,10 @@
+[DONE] Collect statistics from Wikipedia images objects
+* Design a simple and small test workload
+* Find a KV store use multiple drives, besides GTSSL!
 * Find an image processing software using MRI and see how the performance can
 	be improved. [Thanks to Vasily]
-* Collect statistics from Wikipedia images objects
 * Come up with a cost model about how Flash size can be smaller [Thanks to Vasily]
 * Use unionfs for differetiating small and large files
 * Setup GTSSL mchen@story.fsl.cs.sunysb.edu:/scm/fslgit/staticfs-rick
+* Come up with a cost model for replacement or migration that consider 1)
+	average latency per object, and 2) the Flash characteristics

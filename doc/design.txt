@@ -45,3 +45,6 @@ FFS has the same idea by allowing blocks to be further dividable to fragments,
 which is an optimization for small files.
 
 In file trunk is rare -- need cite.
+
+Objective:
+- A metric to achieve is the average latency per object access
