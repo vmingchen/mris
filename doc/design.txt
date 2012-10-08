@@ -48,3 +48,16 @@ In file trunk is rare -- need cite.
 
 Objective:
 - A metric to achieve is the average latency per object access
+
+The default block sizes of Cassandra and HBase are 256KB and 64KB repectively.
+
+Images, which are large objects, are more suitable for benchmarking the storage
+subsystem than small objects, which make the whole system CPU-bound
+\ref{spillane2011efficient}.
+
+Allow application-specific optimization. For instance, thumbnails can be named
+with a common prefix indicating it is a small object. Then, only a subset of
+the key space is needed to be searched for reads.
+
+It might be inconvienent to distribute files of a database into multiple
+directory. However, we can alliviate this problem by using Unionfs.
