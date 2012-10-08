@@ -1,0 +1,8 @@
+# Allocate mapped file
+
+	PosixRandomAccessFile : pread() based random-access
+	PosixMmapReadableFile : mmap() based random-access
+
+	NewWritableFile
+		-> PosixMmapFile
+			-> MapNewRegion
