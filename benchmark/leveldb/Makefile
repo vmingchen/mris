@@ -9,8 +9,8 @@ INSTALL_PATH ?= $(CURDIR)
 # Uncomment exactly one of the lines labelled (A), (B), and (C) below
 # to switch between compilation modes.
 
-OPT ?= -O2 -DNDEBUG       # (A) Production use (optimized mode)
-# OPT ?= -g2              # (B) Debug mode, w/ full line-level debugging symbols
+# OPT ?= -O2 -DNDEBUG       # (A) Production use (optimized mode)
+OPT ?= -g2              # (B) Debug mode, w/ full line-level debugging symbols
 # OPT ?= -O2 -g2 -DNDEBUG # (C) Profiling mode: opt, but w/debugging symbols
 #-----------------------------------------------
 
@@ -105,8 +105,11 @@ bench_histogram: db_bench
 	./db_bench --histogram=1
 
 mris_seq_wt: db_bench all
-	./db_bench --histogram=1 --num=10 --benchmarks=mris_seq_wt --value_size=-1 \
+	./db_bench --histogram=1 --num=100 --benchmarks=mris_seq_wt --value_size=-2 \
 		--compression_ratio=0.9 --threads=1
+
+install: $(SHARED) $(LIBRARY)
+	cp libleveldb.a libleveldb.so.1.5 /usr/local/lib/
 
 db_bench: db/db_bench.o $(LIBOBJECTS) $(TESTUTIL)
 	$(CXX) db/db_bench.o $(LIBOBJECTS) $(TESTUTIL) -o $@  $(LDFLAGS)
