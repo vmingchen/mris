@@ -22,11 +22,9 @@
 
 namespace mris {
 
-class Request {
-private:
+struct Request {
 	int size;			// Request size in bytes
 	double frequency;	// Relative frequency of requests of this size
-public:
 	Request(int size, double freq) : size(size), frequency(freq) {}
 };
 
@@ -40,7 +38,7 @@ public:
 		registorReqeust(req1);
 		registorReqeust(req2);
 	}
-	registorReqeust(const Request &req) {
+	void registorReqeust(const Request &req) {
 		requests.push_back(req);
 		totalFrequency += req.frequency;
 	}

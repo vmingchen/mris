@@ -1,4 +1,4 @@
-CXXFLAGS += -Wall -Werror -O2 -I../leveldb/include
+CXXFLAGS += -Wall -Werror -O2 -I../leveldb/include -I../leveldb
 #CFLAGS = -Wall -Werror -g O0
 
 all: twodb

@@ -111,6 +111,9 @@ mris_seq_wt: db_bench all
 install: $(SHARED) $(LIBRARY)
 	cp libleveldb.a libleveldb.so.1.5 /usr/local/lib/
 
+mris_twodb: mrisdb/SeparateDB.o $(TESTUTIL)
+	$(CXX) mrisdb/SeparateDB.o $(LIBOBJECTS) $(TESTUTIL) -o $@  $(LDFLAGS)
+
 db_bench: db/db_bench.o $(LIBOBJECTS) $(TESTUTIL)
 	$(CXX) db/db_bench.o $(LIBOBJECTS) $(TESTUTIL) -o $@  $(LDFLAGS)
 
