@@ -15,6 +15,7 @@
 
 #include <vector>
 #include <string>
+#include "db/filename.h"
 #include "leveldb/dbformat.h"
 #include "leveldb/env.h"
 
@@ -38,6 +39,8 @@ struct MrisOptions {
 
   // once cealed, some of the options become immutable
   bool cealed;
+
+	std::string dbname;
 
   MrisOptions() 
 	: kSizeThreshold(128 << 10),
@@ -127,6 +130,7 @@ private:
   const MrisOptions *mris_options_;
 	std::vector<BlockFileReader> blocks_;
 
+	// make sure it points to a ready writer all the time
 	BlockFileWriter *writer_;
 
 	// find the file block contains @offset
@@ -171,11 +175,11 @@ public:
 
 	// size of all data
 	uint64_t DataSize() const {
-
+		return writer_->offset() + writer_->size();
 	}
 
 	std::string NewBlockFile() {
-
+		return MakeFileName(mris_options_->dbname, blocks_.size(), "bbf");
 	}
 };
 
