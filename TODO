@@ -1,5 +1,5 @@
 [DONE] Collect statistics from Wikipedia images objects
-* Design a simple and small test workload
+[DONE] * Design a simple and small test workload [benchmark/leveldb/mrisdb]
 * Find a KV store use multiple drives, besides GTSSL!
 * Find an image processing software using MRI and see how the performance can
 	be improved. [Thanks to Vasily]

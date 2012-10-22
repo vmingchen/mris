@@ -5,9 +5,9 @@
  *         Author:  Ming Chen, brianchenming@gmail.com
  *        Created:  10/13/2012 03:23:43 AM
  *
- *    Description:  Create a Mris store by using different DBs
+ *    Description:  Create a Mris store by using different DBs. 
  *
- *       Revision:  none
+ *    make mris_twodb
  *
  * ===========================================================================
  */
