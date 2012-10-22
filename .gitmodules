@@ -1,0 +1,3 @@
+[submodule "staticfs-rick"]
+	path = staticfs-rick
+	url = mchen@story.fsl.cs.sunysb.edu:/scm/fslgit/staticfs-rick.git
