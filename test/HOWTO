@@ -1,0 +1,6 @@
+Login to gateway: 
+	ssh -p 130 mchen@130.245.191.165
+
+Login to ubuntu6:
+	ssh ubuntu6@ubuntu6
+
