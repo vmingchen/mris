@@ -29,6 +29,9 @@ enum CompressionType {
 
 // Options to control the behavior of a database (passed to DB::Open)
 struct Options {
+#ifdef MRIS
+	MrisOptions mris_options;
+#endif
   // -------------------
   // Parameters that affect behavior
 
@@ -193,3 +196,5 @@ struct WriteOptions {
 }  // namespace leveldb
 
 #endif  // STORAGE_LEVELDB_INCLUDE_OPTIONS_H_
+
+// vim: set shiftwidth=2 tabstop=2:
