@@ -17,7 +17,6 @@
 #include <string>
 #include "leveldb/dbformat.h"
 #include "leveldb/env.h"
-#include "table/format.h"
 
 #define MRIS
 
@@ -61,20 +60,33 @@ private:
 	uint64_t offset_;
 	uint64_t size_;
 	std::string name_;
+
+public:
+  uint64_t offset() const { return offset_; }
+  uint64_t size() const { return size_; }
+	uint64_t end() const { return offset_ + size_; }
+	const std::string& name() const { return name_; }
+	bool Contains(uint64_t offset, uint64_t n) const {
+		return offset >= offset() && (offset + n) <= end();
+	}
+	bool Initialized() const { return name_.length() > 0; }
+};
+
+class BlockFileReader : BlockFileHandle {
+private:
 	Env* env_;
 	RandomAccessFile *file_;
 
 public:
-	BlockFileHandle(const std::string& name, Env* env) 
-			: name_(name_), file_(NULL), env_(env) {}
-
-	~BlockFileHandle() {
-		if (file_) delete file_;
-	}
+	BlockFileReader(Env* env) : file_(NULL), env_(env) {}
+	BlockFileReader(Env* env, uint64_t off, const std::string& name) 
+			: offset_(off), size_(0), name_(name), env_(env), file_(NULL) {}
+	~BlockFileReader() { if (file_) delete file_; }
 	Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
+		assert(Initialized());
 		Status s;
 		if (file_ == NULL) {
-			s = Env->NewRandomAccessFile(name_, &file_);
+			s = env_->NewRandomAccessFile(name_, &file_);
 			if (!s.ok()) {
 				assert(file_ == NULL);
 				return s;
@@ -82,24 +94,43 @@ public:
 		}
 		return file_->Read(offset, n, result, scratch);
 	}
-  uint64_t offset() const { return offset_; }
-  uint64_t size() const { return size_; }
-	uint64_t end() const { return offset_ + size_; }
-	bool Contains(uint64_t offset, uint64_t n) const {
-		return offset >= offset() && (offset + n) <= end();
-	}
+}
 
-};
+class BlockFileWriter : BlockFileHandle {
+private:
+	WritableFile* file_;
+
+public:
+	BlockFileWriter(Env* env) : file_(NULL), env_(env) {}
+	~BlockFileWriter() { if (file_) delete file_; }
+	Status Write(const Slice& data) {
+		assert(Initialized());
+		Status s;
+		if (file_ == NULL) {
+			s = env_->NewWritableFile(name_, &file_);
+			if (!s.ok()) {
+				assert(file_ == NULL);
+				return s;
+			}
+		}
+		s = file_->Append(data);
+		if (s.ok()) 
+			size_ += data.size();
+		return s;
+	}
+	Status Close() { return file_ ? file_->Close() : Status::OK(); }
+}
 
 class SpaceManager {
 private:
-  WritableFile *file_;
 	Env* env_;
-  const MrisOptions *options_;
-	std::vector<BlockFileHandle> blocks_;
+  const MrisOptions *mris_options_;
+	std::vector<BlockFileReader> blocks_;
+
+	BlockFileWriter *writer_;
 
 	// find the file block contains @offset
-	BlockFileHandle* getBlock(uint64_t offset) {
+	BlockFileReader* getBlockReader(uint64_t offset) {
 		// binary search
 		size_t first = 0;
 		size_t count = file_.size();
@@ -119,19 +150,32 @@ private:
 		return &blocks_[first];
 	}
 
+	BlockFileWriter* NewWriter(const std::string &name);
+
 public:
   SpaceManager(const Options *opt, const char *meta_name) : env_(opt->env) {}
 
-	// Build blocks
-	Status BuildBlocks(Slice* input);
+	// Build block readers
+	Status BuildReaders(Slice* input, size_t nblock);
 
 	// Load metadata from file given by @meta_name
 	Status Load(const char *meta_name, uint64_t meta_size, uint64_t nblock);
 
 	Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
-		BlockFileHandle* block = getBlock(offset);
+		BlockFileReader* reader = getBlockReader(offset);
 		assert(block->Contains(offset, n));
 		return block->Read(offset - block->offset(), n, result, scratch);
+	}
+
+	Status Write(const Slice& slice, uint64_t& offset);
+
+	// size of all data
+	uint64_t DataSize() const {
+
+	}
+
+	std::string NewBlockFile() {
+
 	}
 };
 

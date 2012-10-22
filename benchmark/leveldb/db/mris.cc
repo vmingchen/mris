@@ -13,6 +13,7 @@
  */
 
 #include "db/mris.h"
+#include "leveldb/env.h"
 #include "util/crc32c.h"
 #include "util/coding.h"
 
@@ -53,8 +54,17 @@ Status BlockFileHandle::DecodeFrom(Slice* input) {
 	}
 }
 
-Status SpaceManager::BuildBlocks(Slice* input) {
-
+Status SpaceManager::BuildReaders(Slice* input, size_t nblock) {
+	blocks_.clear();
+	Status s;
+	for (size_t i = 0; i < nblock; ++i) {
+		BlockFileReader block(env_);
+		s = block.DecodeFrom(input);
+		if (!s.ok())
+			return s;
+		blocks_.push_back(block);
+	}
+	return Status::OK();
 }
 
 // meta_size is the size without the length prefix and crc suffix
@@ -86,12 +96,36 @@ Status SpaceManager::Load(const char *meta_name, uint64_t meta_size, uint64_t nb
 	uint32_t crc1 = crc32c::Value(scrach, meta_size);
 	uint32_t crc2 = LoadFixedUint32(meta_size + 8, file);
 	if (crc1 == crc2) {
-		s = BuildBlocks(&buffer);
+		s = BuildBlocks(&buffer, nblock);
 	} else {
 		s = Status::Corruption("crc error");
 	}
 
 	delete[] scrach;
+	return s;
+}
+
+Status SpaceManager::NewWriter(const std::string &name) {
+	if (writer_) {
+		Status s = writer_.Close();
+		if (!s.ok())
+			return s;
+		delete writer_;
+		writer_ = NULL;
+	}
+	writer_ = new BlockFileWriter(env_, DataSize(), NewBlockFile());
+	return Status::OK();
+}
+
+Status SpaceManager::Write(const Slice& slice, uint64_t& offset) {
+	offset = writer_->offset();
+	Status s = writer_->Write(slice);
+	if (!s.ok()) 
+		return s;
+
+	if (writer_->size() > mris_options_->kSplitThreshold) {
+
+	}
 	return s;
 }
 
