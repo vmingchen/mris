@@ -42,12 +42,12 @@ struct MrisOptions {
 
 	std::string dbname;
 
-  MrisOptions() 
+  MrisOptions(const char* name) 
 	: kSizeThreshold(128 << 10),
 	  kLargeBlockSize(64 << 10),
 	  kSplitThreshold(64 << 20),
-	  cealed(false) {
-  }
+	  cealed(false),
+		dbname(name) { }
 };
 
 struct ValueDelegate {
@@ -124,10 +124,11 @@ public:
 	Status Close() { return file_ ? file_->Close() : Status::OK(); }
 }
 
-class SpaceManager {
+class LargeSpace {
 private:
 	Env* env_;
-  const MrisOptions *mris_options_;
+	const Options* db_options_;
+  MrisOptions mris_options_;
 	std::vector<BlockFileReader> blocks_;
 
 	// make sure it points to a ready writer all the time
@@ -157,7 +158,7 @@ private:
 	BlockFileWriter* NewWriter(const std::string &name);
 
 public:
-  SpaceManager(const Options *opt, const char *meta_name) : env_(opt->env) {}
+  LargeSpace(const Options *opt, const char *db_name);
 
 	// Build block readers
 	Status BuildReaders(Slice* input, size_t nblock);
@@ -178,9 +179,7 @@ public:
 		return writer_->offset() + writer_->size();
 	}
 
-	std::string NewBlockFile() {
-		return MakeFileName(mris_options_->dbname, blocks_.size(), "bbf");
-	}
+	Status UpdateHead();
 };
 
 } }

@@ -12,12 +12,37 @@
  * ===========================================================================
  */
 
+#include "db/filename.h"
 #include "db/mris.h"
 #include "leveldb/env.h"
 #include "util/crc32c.h"
 #include "util/coding.h"
 
 namespace leveldb { namespace mris {
+
+// copied from filename.cc
+static std::string MakeFileName(const std::string& name, uint64_t number,
+                                const char* suffix) {
+  char buf[100];
+  snprintf(buf, sizeof(buf), "/%06llu.%s",
+           static_cast<unsigned long long>(number),
+           suffix);
+  return name + buf;
+}
+
+static std::string LargeBlockFileName(const std::string& dbname, 
+																			uint64_t number) {
+	return MakeFileName(dbname, number, "lbf");
+}
+
+static std::string LargeMetaFileName(const std::string& dbname, 
+																		 uint64_t number) {
+	return MakeFileName(dbname, number, "lmf");
+}
+
+std::string LargeHeadFileName(const std::string& dbname) {
+	return dbname + "/LARGEHEAD";
+}
 
 uint64_t LoadFixedUint64(uint64_t offset, SequentialFile* file) {
 	uint64_t result;
@@ -54,7 +79,22 @@ Status BlockFileHandle::DecodeFrom(Slice* input) {
 	}
 }
 
-Status SpaceManager::BuildReaders(Slice* input, size_t nblock) {
+LargeSpace::LargeSpace(const Options *opt, const std::string& db_name) 
+		: env_(opt->env), 
+			db_options_(opt),
+			mris_options_(db_name) {
+	if (env_->FileExists(LargeHeadFileName(db_name))) {
+		if (db_options_->error_if_exists) {
+      return Status::InvalidArgument(
+          dbname_, "exists (error_if_exists is true)");
+		}
+	} else {
+    if (db_options_.create_if_missing) {
+		}
+	}
+}
+
+Status LargeSpace::BuildReaders(Slice* input, size_t nblock) {
 	blocks_.clear();
 	Status s;
 	for (size_t i = 0; i < nblock; ++i) {
@@ -73,7 +113,7 @@ Status SpaceManager::BuildReaders(Slice* input, size_t nblock) {
 // [number-of-bytes-of-block-metadata] a.k.a. meta_size
 // [block-metadata]
 // [crc]
-Status SpaceManager::Load(const char *meta_name, uint64_t meta_size, uint64_t nblock) {
+Status LargeSpace::Load(const char *meta_name, uint64_t meta_size, uint64_t nblock) {
 	// check sanity of parameters
 	assert(nblock > 0 && meta_size > 8);
 	SequentialFile* file;
@@ -105,7 +145,7 @@ Status SpaceManager::Load(const char *meta_name, uint64_t meta_size, uint64_t nb
 	return s;
 }
 
-Status SpaceManager::NewWriter(const std::string &name) {
+Status LargeSpace::NewWriter(const std::string &name) {
 	if (writer_) {
 		Status s = writer_.Close();
 		if (!s.ok())
@@ -113,20 +153,24 @@ Status SpaceManager::NewWriter(const std::string &name) {
 		delete writer_;
 		writer_ = NULL;
 	}
-	writer_ = new BlockFileWriter(env_, DataSize(), NewBlockFile());
+	std::string name = LargeBlockFileName(mris_options_.dbname, blocks_.size());
+	writer_ = new BlockFileWriter(env_, DataSize(), name);
 	return Status::OK();
 }
 
-Status SpaceManager::Write(const Slice& slice, uint64_t& offset) {
+Status LargeSpace::Write(const Slice& slice, uint64_t& offset) {
 	offset = writer_->offset();
 	Status s = writer_->Write(slice);
 	if (!s.ok()) 
 		return s;
 
-	if (writer_->size() > mris_options_->kSplitThreshold) {
-
+	if (writer_->size() > mris_options_.kSplitThreshold) {
 	}
 	return s;
+}
+
+Status LargeSpace::UpdateHead() {
+
 }
 
 }}
