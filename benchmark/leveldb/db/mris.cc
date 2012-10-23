@@ -110,8 +110,8 @@ Status LargeMeta::DecodeFrom(Slice* input) {
 
 	// decode block information and build space.blocks_
 	for (uint64_t i = 0; i < nblock; ++i) {
-		LargeBlockReader block(space->env_);
-		s = block.DecodeFrom(input);
+		LargeBlockReader *block = new LargeBlockReader(space->env_);
+		s = block->DecodeFrom(input);
 		if (!s.ok())
 			return s;
 		space.blocks_.push_back(block);
@@ -149,7 +149,7 @@ void LargeMeta::EncodeTo(std::string* dst) const {
 	size_t block_offset = dst.length();
 	
 	for (uint64_t i = 0; i < nblock; ++i) {
-		space->blocks_[i].EncodeTo(dst);
+		space->blocks_[i]->EncodeTo(dst);
 	}
 
 	uint64_t block_length = static_cast<uint64_t>(dst.length() - block_offset);
@@ -165,7 +165,8 @@ void LargeMeta::EncodeTo(std::string* dst) const {
 LargeSpace::LargeSpace(const Options *opt, const std::string& dbname) 
 		: env_(opt->env), 
 			db_options_(opt),
-			mris_options_(dbname) {
+			dbname_(dbname),
+			meta_(this) {
 	if (env_->FileExists(LargeHeadFileName(dbname))) {
 		OpenLargeSpace(dbname);
 	} else {
@@ -173,10 +174,16 @@ LargeSpace::LargeSpace(const Options *opt, const std::string& dbname)
 	}
 }
 
-Status LargeSpace::OpenLargeSpace(const std::string& dbname) {
+~LargeSpace::LargeSpace() {
+	for (size_t i = 0; i < blocks_.size(); ++i) {
+		delete blocks_[i];
+	}
+}
+
+Status LargeSpace::OpenLargeSpace() {
   // Read "LARGEHEAD" file, which contains the name of the current meta file
   std::string head;
-  Status s = ReadFileToString(env_, LargeHeadFileName(dbname), &head);
+  Status s = ReadFileToString(env_, LargeHeadFileName(dbname_), &head);
   if (!s.ok()) {
     return s;
   }
@@ -186,26 +193,57 @@ Status LargeSpace::OpenLargeSpace(const std::string& dbname) {
 
 	// Check if the large space is empty
 	if (strcmp(head.c_str(), EMPTY_LARGESPACE) == 0) {
-		return s;
+		meta_sequence_ = 0;
+		return Status::OK();
 	}
 
+	// Load block information from file given by head
+	meta_sequence_ = static_cast<uint64_t>(atoll(head));
+	return meta_.Load(LargeBlockFileName(dbname_, meta_sequence_));
 }
 
 Status LargeSpace::NewLargeSpace() {
-
+	// Write empty "LARGEHEAD" file
+	meta_sequence_ = 0;
+	return WriteStringToFileSync(env_, LargeHeadFileName(dbname_));
 }
 
-Status LargeSpace::NewWriter(const std::string &name) {
+LargeBlockWriter* LargeSpace::NewWriter(uint64_t offset) {
 	if (writer_) {
 		Status s = writer_.Close();
 		if (!s.ok())
-			return s;
+			return NULL;
 		delete writer_;
 		writer_ = NULL;
 	}
-	std::string name = LargeBlockFileName(mris_options_.dbname, blocks_.size());
-	writer_ = new LargeBlockWriter(env_, DataSize(), name);
-	return Status::OK();
+	std::string name = LargeBlockFileName(dbname_, blocks_.size());
+	return new LargeBlockWriter(env_, offset, name);
+}
+
+// TODO: consider concurrent issues
+Status LargeSpace::SealLargeBlock() {
+	// skip empty block
+	if (writer_->empty()) {
+		return Status::OK();
+	}
+
+	Status s = writer_->Flush();
+	if (!s.ok()) {
+		return s;
+	}
+
+	LargeBlockReader *reader = new LargeBlockReader(env_, writer_);
+	blocks_.push_back(reader);
+	meta_.nblock++;
+
+	uint64_t offset = writer_.offset() + writer_.size();
+	std::string name = LargeBlockFileName(dbname_, blocks_.size());
+	writer_ = NewWriter(offset);
+	
+	if (writer_)
+		return Status::OK();
+	else 
+		return Status::Corruption("wrong large space writer");
 }
 
 Status LargeSpace::Write(const Slice& slice, uint64_t& offset) {
@@ -215,6 +253,7 @@ Status LargeSpace::Write(const Slice& slice, uint64_t& offset) {
 		return s;
 
 	if (writer_->size() > mris_options_.kSplitThreshold) {
+		SealLargeBlock();
 	}
 	return s;
 }

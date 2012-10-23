@@ -40,14 +40,11 @@ struct MrisOptions {
   // once cealed, some of the options become immutable
   bool cealed;
 
-	std::string dbname;
-
-  MrisOptions(const char* name) 
-	: kSizeThreshold(128 << 10),
-	  kLargeBlockSize(64 << 10),
-	  kSplitThreshold(64 << 20),
-	  cealed(false),
-		dbname(name) { }
+  MrisOptions() 
+			: kSizeThreshold(128 << 10),
+				kLargeBlockSize(64 << 10),
+				kSplitThreshold(64 << 20),
+				cealed(false) { }
 };
 
 struct ValueDelegate {
@@ -59,20 +56,22 @@ struct ValueDelegate {
 };
 
 class LargeBlockHandle {
-private:
+protected:
 	uint64_t offset_;
 	uint64_t size_;
 	std::string name_;
 
 public:
+	LargeBlockHandle() : offset_(0), size_(0) { }
   uint64_t offset() const { return offset_; }
   uint64_t size() const { return size_; }
 	uint64_t end() const { return offset_ + size_; }
 	const std::string& name() const { return name_; }
-	bool Contains(uint64_t offset, uint64_t n) const {
+	bool contains(uint64_t offset, uint64_t n) const {
 		return offset >= offset() && (offset + n) <= end();
 	}
-	bool Initialized() const { return name_.length() > 0; }
+	bool initialized() const { return name_.length() > 0; }
+	bool empty() const { return size_ == 0; }
 };
 
 class LargeBlockReader : LargeBlockHandle {
@@ -82,11 +81,16 @@ private:
 
 public:
 	LargeBlockReader(Env* env) : file_(NULL), env_(env) {}
-	LargeBlockReader(Env* env, uint64_t off, const std::string& name) 
-			: offset_(off), size_(0), name_(name), env_(env), file_(NULL) {}
+	LargeBlockReader(Env* env, const LargeBlockHandle* handle)
+			: env_(env), 
+				offset_(handle->offset()),
+				size_(handle->size()),
+				name_(handle->name()),
+				file_(NULL) {}
 	~LargeBlockReader() { if (file_) delete file_; }
+
 	Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
-		assert(Initialized());
+		assert(initialized());
 		Status s;
 		if (file_ == NULL) {
 			s = env_->NewRandomAccessFile(name_, &file_);
@@ -105,9 +109,16 @@ private:
 
 public:
 	LargeBlockWriter(Env* env) : file_(NULL), env_(env) {}
+	LargeBlockWriter(Env* env, uint64_t off, const std::string& name) 
+			: env_(env), 
+			  offset_(off), 
+				size_(0), 
+				name_(name), 
+				file_(NULL) {}
 	~LargeBlockWriter() { if (file_) delete file_; }
+
 	Status Write(const Slice& data) {
-		assert(Initialized());
+		assert(initialized());
 		Status s;
 		if (file_ == NULL) {
 			s = env_->NewWritableFile(name_, &file_);
@@ -121,6 +132,7 @@ public:
 			size_ += data.size();
 		return s;
 	}
+	Status Fulsh() { return file_ ? file_->Flush() : Status::OK(); }
 	Status Close() { return file_ ? file_->Close() : Status::OK(); }
 };
 
@@ -146,7 +158,12 @@ private:
 	Env* env_;
 	const Options* db_options_;
   MrisOptions mris_options_;
-	std::vector<LargeBlockReader> blocks_;
+	std::vector<LargeBlockReader*> blocks_;
+	std::string dbname_;
+	LargeMeta meta_;
+	// sequence of current meta file. valid sequence starts from 1, and 0
+	// means no meta file, which means the space is empty
+	uint64_t meta_sequence_;
 
 	// make sure it points to a ready writer all the time
 	LargeBlockWriter *writer_;
@@ -160,31 +177,36 @@ private:
 		while (count > 1) {
 			size_t step = count / 2;
 			size_t mid = first + step;
-			if (blocks_[mid].offset() == offset) {
-				return &blocks_[mid];
-			} else if (blocks_[mid].offset() > offset) {
+			if (blocks_[mid]->offset() == offset) {
+				return blocks_[mid];
+			} else if (blocks_[mid]->offset() > offset) {
 				count = step;
 			} else {
 				first = mid;
 				count -= step;
 			}
 		}
-		return &blocks_[first];
+		return blocks_[first];
 	}
 
-	LargeBlockWriter* NewWriter(const std::string &name);
+	LargeBlockWriter* NewWriter(uint64_t offset);
+
+	Status OpenLargeSpace();
 
 	Status NewLargeSpace();
 
+	Status SealLargeBlock();
+
 public:
   LargeSpace(const Options *opt, const char *db_name);
+	~LargeSpace();
 
 	// Load metadata from file given by @meta_name
 	Status Load(const char *meta_name, uint64_t meta_size, uint64_t nblock);
 
 	Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
 		LargeBlockReader* reader = getBlockReader(offset);
-		assert(block->Contains(offset, n));
+		assert(block->contains(offset, n));
 		return block->Read(offset - block->offset(), n, result, scratch);
 	}
 
@@ -194,6 +216,8 @@ public:
 	uint64_t DataSize() const {
 		return writer_->offset() + writer_->size();
 	}
+
+	bool IsEmpty() const { return meta_sequence_ == 0; }
 
 	Status UpdateHead();
 };
