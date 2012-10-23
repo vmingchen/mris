@@ -58,7 +58,7 @@ struct ValueDelegate {
   ValueDelegate(size_t off, size_t sz) : offset(off), size(sz) {}
 };
 
-class BlockFileHandle {
+class LargeBlockHandle {
 private:
 	uint64_t offset_;
 	uint64_t size_;
@@ -75,16 +75,16 @@ public:
 	bool Initialized() const { return name_.length() > 0; }
 };
 
-class BlockFileReader : BlockFileHandle {
+class LargeBlockReader : LargeBlockHandle {
 private:
 	Env* env_;
 	RandomAccessFile *file_;
 
 public:
-	BlockFileReader(Env* env) : file_(NULL), env_(env) {}
-	BlockFileReader(Env* env, uint64_t off, const std::string& name) 
+	LargeBlockReader(Env* env) : file_(NULL), env_(env) {}
+	LargeBlockReader(Env* env, uint64_t off, const std::string& name) 
 			: offset_(off), size_(0), name_(name), env_(env), file_(NULL) {}
-	~BlockFileReader() { if (file_) delete file_; }
+	~LargeBlockReader() { if (file_) delete file_; }
 	Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
 		assert(Initialized());
 		Status s;
@@ -99,13 +99,13 @@ public:
 	}
 };
 
-class BlockFileWriter : BlockFileHandle {
+class LargeBlockWriter : LargeBlockHandle {
 private:
 	WritableFile* file_;
 
 public:
-	BlockFileWriter(Env* env) : file_(NULL), env_(env) {}
-	~BlockFileWriter() { if (file_) delete file_; }
+	LargeBlockWriter(Env* env) : file_(NULL), env_(env) {}
+	~LargeBlockWriter() { if (file_) delete file_; }
 	Status Write(const Slice& data) {
 		assert(Initialized());
 		Status s;
@@ -124,10 +124,21 @@ public:
 	Status Close() { return file_ ? file_->Close() : Status::OK(); }
 };
 
+// meta_size is the size without the length prefix and crc suffix
+// meta_file format:
+// [number-of-blocks] a.k.a. nblock
+// [number-of-bytes-of-block-metadata] a.k.a. meta_size
+// [block-metadata]
+// [crc]
 struct LargeMeta {
-	uint64_t size;
+	LargeSpace* space;
+	uint64_t meta_size;
 	uint64_t nblock;
-
+	LargeSpace(LargeSpace* sp) : space(sp) {}
+	Status Load(const std::string& filename);
+	Status Dump(const std::string& filename);
+	Status DecodeFrom(Slice* input);
+	Status EncodeTo(std::string* dst) const;
 };
 
 class LargeSpace {
@@ -135,13 +146,13 @@ private:
 	Env* env_;
 	const Options* db_options_;
   MrisOptions mris_options_;
-	std::vector<BlockFileReader> blocks_;
+	std::vector<LargeBlockReader> blocks_;
 
 	// make sure it points to a ready writer all the time
-	BlockFileWriter *writer_;
+	LargeBlockWriter *writer_;
 
 	// find the file block contains @offset
-	BlockFileReader* getBlockReader(uint64_t offset) {
+	LargeBlockReader* getBlockReader(uint64_t offset) {
 		// binary search
 		size_t first = 0;
 		size_t count = file_.size();
@@ -161,21 +172,18 @@ private:
 		return &blocks_[first];
 	}
 
-	BlockFileWriter* NewWriter(const std::string &name);
+	LargeBlockWriter* NewWriter(const std::string &name);
 
 	Status NewLargeSpace();
 
 public:
   LargeSpace(const Options *opt, const char *db_name);
 
-	// Build block readers
-	Status BuildReaders(Slice* input, size_t nblock);
-
 	// Load metadata from file given by @meta_name
 	Status Load(const char *meta_name, uint64_t meta_size, uint64_t nblock);
 
 	Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
-		BlockFileReader* reader = getBlockReader(offset);
+		LargeBlockReader* reader = getBlockReader(offset);
 		assert(block->Contains(offset, n));
 		return block->Read(offset - block->offset(), n, result, scratch);
 	}

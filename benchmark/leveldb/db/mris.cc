@@ -27,7 +27,7 @@ static const char* EMPTY_LARGESPACE = "EMPTY_LARGESPACE";
 static std::string MakeFileName(const std::string& name, uint64_t number,
                                 const char* suffix) {
   char buf[100];
-  snprintf(buf, sizeof(buf), "/%06llu.%s",
+  snprintf(buf, sizeof(buf), "/%08llu.%s",
            static_cast<unsigned long long>(number),
            suffix);
   return name + buf;
@@ -65,14 +65,14 @@ uint32_t LoadFixedUint32(uint64_t offset, SequentialFile* file) {
 	return DecodeFixed32(scrach);
 }
 
-void BlockFileHandle::EncodeTo(std::string* dst) const {
+void LargeBlockHandle::EncodeTo(std::string* dst) const {
 	assert(size_ > 0);
 	PutLengthPrefixedSlice(dst, name_);
 	PutVarint64(offset_);
 	PutVarint64(size_);
 }
 
-Status BlockFileHandle::DecodeFrom(Slice* input) {
+Status LargeBlockHandle::DecodeFrom(Slice* input) {
 	if (GetLengthPrefixedSlice(input, &name_) &&
 			GetVarint64(input, &offset_) &&
 			GetVarint64(input, &size_)) {
@@ -81,6 +81,86 @@ Status BlockFileHandle::DecodeFrom(Slice* input) {
     return Status::Corruption("bad block handle");
 	}
 }
+
+
+// ========================== LargeMeta Begin ==============================
+
+Status LargeMeta::Load(const std::string& fname) {
+	std::string metadata;
+	Status s = ReadFileToString(space->env_, fname, &metadata);
+	if (!s.ok()) {
+		MaybeIgnoreError(&s);
+		return s;
+	}
+	Slice buffer(metadata);
+
+	return DecodeFrom(&buffer);
+}
+
+Status LargeMeta::DecodeFrom(Slice* input) {
+	// read nblock and meta_size from meta file and check
+	// for simplicity, we assert the status to be ok
+	if (! GetVarint64(input, &nblock)) {
+		return Status::Corruption("error in large meta head");
+	}
+
+	// pointer to block metadata
+	const char *block_raw = input->data();
+	uint64_t *block_length = input->size();
+
+	// decode block information and build space.blocks_
+	for (uint64_t i = 0; i < nblock; ++i) {
+		LargeBlockReader block(space->env_);
+		s = block.DecodeFrom(input);
+		if (!s.ok())
+			return s;
+		space.blocks_.push_back(block);
+	}
+
+	block_length -= input->size();
+	if (! GetLengthPrefixedSlice(input, &meta_size) || 
+			block_length != meta_size) {
+		return Status::Corruption("error in large meta size");
+	}
+
+	// check crc
+	uint32_t crc1 = crc32c::Value(block_raw, block_length);
+	uint32_t crc2;
+	s = GetVarint32(input, &crc2);
+	if (!s.ok( || crc1 != crc2)) {
+		return Status::Corruption("crc error");
+	}
+
+	return s;
+}
+
+Status LargeMeta::Dump(const std::string& fname) {
+	std::string metadata;
+	EncodeTo(&metadata);
+	Status s = WriteStringToFileSync(space->env_,
+			Slice(metadata), fname);
+	return s;
+}
+
+void LargeMeta::EncodeTo(std::string* dst) const {
+	assert(nblock == static_cast<uint64_t>(space->blocks_.size()));
+
+	PutVarint64(dst, nblock);
+	size_t block_offset = dst.length();
+	
+	for (uint64_t i = 0; i < nblock; ++i) {
+		space->blocks_[i].EncodeTo(dst);
+	}
+
+	uint64_t block_length = static_cast<uint64_t>(dst.length() - block_offset);
+	const char *block_raw = dst.c_str() + block_offset;
+	PutVarint64(dst, block_length);
+
+	uint32_t crc = crc32c::Value(block_raw, block_length);
+	PutVarint32(dst, crc);
+}
+
+// ========================== LargeSpace Begin ==============================
 
 LargeSpace::LargeSpace(const Options *opt, const std::string& dbname) 
 		: env_(opt->env), 
@@ -115,57 +195,6 @@ Status LargeSpace::NewLargeSpace() {
 
 }
 
-Status LargeSpace::BuildReaders(Slice* input, size_t nblock) {
-	blocks_.clear();
-	Status s;
-	for (size_t i = 0; i < nblock; ++i) {
-		BlockFileReader block(env_);
-		s = block.DecodeFrom(input);
-		if (!s.ok())
-			return s;
-		blocks_.push_back(block);
-	}
-	return Status::OK();
-}
-
-// meta_size is the size without the length prefix and crc suffix
-// meta_file format:
-// [number-of-blocks] a.k.a. nblock
-// [number-of-bytes-of-block-metadata] a.k.a. meta_size
-// [block-metadata]
-// [crc]
-Status LargeSpace::Load(const char *meta_name, uint64_t meta_size, uint64_t nblock) {
-	// check sanity of parameters
-	assert(nblock > 0 && meta_size > 8);
-	SequentialFile* file;
-	Status s = env_->NewSequentialFile(meta_name, &file);
-	if (!s.ok()) {
-		MaybeIgnoreError(&s);
-		return s;
-	}
-
-	// read nblock and meta_size from meta file and check
-	// for simplicity, we assert the status to be ok
-	assert(LoadFixedUint64(0, file) == nblock);
-	assert(LoadFixedUint64(8, file) == meta_size);
-
-	char *scrach = new char[meta_size+1];
-	Slice buffer;
-	s = file->Read(offset, 16, &buffer, scrach);
-	assert(s.ok());
-
-	uint32_t crc1 = crc32c::Value(scrach, meta_size);
-	uint32_t crc2 = LoadFixedUint32(meta_size + 8, file);
-	if (crc1 == crc2) {
-		s = BuildBlocks(&buffer, nblock);
-	} else {
-		s = Status::Corruption("crc error");
-	}
-
-	delete[] scrach;
-	return s;
-}
-
 Status LargeSpace::NewWriter(const std::string &name) {
 	if (writer_) {
 		Status s = writer_.Close();
@@ -175,7 +204,7 @@ Status LargeSpace::NewWriter(const std::string &name) {
 		writer_ = NULL;
 	}
 	std::string name = LargeBlockFileName(mris_options_.dbname, blocks_.size());
-	writer_ = new BlockFileWriter(env_, DataSize(), name);
+	writer_ = new LargeBlockWriter(env_, DataSize(), name);
 	return Status::OK();
 }
 
