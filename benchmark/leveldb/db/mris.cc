@@ -12,6 +12,7 @@
  * ===========================================================================
  */
 
+#include <string.h>
 #include "db/filename.h"
 #include "db/mris.h"
 #include "leveldb/env.h"
@@ -19,6 +20,8 @@
 #include "util/coding.h"
 
 namespace leveldb { namespace mris {
+
+static const char* EMPTY_LARGESPACE = "EMPTY_LARGESPACE";
 
 // copied from filename.cc
 static std::string MakeFileName(const std::string& name, uint64_t number,
@@ -79,19 +82,37 @@ Status BlockFileHandle::DecodeFrom(Slice* input) {
 	}
 }
 
-LargeSpace::LargeSpace(const Options *opt, const std::string& db_name) 
+LargeSpace::LargeSpace(const Options *opt, const std::string& dbname) 
 		: env_(opt->env), 
 			db_options_(opt),
-			mris_options_(db_name) {
-	if (env_->FileExists(LargeHeadFileName(db_name))) {
-		if (db_options_->error_if_exists) {
-      return Status::InvalidArgument(
-          dbname_, "exists (error_if_exists is true)");
-		}
+			mris_options_(dbname) {
+	if (env_->FileExists(LargeHeadFileName(dbname))) {
+		OpenLargeSpace(dbname);
 	} else {
-    if (db_options_.create_if_missing) {
-		}
+		NewLargeSpace(dbname);
 	}
+}
+
+Status LargeSpace::OpenLargeSpace(const std::string& dbname) {
+  // Read "LARGEHEAD" file, which contains the name of the current meta file
+  std::string head;
+  Status s = ReadFileToString(env_, LargeHeadFileName(dbname), &head);
+  if (!s.ok()) {
+    return s;
+  }
+  if (head.empty() || head[head.size()-1] != '\n') {
+    return Status::Corruption("LARGEHEAD file does not end with newline");
+  }
+
+	// Check if the large space is empty
+	if (strcmp(head.c_str(), EMPTY_LARGESPACE) == 0) {
+		return s;
+	}
+
+}
+
+Status LargeSpace::NewLargeSpace() {
+
 }
 
 Status LargeSpace::BuildReaders(Slice* input, size_t nblock) {

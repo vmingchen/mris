@@ -97,7 +97,7 @@ public:
 		}
 		return file_->Read(offset, n, result, scratch);
 	}
-}
+};
 
 class BlockFileWriter : BlockFileHandle {
 private:
@@ -122,7 +122,13 @@ public:
 		return s;
 	}
 	Status Close() { return file_ ? file_->Close() : Status::OK(); }
-}
+};
+
+struct LargeMeta {
+	uint64_t size;
+	uint64_t nblock;
+
+};
 
 class LargeSpace {
 private:
@@ -156,6 +162,8 @@ private:
 	}
 
 	BlockFileWriter* NewWriter(const std::string &name);
+
+	Status NewLargeSpace();
 
 public:
   LargeSpace(const Options *opt, const char *db_name);
