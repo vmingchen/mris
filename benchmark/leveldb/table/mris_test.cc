@@ -13,6 +13,8 @@
  */
 
 #include <string>
+#include <vector>
+#include <string.h>
 #include "leveldb/slice.h"
 #include "leveldb/env.h"
 #include "table/mris.h"
@@ -59,7 +61,25 @@ class MrisTest {
     std::string dbname;
     Env* env;
     MrisTest() : dbname("mris-test-db"), 
-                 env(Env::Default()) {}
+                 env(Env::Default()) {
+      // new a blank test dir, empty it if already exist
+      if (env->FileExists(dbname)) {
+        //std::cerr << "dir '" << dbname << "' already exits" << std::endl;
+        std::vector<std::string> children;
+        assert(env->GetChildren(dbname, &children).ok());
+        for (size_t i = 0; i < children.size(); ++i) {
+          if (children[i][0] == '.') {
+            continue;
+          }
+          std::string cname = dbname + "/" + children[i];
+          assert((env->DeleteFile(cname)).ok());
+        }
+        //std::cerr << "dir '" << dbname << "' emptied" << std::endl;
+      } else {
+        assert(env->CreateDir(dbname).ok());
+        //std::cerr << "dir '" << dbname << "' created" << std::endl;
+      }
+    }
     virtual ~MrisTest() {}
     std::string NewBlockFileName() {
       char buf[256];
@@ -83,15 +103,29 @@ TEST(MrisTest, MrisAppendReadFileTest) {
   ASSERT_OK(mris_file->Sync());
   ASSERT_TRUE(env->FileExists(filename));
 
-  char buf[1024];
-  Slice result;
+  char inbuf[1024];
+  Slice input;
   // read from empty file should be IOError
-  ASSERT_TRUE(mris_file->Read(0, 10, &result, buf).IsIOError());
+  ASSERT_TRUE(mris_file->Read(0, 10, &input, inbuf).IsIOError());
 
   // append some data
-  memset(buf, 'a', 512);
-  Slice data(buf, 512);
-  ASSERT_OK(mris_file->Append(data));
+  char *first_half = inbuf;
+  memset(first_half, 'a', 512);
+  Slice first(first_half, 512);
+  ASSERT_OK(mris_file->Append(first));
+
+  char *second_half = inbuf + 512;
+  memset(second_half, 'b', 512);
+  Slice second(second_half, 512);
+  ASSERT_OK(mris_file->Append(second));
+
+  char outbuf[1024];
+  Slice result;
+  ASSERT_OK(mris_file->Read(0, 1024, &result, outbuf));
+  ASSERT_EQ(0, memcmp(inbuf, outbuf, 1024));
+
+  ASSERT_OK(mris_file->Read(512 - 5, 10, &result, outbuf));
+  ASSERT_EQ(0, strcmp(inbuf, outbuf, 10));
 }
 
 TEST(MrisTest, LargeBlockBuilderTest) {
