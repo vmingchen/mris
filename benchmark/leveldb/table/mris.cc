@@ -29,7 +29,7 @@ static const char* EMPTY_LARGESPACE = "EMPTY_LARGESPACE";
 // copied from filename.cc
 static std::string MakeFileName(const std::string& name, uint64_t number,
                                 const char* suffix) {
-  char buf[100];
+  char buf[256];
   snprintf(buf, sizeof(buf), "/%08llu.%s",
            static_cast<unsigned long long>(number),
            suffix);

@@ -19,10 +19,7 @@
 #include "util/testharness.h"
 #include "util/testutil.h"
 
-static Status bad = Status::NotFound("[mris] bad status");
-
 #define ASSERT_FALSE(x) ASSERT_TRUE(!(x))
-#define ASSERT_BAD(x) ASSERT_OK(((x).ok() ? bad : Status::OK()))
 
 namespace leveldb { namespace mris {
 
@@ -57,9 +54,27 @@ TEST(LargeBlockHandle, basic) {
   ASSERT_EQ(large_block, new_block);
 }
 
-TEST(MrisAppendReadFile, basic) {
-  Env* env = new PosixEnv();
-  std::string filename = "block000002.lbf";
+class MrisTest {
+  public:
+    std::string dbname;
+    Env* env;
+    MrisTest() : dbname("mris-test-db"), 
+                 env(Env::Default()) {}
+    virtual ~MrisTest() {}
+    std::string NewBlockFileName() {
+      char buf[256];
+      snprintf(buf, sizeof(buf), "/%08llu.lbf",
+               static_cast<unsigned long long>(sequence));
+      ++sequence;
+      return dbname + buf;
+    }
+    static int sequence;
+};
+
+int MrisTest::sequence = 0;
+
+TEST(MrisTest, MrisAppendReadFileTest) {
+  std::string filename = NewBlockFileName();
   MrisAppendReadFile *mris_file = NULL;
 
   // create an empty file
@@ -77,25 +92,14 @@ TEST(MrisAppendReadFile, basic) {
   memset(buf, 'a', 512);
   Slice data(buf, 512);
   ASSERT_OK(mris_file->Append(data));
-
-  delete env;
 }
 
-TEST(LargeBlockBuilder, basic) {
-  Env* env = new PosixEnv();
-  std::string name = "block000003.lbf";
-
-  delete env;
+TEST(MrisTest, LargeBlockBuilderTest) {
+  std::string name = NewBlockFileName();
 }
 
-TEST(LargeBlockReader, basic) {
-  Env* env = new PosixEnv();
-  std::string name = "block000002.lbf";
-  LargeBlockReader reader(env, 1000, 1000, name);
-
-
-
-  delete env;
+TEST(MrisTest, LargeBlockReaderTest) {
+  std::string name = NewBlockFileName();
 }
 
 } }

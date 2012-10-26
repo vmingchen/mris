@@ -192,7 +192,8 @@ public:
   		: LargeBlockHandle(handle),
   		  env_(env), 
   			file_(NULL) {}
-  LargeBlockHandle(Env* env, uint64_t off, 
+
+  LargeBlockReader(Env* env, uint64_t off, 
                    uint64_t size, const std::string& name)
       : LargeBlockHandle(off, size, name),
         env_(env_),
