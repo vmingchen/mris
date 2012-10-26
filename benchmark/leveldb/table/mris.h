@@ -49,6 +49,9 @@ public:
 
   virtual Status Read(uint64_t offset, size_t n, Slice* result,
                       char* scratch) const {
+    if (offset + n > size_) {
+      return Status::IOError(filename_, "[mris] out of file bound");
+    }
     Status s;
     ssize_t r = pread(fd_, scratch, n, static_cast<off_t>(offset));
     *result = Slice(scratch, (r < 0) ? 0 : r);
@@ -162,17 +165,17 @@ public:
   Status DecodeFrom(Slice* input);
 };
 
-bool operator==(const LargeBlockHandle& a, const LargeBlockHandle& b) {
+inline bool operator==(const LargeBlockHandle& a, const LargeBlockHandle& b) {
   return a.offset_ == b.offset_ 
       && a.size_ == b.size_
       && a.name_ == b.name_;
 }
 
-bool operator!=(const LargeBlockHandle& a, const LargeBlockHandle& b) {
+inline bool operator!=(const LargeBlockHandle& a, const LargeBlockHandle& b) {
   return !(a == b);
 }
 
-std::ostream& operator<<(std::ostream& oss, const LargeBlockHandle& b) {
+inline std::ostream& operator<<(std::ostream& oss, const LargeBlockHandle& b) {
   oss << "name: " << b.name_ 
     << ", offset: " << b.offset_ 
     << ", size: " << b.size_ << std::endl;
@@ -184,11 +187,16 @@ private:
   RandomAccessFile *file_;
 
 public:
-  LargeBlockReader(Env* env) : file_(NULL), env_(env) {}
+  LargeBlockReader(Env* env) : env_(env), file_(NULL) {}
   LargeBlockReader(Env* env, const LargeBlockHandle* handle)
-  		: env_(env), 
-  			LargeBlockHandle(handle),
+  		: LargeBlockHandle(handle),
+  		  env_(env), 
   			file_(NULL) {}
+  LargeBlockHandle(Env* env, uint64_t off, 
+                   uint64_t size, const std::string& name)
+      : LargeBlockHandle(off, size, name),
+        env_(env_),
+        file_(NULL) {}
   ~LargeBlockReader() { if (file_) delete file_; }
 
   Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
