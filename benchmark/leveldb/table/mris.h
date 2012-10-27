@@ -236,7 +236,7 @@ public:
   Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
   	Status s;
   	if (! file_) {
-  		s = Status::Corruption("Nothing to read", name_);
+  		s = Status::IOError("[mris] out of file bound", name_);
   	} else {
   		s = file_->Read(offset, n, result, scratch);
   	}

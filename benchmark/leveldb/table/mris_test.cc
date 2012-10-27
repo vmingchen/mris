@@ -125,11 +125,32 @@ TEST(MrisTest, MrisAppendReadFileTest) {
   ASSERT_EQ(0, memcmp(inbuf, outbuf, 1024));
 
   ASSERT_OK(mris_file->Read(512 - 5, 10, &result, outbuf));
-  ASSERT_EQ(0, strcmp(inbuf, outbuf, 10));
+  ASSERT_EQ(0, strncmp("aaaaabbbbb", outbuf, 10));
 }
 
 TEST(MrisTest, LargeBlockBuilderTest) {
-  std::string name = NewBlockFileName();
+  std::string filename = NewBlockFileName();
+  LargeBlockBuilder* builder = new LargeBlockBuilder(env, 0, filename);
+
+  char inbuf[1024];
+  Slice result;
+  ASSERT_TRUE(builder->Read(0, 512, &result, inbuf).IsIOError());
+
+  char *first_half = inbuf;
+  memset(first_half, '0', 512);
+  Slice first(first_half, 512);
+  ASSERT_OK(builder->Write(first_half));
+
+  char *second_half = inbuf + 512;
+  memset(second_half, '1', 512);
+  Slice second(second_half, 512);
+  ASSERT_OK(builder->Write(second_half));
+
+  char outbuf[1024];
+  ASSERT_OK(builder->Read(0, 1024, &result, outbuf));
+  ASSERT_EQ(0, memcmp(inbuf, outbuf, 1024));
+
+  delete builder;
 }
 
 TEST(MrisTest, LargeBlockReaderTest) {
