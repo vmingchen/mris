@@ -310,6 +310,7 @@ Status LargeSpace::SealLargeBlock() {
 }
 
 Status LargeSpace::Write(const Slice& slice, uint64_t& offset) {
+  // TODO: mutex_.AssertHeld() ? 
   // lazy init: create a new writer if there is no current writer
   Status s;
   if (builder_ == NULL) {

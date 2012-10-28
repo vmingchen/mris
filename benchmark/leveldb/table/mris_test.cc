@@ -20,8 +20,11 @@
 #include "table/mris.h"
 #include "util/testharness.h"
 #include "util/testutil.h"
+#include "util/random.h"
 
 #define ASSERT_FALSE(x) ASSERT_TRUE(!(x))
+
+static int sequence = 0;
 
 namespace leveldb { namespace mris {
 
@@ -88,10 +91,7 @@ class MrisTest {
       ++sequence;
       return dbname + buf;
     }
-    static int sequence;
 };
-
-int MrisTest::sequence = 0;
 
 TEST(MrisTest, MrisAppendReadFileTest) {
   std::string filename = NewBlockFileName();
@@ -126,11 +126,17 @@ TEST(MrisTest, MrisAppendReadFileTest) {
 
   ASSERT_OK(mris_file->Read(512 - 5, 10, &result, outbuf));
   ASSERT_EQ(0, strncmp("aaaaabbbbb", outbuf, 10));
+
+  delete mris_file;
 }
 
 TEST(MrisTest, LargeBlockBuilderTest) {
   std::string filename = NewBlockFileName();
   LargeBlockBuilder* builder = new LargeBlockBuilder(env, 0, filename);
+
+  ASSERT_OK(builder->Sync());
+  // because of lazy init
+  ASSERT_FALSE(env->FileExists(filename));
 
   char inbuf[1024];
   Slice result;
@@ -139,22 +145,59 @@ TEST(MrisTest, LargeBlockBuilderTest) {
   char *first_half = inbuf;
   memset(first_half, '0', 512);
   Slice first(first_half, 512);
-  ASSERT_OK(builder->Write(first_half));
+  ASSERT_OK(builder->Write(first));
+  ASSERT_EQ(512, builder->end());
+  // file should exits now
+  ASSERT_OK(builder->Sync());
+  ASSERT_TRUE(env->FileExists(filename));
+
+  char outbuf[1024];
+  ASSERT_OK(builder->Read(0, 512, &result, outbuf));
+  ASSERT_EQ(0, memcmp(inbuf, outbuf, 512));
 
   char *second_half = inbuf + 512;
   memset(second_half, '1', 512);
   Slice second(second_half, 512);
-  ASSERT_OK(builder->Write(second_half));
+  ASSERT_OK(builder->Write(second));
+  ASSERT_OK(builder->Sync());
 
-  char outbuf[1024];
   ASSERT_OK(builder->Read(0, 1024, &result, outbuf));
   ASSERT_EQ(0, memcmp(inbuf, outbuf, 1024));
+
+  ASSERT_OK(builder->Read(512 - 5, 10, &result, outbuf));
+  ASSERT_EQ(0, strncmp("0000011111", outbuf, 10));
 
   delete builder;
 }
 
 TEST(MrisTest, LargeBlockReaderTest) {
-  std::string name = NewBlockFileName();
+  std::string filename = NewBlockFileName();
+  LargeBlockBuilder* builder = new LargeBlockBuilder(env, 0, filename);
+
+  char inbuf[1024];
+  memset(inbuf, 'X', 1024);
+  Slice input(inbuf, 1024);
+  ASSERT_OK(builder->Write(input));
+  ASSERT_EQ(1024, builder->end());
+  ASSERT_OK(builder->Sync());
+
+  LargeBlockReader* reader = new LargeBlockReader(env, builder);
+
+  char outbuf[1024];
+  Slice result;
+  Random rand(383);
+  for (int i = 0; i < 20; ++i) {
+    uint32_t off = rand.Uniform(1024);
+    uint32_t size = 1 + rand.Uniform(1024-off);
+    ASSERT_OK(reader->Read(off, size, &result, outbuf));
+    ASSERT_EQ(size, result.size());
+    ASSERT_EQ(0, memcmp(result.data(), inbuf + off, size));
+  }
+  ASSERT_TRUE(reader->Read(1, 1024, &result, outbuf).IsIOError());
+  ASSERT_OK(reader->Read(1, 0, &result, outbuf));
+
+  delete reader;
+  delete builder;
 }
 
 } }
