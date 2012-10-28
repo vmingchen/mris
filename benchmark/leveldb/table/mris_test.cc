@@ -26,6 +26,9 @@
 
 static int sequence = 0;
 
+static const size_t LEN = 10240;
+static const size_t HALF_LEN = LEN / 2;
+
 namespace leveldb { namespace mris {
 
 TEST(LargeBlockHandle, basic) {
@@ -103,28 +106,28 @@ TEST(MrisTest, MrisAppendReadFileTest) {
   ASSERT_OK(mris_file->Sync());
   ASSERT_TRUE(env->FileExists(filename));
 
-  char inbuf[1024];
+  char inbuf[LEN];
   Slice input;
   // read from empty file should be IOError
   ASSERT_TRUE(mris_file->Read(0, 10, &input, inbuf).IsIOError());
 
   // append some data
   char *first_half = inbuf;
-  memset(first_half, 'a', 512);
-  Slice first(first_half, 512);
+  memset(first_half, 'a', HALF_LEN);
+  Slice first(first_half, HALF_LEN);
   ASSERT_OK(mris_file->Append(first));
 
-  char *second_half = inbuf + 512;
-  memset(second_half, 'b', 512);
-  Slice second(second_half, 512);
+  char *second_half = inbuf + HALF_LEN;
+  memset(second_half, 'b', HALF_LEN);
+  Slice second(second_half, HALF_LEN);
   ASSERT_OK(mris_file->Append(second));
 
-  char outbuf[1024];
+  char outbuf[LEN];
   Slice result;
-  ASSERT_OK(mris_file->Read(0, 1024, &result, outbuf));
-  ASSERT_EQ(0, memcmp(inbuf, outbuf, 1024));
+  ASSERT_OK(mris_file->Read(0, LEN, &result, outbuf));
+  ASSERT_EQ(0, memcmp(inbuf, outbuf, LEN));
 
-  ASSERT_OK(mris_file->Read(512 - 5, 10, &result, outbuf));
+  ASSERT_OK(mris_file->Read(HALF_LEN - 5, 10, &result, outbuf));
   ASSERT_EQ(0, strncmp("aaaaabbbbb", outbuf, 10));
 
   delete mris_file;
@@ -138,33 +141,33 @@ TEST(MrisTest, LargeBlockBuilderTest) {
   // because of lazy init
   ASSERT_FALSE(env->FileExists(filename));
 
-  char inbuf[1024];
+  char inbuf[LEN];
   Slice result;
-  ASSERT_TRUE(builder->Read(0, 512, &result, inbuf).IsIOError());
+  ASSERT_TRUE(builder->Read(0, HALF_LEN, &result, inbuf).IsIOError());
 
   char *first_half = inbuf;
-  memset(first_half, '0', 512);
-  Slice first(first_half, 512);
+  memset(first_half, '0', HALF_LEN);
+  Slice first(first_half, HALF_LEN);
   ASSERT_OK(builder->Write(first));
-  ASSERT_EQ(512, builder->end());
+  ASSERT_EQ(HALF_LEN, builder->end());
   // file should exits now
   ASSERT_OK(builder->Sync());
   ASSERT_TRUE(env->FileExists(filename));
 
-  char outbuf[1024];
-  ASSERT_OK(builder->Read(0, 512, &result, outbuf));
-  ASSERT_EQ(0, memcmp(inbuf, outbuf, 512));
+  char outbuf[LEN];
+  ASSERT_OK(builder->Read(0, HALF_LEN, &result, outbuf));
+  ASSERT_EQ(0, memcmp(inbuf, outbuf, HALF_LEN));
 
-  char *second_half = inbuf + 512;
-  memset(second_half, '1', 512);
-  Slice second(second_half, 512);
+  char *second_half = inbuf + HALF_LEN;
+  memset(second_half, '1', HALF_LEN);
+  Slice second(second_half, HALF_LEN);
   ASSERT_OK(builder->Write(second));
   ASSERT_OK(builder->Sync());
 
-  ASSERT_OK(builder->Read(0, 1024, &result, outbuf));
-  ASSERT_EQ(0, memcmp(inbuf, outbuf, 1024));
+  ASSERT_OK(builder->Read(0, LEN, &result, outbuf));
+  ASSERT_EQ(0, memcmp(inbuf, outbuf, LEN));
 
-  ASSERT_OK(builder->Read(512 - 5, 10, &result, outbuf));
+  ASSERT_OK(builder->Read(HALF_LEN - 5, 10, &result, outbuf));
   ASSERT_EQ(0, strncmp("0000011111", outbuf, 10));
 
   delete builder;
@@ -174,26 +177,25 @@ TEST(MrisTest, LargeBlockReaderTest) {
   std::string filename = NewBlockFileName();
   LargeBlockBuilder* builder = new LargeBlockBuilder(env, 0, filename);
 
-  char inbuf[1024];
-  memset(inbuf, 'X', 1024);
-  Slice input(inbuf, 1024);
+  char inbuf[LEN]; // use un-initialized as random data
+  Slice input(inbuf, LEN);
   ASSERT_OK(builder->Write(input));
-  ASSERT_EQ(1024, builder->end());
+  ASSERT_EQ(LEN, builder->end());
   ASSERT_OK(builder->Sync());
 
   LargeBlockReader* reader = new LargeBlockReader(env, builder);
 
-  char outbuf[1024];
+  char outbuf[LEN];
   Slice result;
   Random rand(383);
-  for (int i = 0; i < 20; ++i) {
-    uint32_t off = rand.Uniform(1024);
-    uint32_t size = 1 + rand.Uniform(1024-off);
+  for (int i = 0; i < 100; ++i) {
+    uint32_t off = rand.Uniform(LEN);
+    uint32_t size = 1 + rand.Uniform(LEN - off);
     ASSERT_OK(reader->Read(off, size, &result, outbuf));
     ASSERT_EQ(size, result.size());
     ASSERT_EQ(0, memcmp(result.data(), inbuf + off, size));
   }
-  ASSERT_TRUE(reader->Read(1, 1024, &result, outbuf).IsIOError());
+  ASSERT_TRUE(reader->Read(1, LEN, &result, outbuf).IsIOError());
   ASSERT_OK(reader->Read(1, 0, &result, outbuf));
 
   delete reader;
