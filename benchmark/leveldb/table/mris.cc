@@ -190,13 +190,13 @@ void LargeSpace::LargeMeta::EncodeTo(std::string* dst) const {
 
 // ========================== LargeSpace Begin ==============================
 
-LargeSpace::LargeSpace(Options *opt, const std::string& dbname) {
-		//: env_(opt->env), 
-			//db_options_(opt),
-			//dbname_(dbname),
-			//meta_(this),
-			//meta_sequence_(0),
-			//writer_(NULL) {
+LargeSpace::LargeSpace(const Options *opt, const std::string& dbname) 
+		: env_(opt->env), 
+			db_options_(opt),
+			dbname_(dbname),
+			meta_(this),
+			meta_sequence_(0),
+			writer_(NULL) {
 	if (env_->FileExists(LargeHeadFileName(dbname))) {
 		LoadLargeSpace();
 	} else {
