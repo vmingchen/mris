@@ -11,7 +11,7 @@
  */
 
 #ifndef STORAGE_LEVELDB_INCLUDE_MRIS_H_
-#define STORAGE_LEVELDB_INCLUDE_OPTIONS_H_
+#define STORAGE_LEVELDB_INCLUDE_MRIS_H_
 
 #include <vector>
 #include <string>
