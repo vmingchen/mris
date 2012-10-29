@@ -13,6 +13,7 @@
  */
 
 #include <string.h>
+#include <sstream>
 #include "db/filename.h"
 #include "db/mris.h"
 #include "leveldb/env.h"
@@ -98,8 +99,9 @@ Status LargeMeta::Load(const std::string& fname) {
 }
 
 Status LargeMeta::DecodeFrom(Slice* input) {
-	// read nblock and meta_size from meta file and check
+	// read nblock from meta file
 	// for simplicity, we assert the status to be ok
+	uint64_t nblock;
 	if (! GetVarint64(input, &nblock)) {
 		return Status::Corruption("error in large meta head");
 	}
@@ -107,6 +109,12 @@ Status LargeMeta::DecodeFrom(Slice* input) {
 	// pointer to block metadata
 	const char *block_raw = input->data();
 	uint64_t *block_length = input->size();
+
+	// read if there is any writer block
+	uint32_t nwblock;
+	if (! GetVarint32(input, &nwblock) || nwblock > 1) {
+		return Status::Corruption("[mris] corrupted nwblock");
+	}
 
 	// decode block information and build space.blocks_
 	for (uint64_t i = 0; i < nblock; ++i) {
@@ -117,8 +125,19 @@ Status LargeMeta::DecodeFrom(Slice* input) {
 		space.blocks_.push_back(block);
 	}
 
+	// decode writer block and build space.writer_
+	if (nwblock > 0) {
+		assert(space->writer_ == NULL);
+		space->writer_ = new LargeBlockWriter(space->env_);
+		s = space->writer_->DecodeFrom(input);
+		if (!s.ok())
+			return s;
+	}
+
+	// check meta_size
+	uint64_t meta_size = 0;
 	block_length -= input->size();
-	if (! GetLengthPrefixedSlice(input, &meta_size) || 
+	if (! GetVarint64(input, &meta_size) || 
 			block_length != meta_size) {
 		return Status::Corruption("error in large meta size");
 	}
@@ -143,13 +162,19 @@ Status LargeMeta::Dump(const std::string& fname) {
 }
 
 void LargeMeta::EncodeTo(std::string* dst) const {
-	assert(nblock == static_cast<uint64_t>(space->blocks_.size()));
-
-	PutVarint64(dst, nblock);
+	// save the begining of the metadata
 	size_t block_offset = dst.length();
+
+	uint64_t nblock;
+	PutVarint64(dst, nblock);
+	PutVarint32(dst, space->writer_ ? 1 : 0);
 	
 	for (uint64_t i = 0; i < nblock; ++i) {
 		space->blocks_[i]->EncodeTo(dst);
+	}
+
+	if (writer_) {
+		space->writer_->EncodeTo(dst);
 	}
 
 	uint64_t block_length = static_cast<uint64_t>(dst.length() - block_offset);
@@ -169,7 +194,7 @@ LargeSpace::LargeSpace(const Options *opt, const std::string& dbname)
 			meta_(this),
 			writer_(NULL) {
 	if (env_->FileExists(LargeHeadFileName(dbname))) {
-		OpenLargeSpace(dbname);
+		LoadLargeSpace(dbname);
 	} else {
 		NewLargeSpace(dbname);
 	}
@@ -181,7 +206,7 @@ LargeSpace::LargeSpace(const Options *opt, const std::string& dbname)
 	}
 }
 
-Status LargeSpace::OpenLargeSpace() {
+Status LargeSpace::LoadLargeSpace() {
   // Read "LARGEHEAD" file, which contains the name of the current meta file
   std::string head;
   Status s = ReadFileToString(env_, LargeHeadFileName(dbname_), &head);
@@ -203,6 +228,21 @@ Status LargeSpace::OpenLargeSpace() {
 	return meta_.Load(LargeBlockFileName(dbname_, meta_sequence_));
 }
 
+Status LargeSpace::DumpLargeSpace() {
+	std::string metaname = LargeMetaFileName(dbname_, meta_sequence_);
+	Status s = meta_.Dump(metaname);
+	if (!s.ok()) {
+		return s;
+	}
+
+	// write meta sequence number
+	std::string seqstr;
+	std::ostringstream oss(seqstr);
+	oss << meta_sequence_ << endl;
+
+	return WriteStringToFileSync(env_, LargeHeadFileName(dbname_), seqstr);
+}
+
 Status LargeSpace::NewLargeSpace() {
 	// Write empty "LARGEHEAD" file
 	meta_sequence_ = 0;
@@ -210,7 +250,7 @@ Status LargeSpace::NewLargeSpace() {
 			LargeHeadFileName(dbname_));
 }
 
-LargeBlockWriter* LargeSpace::NewWriter() {
+Status LargeSpace::NewWriter() {
 	if (writer_) {
 		Status s = writer_.Close();
 		if (!s.ok())
@@ -220,16 +260,20 @@ LargeBlockWriter* LargeSpace::NewWriter() {
 	}
 
 	std::string name = LargeBlockFileName(dbname_, blocks_.size());
-	writer_ = new LargeBlockWriter(env_, offset, name);
+	writer_ = new LargeBlockWriter(env_, DataSize(), name);
 	if (!writer_) {
 		return Status::IOError("[mris] cannot create writer");
 	}
+
+	meta_sequence_++;
+
+	return DumpLargeSpace();
 }
 
 // TODO: consider concurrent issues
 Status LargeSpace::SealLargeBlock() {
 	// skip empty block
-	if (writer_->empty()) {
+	if (writer_ == NULL || writer_->empty()) {
 		return Status::OK();
 	}
 
@@ -240,16 +284,15 @@ Status LargeSpace::SealLargeBlock() {
 
 	LargeBlockReader *reader = new LargeBlockReader(env_, writer_);
 	blocks_.push_back(reader);
-	meta_.nblock++;
 	
-	// writer will be re-created lazily
+	// a new writer will be created lazily
 	writer_ = NULL;
 
 	return Status::OK();
 }
 
 Status LargeSpace::Write(const Slice& slice, uint64_t& offset) {
-	// create a new writer if there is no current writer
+	// lazy init: create a new writer if there is no current writer
 	Status s;
 	if (writer_ == NULL) {
 		s = NewWriter(DataSize());
