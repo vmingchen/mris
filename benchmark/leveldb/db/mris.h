@@ -16,7 +16,7 @@
 #include <vector>
 #include <string>
 #include "db/filename.h"
-#include "leveldb/dbformat.h"
+#include "db/dbformat.h"
 #include "leveldb/env.h"
 
 #define MRIS
@@ -24,8 +24,6 @@
 namespace leveldb { namespace mris {
 
 uint64_t LoadFixedUint64(uint64_t offset, SequentialFile* file);
-
-const size_t kValueDelegateSize = sizeof(ValueDelegate);
 
 struct MrisOptions {
   // the threshold of taking record as large
@@ -63,12 +61,18 @@ protected:
 
 public:
 	LargeBlockHandle() : offset_(0), size_(0) { }
+	LargeBlockHandle(const LargeBlockHandle* handle)
+			: offset_(handle->offset()),
+				size_(handle->size()),
+				name_(handle->name()) {}
+	LargeBlockHandle(uint64_t off, uint64_t size, const std::string& name)
+			: offset_(off), size_(size), name_(name) { }
   uint64_t offset() const { return offset_; }
   uint64_t size() const { return size_; }
 	uint64_t end() const { return offset_ + size_; }
 	const std::string& name() const { return name_; }
 	bool contains(uint64_t offset, uint64_t n) const {
-		return offset >= offset() && (offset + n) <= end();
+		return offset >= offset_ && (offset + n) <= end();
 	}
 	bool initialized() const { return name_.length() > 0; }
 	bool empty() const { return size_ == 0; }
@@ -83,9 +87,7 @@ public:
 	LargeBlockReader(Env* env) : file_(NULL), env_(env) {}
 	LargeBlockReader(Env* env, const LargeBlockHandle* handle)
 			: env_(env), 
-				offset_(handle->offset()),
-				size_(handle->size()),
-				name_(handle->name()),
+				LargeBlockHandle(handle),
 				file_(NULL) {}
 	~LargeBlockReader() { if (file_) delete file_; }
 
@@ -105,15 +107,14 @@ public:
 
 class LargeBlockWriter : LargeBlockHandle {
 private:
+	Env* env_;
 	WritableFile* file_;
 
 public:
 	LargeBlockWriter(Env* env) : file_(NULL), env_(env) {}
 	LargeBlockWriter(Env* env, uint64_t off, const std::string& name) 
 			: env_(env), 
-			  offset_(off), 
-				size_(0), 
-				name_(name), 
+			  LargeBlockHandle(off, 0, name),
 				file_(NULL) {}
 	~LargeBlockWriter() { 
 		if (file_) {
@@ -142,21 +143,10 @@ public:
 	Status Close() { return file_ ? file_->Close() : Status::OK(); }
 };
 
+const size_t kValueDelegateSize = sizeof(ValueDelegate);
+
 class LargeSpace {
 private:
-	Env* env_;
-	const Options* db_options_;
-  MrisOptions mris_options_;
-	std::vector<LargeBlockReader*> blocks_;
-	std::string dbname_;
-	LargeMeta meta_;
-	// sequence of current meta file. valid sequence starts from 1, and 0
-	// means no meta file, which means the space is empty
-	uint64_t meta_sequence_;
-
-	// make sure it points to a ready writer all the time
-	LargeBlockWriter *writer_;
-
 	// meta_size is the size with the length prefix but not the crc suffix
 	// meta_file format:
 	// [number-of-reader-blocks] a.k.a. nblock
@@ -172,6 +162,19 @@ private:
 		Status DecodeFrom(Slice* input);
 		Status EncodeTo(std::string* dst) const;
 	};
+
+	Env* env_;
+	const Options* db_options_;
+  MrisOptions mris_options_;
+	std::vector<LargeBlockReader*> blocks_;
+	std::string dbname_;
+	LargeMeta meta_;
+	// sequence of current meta file. valid sequence starts from 1, and 0
+	// means no meta file, which means the space is empty
+	uint64_t meta_sequence_;
+
+	// make sure it points to a ready writer all the time
+	LargeBlockWriter *writer_;
 
 	// find the file block contains @offset
 	LargeBlockReader* getBlockReader(uint64_t offset) {
