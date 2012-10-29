@@ -62,11 +62,46 @@ TEST(LargeBlockHandle, basic) {
   ASSERT_EQ(large_block, new_block);
 }
 
+// Copied from db_bench.cc
+// Helper for quickly generating random data.
+class RandomGenerator {
+ private:
+  std::string data_;
+  int pos_;
+
+ public:
+  RandomGenerator() {
+    // We use a limited amount of data over and over again and ensure
+    // that it is larger than the compression window (32KB), and also
+    // large enough to serve all typical value sizes we want to write.
+    Random rnd(301);
+    std::string piece;
+    while (data_.size() < 2*LEN) {
+      // Add a short fragment that is as compressible as specified
+      // by FLAGS_compression_ratio.
+      test::CompressibleString(&rnd, 0.5, 100, &piece);
+      data_.append(piece);
+    }
+    pos_ = 0;
+  }
+
+  Slice Generate(int len) {
+    if (pos_ + len > data_.size()) {
+      pos_ = 0;
+      assert(len < data_.size());
+    }
+    pos_ += len;
+    return Slice(data_.data() + pos_ - len, len);
+  }
+};
+
 class MrisTest {
   public:
+    Random rand;
+    RandomGenerator rgen;
     std::string dbname;
     Env* env;
-    MrisTest() : dbname("mris-test-db"), 
+    MrisTest() : rand(383), dbname("mris-test-db"), 
                  env(Env::Default()) {
       // new a blank test dir, empty it if already exist
       if (env->FileExists(dbname)) {
@@ -133,7 +168,8 @@ TEST(MrisTest, MrisAppendReadFileTest) {
   delete mris_file;
 }
 
-TEST(MrisTest, LargeBlockBuilderTest) {
+// write a random value, then read it, and compare
+TEST(MrisTest, BuilderTestSimple) {
   std::string filename = NewBlockFileName();
   LargeBlockBuilder* builder = new LargeBlockBuilder(env, 0, filename);
 
@@ -141,42 +177,58 @@ TEST(MrisTest, LargeBlockBuilderTest) {
   // because of lazy init
   ASSERT_FALSE(env->FileExists(filename));
 
-  char inbuf[LEN];
-  Slice result;
-  ASSERT_TRUE(builder->Read(0, HALF_LEN, &result, inbuf).IsIOError());
-
-  char *first_half = inbuf;
-  uint64_t offset;
-  memset(first_half, '0', HALF_LEN);
-  Slice first(first_half, HALF_LEN);
-  ASSERT_OK(builder->Write(first, &offset));
-
   char outbuf[LEN];
-  ASSERT_OK(builder->Read(offset, HALF_LEN, &result, outbuf));
-  ASSERT_EQ(0, memcmp(inbuf, outbuf, HALF_LEN));
+  Slice result;
+  ASSERT_TRUE(builder->Read(0, HALF_LEN, &result, outbuf).IsIOError());
 
-  //ASSERT_EQ(HALF_LEN, builder->end());
-  //// file should exits now
-  //ASSERT_OK(builder->Sync());
-  //ASSERT_TRUE(env->FileExists(filename));
+  uint64_t offset;
+  Slice source = rgen.Generate(LEN);
+  ASSERT_OK(builder->Write(source, &offset));
+  ASSERT_EQ(source.size(), LEN);
+  ASSERT_TRUE(offset >= 0);
 
-  //char outbuf[LEN];
-  //ASSERT_OK(builder->Read(0, HALF_LEN, &result, outbuf));
-  //ASSERT_EQ(0, memcmp(inbuf, outbuf, HALF_LEN));
+  ASSERT_OK(builder->Read(offset, LEN, &result, outbuf));
+  ASSERT_EQ(result.size(), LEN);
+  ASSERT_EQ(0, memcmp(source.data(), result.data(), LEN));
+}
 
-  //char *second_half = inbuf + HALF_LEN;
-  //memset(second_half, '1', HALF_LEN);
-  //Slice second(second_half, HALF_LEN);
-  //ASSERT_OK(builder->Write(second));
-  //ASSERT_OK(builder->Sync());
+// write 100 random value, then random read some of them, and compare
+TEST(MrisTest, BuilderTest100) {
+  std::string filename = NewBlockFileName();
+  LargeBlockBuilder* builder = new LargeBlockBuilder(env, 0, filename);
+  std::vector<Slice> sources;
+  std::vector<ValueDelegate> values;
+  char buf[LEN+1];
+  const size_t N = 100;
 
-  //ASSERT_OK(builder->Read(0, LEN, &result, outbuf));
-  //ASSERT_EQ(0, memcmp(inbuf, outbuf, LEN));
+  for (size_t i = 0; i < N; ++i) {
+    size_t size = rand.Uniform(LEN);
+    Slice in = rgen.Generate(size);
+    sources.push_back(in);
+    ASSERT_EQ(size, in.size());
 
-  //ASSERT_OK(builder->Read(HALF_LEN - 5, 10, &result, outbuf));
-  //ASSERT_EQ(0, strncmp("0000011111", outbuf, 10));
+    uint64_t offset = 0;
+    ASSERT_OK(builder->Write(in, &offset));
 
-  //delete builder;
+    Slice out;
+    ASSERT_OK(builder->Read(offset, size, &out, buf));
+    ASSERT_EQ(out.size(), size);
+    ASSERT_EQ(0, memcmp(in.data(), out.data(), size));
+    values.push_back(ValueDelegate(offset, size));
+  }
+
+  for (size_t i = 0; i < 256; ++i) {
+    size_t j = rand.Uniform(N);
+    Slice in = sources[j];
+
+    Slice out;
+    ValueDelegate vd = values[j];
+    ASSERT_OK(builder->Read(vd.offset, vd.size, &out, buf));
+    ASSERT_EQ(out.size(), in.size());
+    ASSERT_EQ(0, memcmp(out.data(), in.data(), out.size()));
+  }
+
+  delete builder;
 }
 
 TEST(MrisTest, LargeBlockReaderTest) {
@@ -204,7 +256,7 @@ TEST(MrisTest, LargeBlockReaderTest) {
   //ASSERT_TRUE(reader->Read(1, LEN, &result, outbuf).IsIOError());
   //ASSERT_OK(reader->Read(1, 0, &result, outbuf));
 
-  delete reader;
+  //delete reader;
   delete builder;
 }
 
@@ -216,7 +268,7 @@ TEST(MrisTest, LargeSpaceTest) {
   std::string message = "hello, world";
   Slice input(message);
   ASSERT_OK(space->Open());
-  ASSERT_OK(space->Write(input, offset));
+  ASSERT_OK(space->Write(input, &offset));
   ASSERT_OK(space->Close());
 
   delete space;

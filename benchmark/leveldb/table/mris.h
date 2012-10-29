@@ -131,7 +131,7 @@ struct MrisOptions {
 //  [4-bytes-value-size] [value] [4-bytes-crc32]
 struct ValueDelegate {
   // offset of the record containing real value
-  size_t offset;
+  uint64_t offset;
   // size of real value
   size_t size;
   ValueDelegate(size_t off, size_t sz) : offset(off), size(sz) {}
@@ -227,9 +227,9 @@ private:
     return file_->Append(buf);
   }
 
-  Status ReadFixed32(int64_t offset, uint32_t* value) {
+  Status ReadFixed32(uint64_t offset, uint32_t* value) {
     char buf[sizeof(*value) + 1];
-    Slice* result;
+    Slice result;
     Status s = file_->Read(offset, sizeof(*value), &result, buf);
     if (s.ok()) {
       *value = DecodeFixed32(buf);
@@ -296,7 +296,7 @@ public:
   			return s;
   		}
   	}
-    uint64_t record_offset = offset() + size();
+    uint64_t record_offset = end();
 
     // write size of read data
     uint32_t data_size = data.size();
