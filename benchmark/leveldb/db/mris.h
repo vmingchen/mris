@@ -115,7 +115,13 @@ public:
 				size_(0), 
 				name_(name), 
 				file_(NULL) {}
-	~LargeBlockWriter() { if (file_) delete file_; }
+	~LargeBlockWriter() { 
+		if (file_) {
+			file_->Flush();
+			file_->Close();
+			delete file_;
+		}
+	}
 
 	Status Write(const Slice& data) {
 		assert(initialized());
@@ -136,22 +142,6 @@ public:
 	Status Close() { return file_ ? file_->Close() : Status::OK(); }
 };
 
-// meta_size is the size with the length prefix but not the crc suffix
-// meta_file format:
-// [number-of-reader-blocks] a.k.a. nblock
-// [number-of-writer-blocks] a.k.a. 1 or 0
-// [block-metadata]
-// [number-of-bytes-of-block-metadata] a.k.a. meta_size
-// [crc]
-struct LargeMeta {
-	LargeSpace* space;
-	LargeSpace(LargeSpace* sp) : space(sp) {}
-	Status Load(const std::string& filename);
-	Status Dump(const std::string& filename);
-	Status DecodeFrom(Slice* input);
-	Status EncodeTo(std::string* dst) const;
-};
-
 class LargeSpace {
 private:
 	Env* env_;
@@ -166,6 +156,22 @@ private:
 
 	// make sure it points to a ready writer all the time
 	LargeBlockWriter *writer_;
+
+	// meta_size is the size with the length prefix but not the crc suffix
+	// meta_file format:
+	// [number-of-reader-blocks] a.k.a. nblock
+	// [number-of-writer-blocks] a.k.a. 1 or 0
+	// [block-metadata]
+	// [number-of-bytes-of-block-metadata] a.k.a. meta_size
+	// [crc]
+	struct LargeMeta {
+		LargeSpace* space;
+		LargeSpace(LargeSpace* sp) : space(sp) {}
+		Status Load(const std::string& filename);
+		Status Dump(const std::string& filename);
+		Status DecodeFrom(Slice* input);
+		Status EncodeTo(std::string* dst) const;
+	};
 
 	// find the file block contains @offset
 	LargeBlockReader* getBlockReader(uint64_t offset) {
@@ -190,7 +196,10 @@ private:
 
 	Status NewWriter(uint64_t offset);
 
+	// instanciate from disk files
 	Status LoadLargeSpace();
+
+	// save to disk files
 	Status DumpLargeSpace();
 
 	Status NewLargeSpace();
@@ -212,8 +221,6 @@ public:
 
 	Status Write(const Slice& slice, uint64_t& offset);
 
-	Status Close();
-
 	// size of all data
 	uint64_t DataSize() const {
 		if (writer_) {
@@ -226,8 +233,6 @@ public:
 	}
 
 	bool IsEmpty() const { return meta_sequence_ == 0; }
-
-	Status UpdateHead();
 };
 
 } }

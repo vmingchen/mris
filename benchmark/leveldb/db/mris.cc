@@ -86,7 +86,7 @@ Status LargeBlockHandle::DecodeFrom(Slice* input) {
 
 // ========================== LargeMeta Begin ==============================
 
-Status LargeMeta::Load(const std::string& fname) {
+Status LargeSpace::LargeMeta::Load(const std::string& fname) {
 	std::string metadata;
 	Status s = ReadFileToString(space->env_, fname, &metadata);
 	if (!s.ok()) {
@@ -98,7 +98,7 @@ Status LargeMeta::Load(const std::string& fname) {
 	return DecodeFrom(&buffer);
 }
 
-Status LargeMeta::DecodeFrom(Slice* input) {
+Status LargeSpace::LargeMeta::DecodeFrom(Slice* input) {
 	// read nblock from meta file
 	// for simplicity, we assert the status to be ok
 	uint64_t nblock;
@@ -153,7 +153,7 @@ Status LargeMeta::DecodeFrom(Slice* input) {
 	return s;
 }
 
-Status LargeMeta::Dump(const std::string& fname) {
+Status LargeSpace::LargeMeta::Dump(const std::string& fname) {
 	std::string metadata;
 	EncodeTo(&metadata);
 	Status s = WriteStringToFileSync(space->env_,
@@ -161,7 +161,7 @@ Status LargeMeta::Dump(const std::string& fname) {
 	return s;
 }
 
-void LargeMeta::EncodeTo(std::string* dst) const {
+void LargeSpace::LargeMeta::EncodeTo(std::string* dst) const {
 	// save the begining of the metadata
 	size_t block_offset = dst.length();
 
@@ -189,18 +189,26 @@ void LargeMeta::EncodeTo(std::string* dst) const {
 
 LargeSpace::LargeSpace(const Options *opt, const std::string& dbname) 
 		: env_(opt->env), 
-			db_options_(opt),
+		  db_options_(opt),
 			dbname_(dbname),
 			meta_(this),
+			meta_sequence_(0),
 			writer_(NULL) {
 	if (env_->FileExists(LargeHeadFileName(dbname))) {
-		LoadLargeSpace(dbname);
+		LoadLargeSpace();
 	} else {
-		NewLargeSpace(dbname);
+		NewLargeSpace();
 	}
 }
 
 ~LargeSpace::LargeSpace() {
+	if (writer_) {
+		Status s = writer_.Close();
+		if (!s.ok())
+			return s;
+		delete writer_;
+		writer_ = NULL;
+	}
 	for (size_t i = 0; i < blocks_.size(); ++i) {
 		delete blocks_[i];
 	}
@@ -236,11 +244,10 @@ Status LargeSpace::DumpLargeSpace() {
 	}
 
 	// write meta sequence number
-	std::string seqstr;
-	std::ostringstream oss(seqstr);
+	std::ostringstream oss;
 	oss << meta_sequence_ << endl;
 
-	return WriteStringToFileSync(env_, LargeHeadFileName(dbname_), seqstr);
+	return WriteStringToFileSync(env_, LargeHeadFileName(dbname_), oss.str());
 }
 
 Status LargeSpace::NewLargeSpace() {
@@ -251,13 +258,7 @@ Status LargeSpace::NewLargeSpace() {
 }
 
 Status LargeSpace::NewWriter() {
-	if (writer_) {
-		Status s = writer_.Close();
-		if (!s.ok())
-			return s;
-		delete writer_;
-		writer_ = NULL;
-	}
+	assert(writer_ == NULL);
 
 	std::string name = LargeBlockFileName(dbname_, blocks_.size());
 	writer_ = new LargeBlockWriter(env_, DataSize(), name);
@@ -267,6 +268,7 @@ Status LargeSpace::NewWriter() {
 
 	meta_sequence_++;
 
+	// once a new block is created, it is dumped onto disk immediately
 	return DumpLargeSpace();
 }
 
@@ -286,6 +288,7 @@ Status LargeSpace::SealLargeBlock() {
 	blocks_.push_back(reader);
 	
 	// a new writer will be created lazily
+	delete writer_;
 	writer_ = NULL;
 
 	return Status::OK();
@@ -310,10 +313,6 @@ Status LargeSpace::Write(const Slice& slice, uint64_t& offset) {
 		SealLargeBlock();
 	}
 	return s;
-}
-
-Status LargeSpace::UpdateHead() {
-
 }
 
 }}
