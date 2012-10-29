@@ -209,9 +209,19 @@ TEST(MrisTest, LargeSpaceTest) {
   uint64_t offset;
   std::string message = "hello, world";
   Slice input(message);
+  ASSERT_OK(space->Open());
   ASSERT_OK(space->Write(input, offset));
+  ASSERT_OK(space->Close());
 
   delete space;
+
+  // load the large space again
+  space = new LargeSpace(&opt, dbname);
+  char buf[1024];
+  Slice result;
+  ASSERT_OK(space->Open());
+  ASSERT_OK(space->Read(offset, message.length(), &result, buf));
+  ASSERT_EQ(0, memcmp(buf, message.c_str(), message.length()));
 }
 
 } }

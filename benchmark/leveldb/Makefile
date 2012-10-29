@@ -181,7 +181,7 @@ version_set_test: db/version_set_test.o $(LIBOBJECTS) $(TESTHARNESS)
 write_batch_test: db/write_batch_test.o $(LIBOBJECTS) $(TESTHARNESS)
 	$(CXX) db/write_batch_test.o $(LIBOBJECTS) $(TESTHARNESS) -o $@ $(LDFLAGS)
 
-mris_test: table/mris_test.o table/mris.o $(LIBOBJECTS) $(TESTHARNESS)
+mris_test: table/mris_test.o table/mris.o table/mris.h $(LIBOBJECTS) $(TESTHARNESS)
 	$(CXX) table/mris_test.o $(LIBOBJECTS) $(TESTHARNESS) -o $@ $(LDFLAGS)
 
 $(MEMENVLIBRARY) : $(MEMENVOBJECTS)

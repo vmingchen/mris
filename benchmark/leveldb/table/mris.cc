@@ -24,7 +24,7 @@
 
 namespace leveldb { namespace mris {
 
-static const char* EMPTY_LARGESPACE = "EMPTY_LARGESPACE";
+static const char* EMPTY_LARGESPACE = "EMPTY_LARGESPACE\n";
 
 // copied from filename.cc
 static std::string MakeFileName(const std::string& name, uint64_t number,
@@ -46,7 +46,7 @@ static std::string LargeMetaFileName(const std::string& dbname,
   return MakeFileName(dbname, number, "lmf");
 }
 
-std::string LargeHeadFileName(const std::string& dbname) {
+static std::string LargeHeadFileName(const std::string& dbname) {
   return dbname + "/LARGEHEAD";
 }
 
@@ -232,17 +232,18 @@ LargeSpace::LargeSpace(const Options *opt, const std::string& dbname)
   		dbname_(dbname),
   		meta_(this),
   		meta_sequence_(0),
-  		builder_(NULL) {
-  if (env_->FileExists(LargeHeadFileName(dbname))) {
-  	LoadLargeSpace();
-  } else {
-  	NewLargeSpace();
-  }
+      closed_(false),
+  		builder_(NULL) { 
+  // empty
 }
 
 LargeSpace::~LargeSpace() {
+  Status s;
+  if (!closed_) {
+    s = Close();
+    assert(s.ok());
+  }
   if (builder_) {
-  	Status s = builder_->Sync();
   	assert(s.ok());
   	delete builder_;
   	builder_ = NULL;
@@ -253,7 +254,7 @@ LargeSpace::~LargeSpace() {
 }
 
 Status LargeSpace::LoadLargeSpace() {
-  // Read "LARGEHEAD" file, which contains the name of the current meta file
+  // Read "LARGEHEAD" file, which contains the sequence of current meta file
   std::string head;
   Status s = ReadFileToString(env_, LargeHeadFileName(dbname_), &head);
   if (!s.ok()) {
@@ -271,7 +272,7 @@ Status LargeSpace::LoadLargeSpace() {
 
   // Load block information from file given by head
   meta_sequence_ = static_cast<uint64_t>(atoll(head.c_str()));
-  return meta_.Load(LargeBlockFileName(dbname_, meta_sequence_));
+  return meta_.Load(LargeMetaFileName(dbname_, meta_sequence_));
 }
 
 Status LargeSpace::DumpLargeSpace() {
@@ -283,7 +284,7 @@ Status LargeSpace::DumpLargeSpace() {
 
   // write meta sequence number
   std::ostringstream oss;
-  oss << meta_sequence_ << std::endl;
+  oss << ++meta_sequence_ << std::endl;
 
   return WriteStringToFile(env_, oss.str(), LargeHeadFileName(dbname_));
 }
@@ -295,7 +296,32 @@ Status LargeSpace::NewLargeSpace() {
   		LargeHeadFileName(dbname_));
 }
 
-Status LargeSpace::NewWriter() {
+Status LargeSpace::Open() {
+  Status s;
+  if (env_->FileExists(LargeHeadFileName(dbname_))) {
+    s = LoadLargeSpace();
+  } else {
+    s = NewLargeSpace();
+  }
+  return s;
+}
+
+Status LargeSpace::Close() {
+  Status s;
+  if (builder_) {
+    s = builder_->Sync();
+    if (! s.ok()) {
+      return s;
+    }
+  }
+  s = DumpLargeSpace();
+  if (s.ok()) {
+    closed_ = true;
+  }
+  return s;
+}
+
+Status LargeSpace::NewBuilder() {
   assert(builder_ == NULL);
 
   std::string name = LargeBlockFileName(dbname_, blocks_.size());
@@ -308,8 +334,6 @@ Status LargeSpace::NewWriter() {
   LargeBlockReader *reader = new LargeBlockReader(env_, builder_);
   blocks_.push_back(reader);
   
-  meta_sequence_++;
-
   // once a new block is created, it is dumped onto disk immediately
   return DumpLargeSpace();
 }
@@ -335,7 +359,7 @@ Status LargeSpace::Write(const Slice& slice, uint64_t& offset) {
   // lazy init: create a new writer if there is no current writer
   Status s;
   if (builder_ == NULL) {
-  	s = NewWriter();
+  	s = NewBuilder();
   	if (!s.ok()) {
   		return s;
   	}

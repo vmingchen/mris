@@ -295,6 +295,7 @@ private:
   // sequence of current meta file. valid sequence starts from 1, and 0
   // means no meta file, which means the space is empty
   uint64_t meta_sequence_;
+  bool closed_;
 
   // make sure it points to a ready writer or NULL
   LargeBlockBuilder* builder_;
@@ -320,7 +321,7 @@ private:
   	return blocks_[first];
   }
 
-  Status NewWriter();
+  Status NewBuilder();
 
   // instanciate from disk files
   Status LoadLargeSpace();
@@ -336,13 +337,16 @@ public:
   LargeSpace(const Options *opt, const std::string& dbname);
   ~LargeSpace();
 
-  // We make sure no value expands multiple LargeBlock
+  Status Open();
+  Status Close();
+
+  // We make sure no value expands more than one LargeBlock
   Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
   	Status s;
   	if (offset > DataSize()) {
   		s = Status::IOError("[mris] invalid offset");
-  	} else if (offset > builder_->offset()) {
-  		if (builder_ && builder_->contains(offset, n)) {
+  	} else if (builder_ && offset > builder_->offset()) {
+  		if (builder_->contains(offset, n)) {
   			s = builder_->Read(offset, n, result, scratch);
   		} else {
   			s = Status::IOError("[mris] out-of-bound read");
@@ -369,6 +373,19 @@ public:
   	} else {
   		return 0;
   	}
+  }
+
+  void SetLargeThreshold(uint32_t size) {
+    mris_options_.kSizeThreshold = size;
+  }
+  uint32_t GetLargeThreshold() const {
+    return mris_options_.kSizeThreshold;
+  }
+  void SetSplitThreshold(uint32_t thres) {
+    mris_options_.kSplitThreshold = thres;
+  }
+  uint32_t GetSplitThreshold() const {
+    return mris_options_.kSplitThreshold;
   }
 
   bool IsEmpty() const { return meta_sequence_ == 0; }
