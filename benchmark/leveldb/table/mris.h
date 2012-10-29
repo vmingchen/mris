@@ -109,22 +109,21 @@ public:
 
 struct MrisOptions {
   // the threshold of taking record as large
-  size_t kSizeThreshold;
-
-  // size of block, which is the allocation unit for large files
- size_t kLargeBlockSize;
+  uint32_t kSizeThreshold;
 
   // the threshold of splitting file, default to 64MB
-  size_t kSplitThreshold;
+  uint32_t kSplitThreshold;
 
   // once cealed, some of the options become immutable
   bool cealed;
 
   MrisOptions() 
   		: kSizeThreshold(128 << 10),
-  			kLargeBlockSize(64 << 10),
   			kSplitThreshold(64 << 20),
   			cealed(false) { }
+
+  void EncodeTo(std::string* dst) const;
+  Status DecodeFrom(Slice* input);
 };
 
 struct ValueDelegate {
@@ -270,6 +269,8 @@ class LargeSpace {
 private:
   // meta_size is the size with the length prefix but not the crc suffix
   // meta_file format:
+  // [large-size-threshold] MrisOptions.kSizeThreshold
+  // [file-split-threshold] MrisOptions.kSplitThreshold
   // [number-of-reader-blocks] a.k.a. nblock
   // [number-of-writer-blocks] a.k.a. 1 or 0
   // [block-metadata]
@@ -334,9 +335,6 @@ private:
 public:
   LargeSpace(const Options *opt, const std::string& dbname);
   ~LargeSpace();
-
-  // Load metadata from file given by @meta_name
-  Status Load(const char *meta_name, uint64_t meta_size, uint64_t nblock);
 
   // We make sure no value expands multiple LargeBlock
   Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {

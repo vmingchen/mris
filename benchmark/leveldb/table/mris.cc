@@ -81,6 +81,23 @@ uint32_t LoadFixedUint32(uint64_t offset, RandomAccessFile* file) {
   return DecodeFixed32(scrach);
 }
 
+// ======================= MrisOptions Begin ================================
+void MrisOptions::EncodeTo(std::string* dst) const {
+  PutVarint32(dst, kSizeThreshold);
+  PutVarint32(dst, kSplitThreshold);
+}
+
+Status MrisOptions::DecodeFrom(Slice* input) {
+  if (GetVarint32(input, &kSizeThreshold) && 
+      GetVarint32(input, &kSplitThreshold)) {
+  	return Status::OK();
+  } else {
+    return Status::Corruption("[mris] bad option data");
+  }
+}
+
+// ======================= LargeBlockHandle Begin ===========================
+
 void LargeBlockHandle::EncodeTo(std::string* dst) const {
   assert(size_ > 0);
   PutLengthPrefixedSlice(dst, name_);
@@ -96,10 +113,9 @@ Status LargeBlockHandle::DecodeFrom(Slice* input) {
   	name_.assign(name.data(), name.size());
   	return Status::OK();
   } else {
-    return Status::Corruption("bad block handle");
+    return Status::Corruption("[mris] bad block handle");
   }
 }
-
 
 // ========================== LargeMeta Begin ==============================
 
@@ -115,16 +131,22 @@ Status LargeSpace::LargeMeta::Load(const std::string& fname) {
 }
 
 Status LargeSpace::LargeMeta::DecodeFrom(Slice* input) {
+  // pointer to block metadata
+  const char *block_raw = input->data();
+  uint64_t block_length = static_cast<uint64_t>(input->size());
+
+  Status s;
+  s = space->mris_options_.DecodeFrom(input);
+  if (!s.ok()) {
+    return s;
+  }
+
   // read nblock from meta file
   // for simplicity, we assert the status to be ok
   uint64_t nblock;
   if (! GetVarint64(input, &nblock)) {
-  	return Status::Corruption("error in large meta head");
+  	return Status::Corruption("[mris] error in large meta head");
   }
-
-  // pointer to block metadata
-  const char *block_raw = input->data();
-  uint64_t block_length = static_cast<uint64_t>(input->size());
 
   // read if there is any writer block
   uint32_t nwblock;
@@ -133,7 +155,6 @@ Status LargeSpace::LargeMeta::DecodeFrom(Slice* input) {
   }
 
   // decode block information and build space.blocks_
-  Status s;
   for (uint64_t i = 0; i < nblock; ++i) {
   	LargeBlockReader *block = new LargeBlockReader(space->env_);
   	s = block->DecodeFrom(input);
@@ -180,6 +201,8 @@ Status LargeSpace::LargeMeta::Dump(const std::string& fname) {
 void LargeSpace::LargeMeta::EncodeTo(std::string* dst) const {
   // save the begining of the metadata
   size_t block_offset = dst->length();
+
+  space->mris_options_.EncodeTo(dst);
 
   uint64_t nblock;
   PutVarint64(dst, nblock);

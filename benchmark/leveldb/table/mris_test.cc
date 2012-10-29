@@ -202,6 +202,19 @@ TEST(MrisTest, LargeBlockReaderTest) {
   delete builder;
 }
 
+TEST(MrisTest, LargeSpaceTest) {
+  Options opt;
+  std::string dbname = "testdb";
+  LargeSpace* space = new LargeSpace(&opt, dbname);
+
+  uint64_t offset;
+  std::string message = "hello, world";
+  Slice input(message);
+  ASSERT_OK(space->Write(input, offset));
+
+  delete space;
+}
+
 } }
 
 int main(int argc, char** argv) {
