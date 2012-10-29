@@ -166,7 +166,8 @@ LargeSpace::LargeSpace(const Options *opt, const std::string& dbname)
 		: env_(opt->env), 
 			db_options_(opt),
 			dbname_(dbname),
-			meta_(this) {
+			meta_(this),
+			writer_(NULL) {
 	if (env_->FileExists(LargeHeadFileName(dbname))) {
 		OpenLargeSpace(dbname);
 	} else {
@@ -205,19 +206,24 @@ Status LargeSpace::OpenLargeSpace() {
 Status LargeSpace::NewLargeSpace() {
 	// Write empty "LARGEHEAD" file
 	meta_sequence_ = 0;
-	return WriteStringToFileSync(env_, LargeHeadFileName(dbname_));
+	return WriteStringToFileSync(env_, EMPTY_LARGESPACE, 
+			LargeHeadFileName(dbname_));
 }
 
-LargeBlockWriter* LargeSpace::NewWriter(uint64_t offset) {
+LargeBlockWriter* LargeSpace::NewWriter() {
 	if (writer_) {
 		Status s = writer_.Close();
 		if (!s.ok())
-			return NULL;
+			return s;
 		delete writer_;
 		writer_ = NULL;
 	}
+
 	std::string name = LargeBlockFileName(dbname_, blocks_.size());
-	return new LargeBlockWriter(env_, offset, name);
+	writer_ = new LargeBlockWriter(env_, offset, name);
+	if (!writer_) {
+		return Status::IOError("[mris] cannot create writer");
+	}
 }
 
 // TODO: consider concurrent issues
@@ -235,18 +241,23 @@ Status LargeSpace::SealLargeBlock() {
 	LargeBlockReader *reader = new LargeBlockReader(env_, writer_);
 	blocks_.push_back(reader);
 	meta_.nblock++;
-
-	uint64_t offset = writer_.offset() + writer_.size();
-	std::string name = LargeBlockFileName(dbname_, blocks_.size());
-	writer_ = NewWriter(offset);
 	
-	if (writer_)
-		return Status::OK();
-	else 
-		return Status::Corruption("wrong large space writer");
+	// writer will be re-created lazily
+	writer_ = NULL;
+
+	return Status::OK();
 }
 
 Status LargeSpace::Write(const Slice& slice, uint64_t& offset) {
+	// create a new writer if there is no current writer
+	Status s;
+	if (writer_ == NULL) {
+		s = NewWriter(DataSize());
+		if (!s.ok()) {
+			return s;
+		}
+	}
+
 	offset = writer_->offset();
 	Status s = writer_->Write(slice);
 	if (!s.ok()) 

@@ -212,9 +212,17 @@ public:
 
 	Status Write(const Slice& slice, uint64_t& offset);
 
+	Status Close();
+
 	// size of all data
 	uint64_t DataSize() const {
-		return writer_->offset() + writer_->size();
+		if (writer_) {
+			return writer_->offset() + writer_->size();
+		} else if (blocks_.size() > 0) {
+			return blocks_.back()->end();
+		} else {
+			return 0;
+		}
 	}
 
 	bool IsEmpty() const { return meta_sequence_ == 0; }
