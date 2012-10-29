@@ -204,7 +204,6 @@ TEST(MrisTest, LargeBlockReaderTest) {
 
 TEST(MrisTest, LargeSpaceTest) {
   Options opt;
-  std::string dbname = "testdb";
   LargeSpace* space = new LargeSpace(&opt, dbname);
 
   uint64_t offset;

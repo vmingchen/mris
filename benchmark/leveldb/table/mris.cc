@@ -54,7 +54,7 @@ Status NewMrisAppendReadFile(const std::string& fname,
   													 MrisAppendReadFile** result) {
   *result = NULL;
   // create a file that we will append and read
-  int fd = open(fname.c_str(), O_RDWR | O_EXCL | O_CREAT);
+  int fd = open(fname.c_str(), O_RDWR | O_EXCL | O_CREAT, 0644);
   if (fd == -1) {
   	return Status::IOError(fname, strerror(errno));
   }
@@ -99,7 +99,7 @@ Status MrisOptions::DecodeFrom(Slice* input) {
 // ======================= LargeBlockHandle Begin ===========================
 
 void LargeBlockHandle::EncodeTo(std::string* dst) const {
-  assert(size_ > 0);
+  //assert(size_ > 0); It is Okay to write a blank block
   PutLengthPrefixedSlice(dst, name_);
   PutVarint64(dst, offset_);
   PutVarint64(dst, size_);
@@ -204,7 +204,7 @@ void LargeSpace::LargeMeta::EncodeTo(std::string* dst) const {
 
   space->mris_options_.EncodeTo(dst);
 
-  uint64_t nblock;
+  uint64_t nblock = space->blocks_.size();
   PutVarint64(dst, nblock);
   PutVarint32(dst, space->builder_ ? 1 : 0);
   
@@ -285,7 +285,7 @@ Status LargeSpace::DumpLargeSpace() {
   std::ostringstream oss;
   oss << meta_sequence_ << std::endl;
 
-  return WriteStringToFile(env_, LargeHeadFileName(dbname_), oss.str());
+  return WriteStringToFile(env_, oss.str(), LargeHeadFileName(dbname_));
 }
 
 Status LargeSpace::NewLargeSpace() {
@@ -304,6 +304,10 @@ Status LargeSpace::NewWriter() {
   	return Status::IOError("[mris] cannot create writer");
   }
 
+  // add reader for the new block
+  LargeBlockReader *reader = new LargeBlockReader(env_, builder_);
+  blocks_.push_back(reader);
+  
   meta_sequence_++;
 
   // once a new block is created, it is dumped onto disk immediately
@@ -312,19 +316,13 @@ Status LargeSpace::NewWriter() {
 
 // TODO: consider concurrent issues
 Status LargeSpace::SealLargeBlock() {
-  // skip empty block
-  if (builder_ == NULL || builder_->empty()) {
-  	return Status::OK();
-  }
+  assert(builder_);
 
   Status s = builder_->Sync();
   if (!s.ok()) {
   	return s;
   }
 
-  LargeBlockReader *reader = new LargeBlockReader(env_, builder_);
-  blocks_.push_back(reader);
-  
   // a new writer will be created lazily
   delete builder_;
   builder_ = NULL;
