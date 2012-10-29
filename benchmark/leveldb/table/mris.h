@@ -15,8 +15,8 @@
 
 #include <vector>
 #include <string>
-#include "db/filename.h"
 #include "db/dbformat.h"
+#include "db/filename.h"
 #include "leveldb/db.h"
 #include "leveldb/env.h"
 
@@ -159,6 +159,7 @@ private:
 	// [crc]
 	struct LargeMeta {
 		LargeSpace* space;
+		LargeMeta() : space(NULL) {}
 		LargeMeta(LargeSpace* sp) : space(sp) {}
 		Status Load(const std::string& filename);
 		Status Dump(const std::string& filename);
@@ -167,7 +168,8 @@ private:
 	};
 
 	Env* env_;
-	const Options* db_options_;
+	// const Options* db_options_;
+	Options* db_options_;
   MrisOptions mris_options_;
 	std::vector<LargeBlockReader*> blocks_;
 	std::string dbname_;
@@ -213,7 +215,7 @@ private:
 	Status SealLargeBlock();
 
 public:
-  LargeSpace(const Options *opt, const std::string& dbname);
+  LargeSpace(Options *opt, const std::string& dbname);
 	~LargeSpace();
 
 	// Load metadata from file given by @meta_name

@@ -16,10 +16,11 @@
 #include <string.h>
 #include <sstream>
 #include "db/filename.h"
-#include "db/mris.h"
+#include "leveldb/db.h"
 #include "leveldb/env.h"
 #include "util/crc32c.h"
 #include "util/coding.h"
+#include "table/mris.h"
 
 namespace leveldb { namespace mris {
 
@@ -155,14 +156,10 @@ Status LargeSpace::LargeMeta::DecodeFrom(Slice* input) {
 	return Status::OK();
 }
 
-// A utility routine: write "data" to the named file and Sync() it.
-extern Status WriteStringToFileSync(Env* env, const Slice& data,
-                                    const std::string& fname);
-
 Status LargeSpace::LargeMeta::Dump(const std::string& fname) {
 	std::string metadata;
 	EncodeTo(&metadata);
-	Status s = WriteStringToFileSync(space->env_,
+	Status s = WriteStringToFile(space->env_,
 			Slice(metadata), fname);
 	return s;
 }
@@ -193,13 +190,13 @@ void LargeSpace::LargeMeta::EncodeTo(std::string* dst) const {
 
 // ========================== LargeSpace Begin ==============================
 
-LargeSpace::LargeSpace(const Options *opt, const std::string& dbname) 
-		: env_(opt->env), 
-		  db_options_(opt),
-			dbname_(dbname),
-			meta_(this),
-			meta_sequence_(0),
-			writer_(NULL) {
+LargeSpace::LargeSpace(Options *opt, const std::string& dbname) {
+		//: env_(opt->env), 
+			//db_options_(opt),
+			//dbname_(dbname),
+			//meta_(this),
+			//meta_sequence_(0),
+			//writer_(NULL) {
 	if (env_->FileExists(LargeHeadFileName(dbname))) {
 		LoadLargeSpace();
 	} else {
@@ -252,13 +249,13 @@ Status LargeSpace::DumpLargeSpace() {
 	std::ostringstream oss;
 	oss << meta_sequence_ << std::endl;
 
-	return WriteStringToFileSync(env_, LargeHeadFileName(dbname_), oss.str());
+	return WriteStringToFile(env_, LargeHeadFileName(dbname_), oss.str());
 }
 
 Status LargeSpace::NewLargeSpace() {
 	// Write empty "LARGEHEAD" file
 	meta_sequence_ = 0;
-	return WriteStringToFileSync(env_, EMPTY_LARGESPACE, 
+	return WriteStringToFile(env_, EMPTY_LARGESPACE, 
 			LargeHeadFileName(dbname_));
 }
 
