@@ -192,7 +192,7 @@ TEST(MrisTest, BuilderTestSimple) {
   ASSERT_EQ(0, memcmp(source.data(), result.data(), LEN));
 }
 
-// write 100 random value, then random read some of them, and compare
+// write 100 random value, then randomly read some of them, and compare
 TEST(MrisTest, BuilderTest100) {
   std::string filename = NewBlockFileName();
   LargeBlockBuilder* builder = new LargeBlockBuilder(env, 0, filename);
@@ -234,29 +234,36 @@ TEST(MrisTest, BuilderTest100) {
 TEST(MrisTest, LargeBlockReaderTest) {
   std::string filename = NewBlockFileName();
   LargeBlockBuilder* builder = new LargeBlockBuilder(env, 0, filename);
+  std::vector<Slice> sources;
+  std::vector<ValueDelegate> values;
+  char buf[LEN+1];
+  const size_t N = 100;
 
-  //char inbuf[LEN]; // use un-initialized as random data
-  //Slice input(inbuf, LEN);
-  //ASSERT_OK(builder->Write(input));
-  //ASSERT_EQ(LEN, builder->end());
-  //ASSERT_OK(builder->Sync());
+  for (size_t i = 0; i < N; ++i) {
+    size_t size = rand.Uniform(LEN);
+    Slice in = rgen.Generate(size);
+    sources.push_back(in);
 
-  //LargeBlockReader* reader = new LargeBlockReader(env, builder);
+    uint64_t offset = 0;
+    ASSERT_OK(builder->Write(in, &offset));
+    values.push_back(ValueDelegate(offset, size));
+  }
 
-  //char outbuf[LEN];
-  //Slice result;
-  //Random rand(383);
-  //for (int i = 0; i < 100; ++i) {
-    //uint32_t off = rand.Uniform(LEN);
-    //uint32_t size = 1 + rand.Uniform(LEN - off);
-    //ASSERT_OK(reader->Read(off, size, &result, outbuf));
-    //ASSERT_EQ(size, result.size());
-    //ASSERT_EQ(0, memcmp(result.data(), inbuf + off, size));
-  //}
-  //ASSERT_TRUE(reader->Read(1, LEN, &result, outbuf).IsIOError());
-  //ASSERT_OK(reader->Read(1, 0, &result, outbuf));
+  ASSERT_OK(builder->Sync());
 
-  //delete reader;
+  LargeBlockReader* reader = new LargeBlockReader(env, builder);
+
+  for (size_t i = 0; i < 256; ++i) {
+    size_t j = rand.Uniform(N);
+    Slice in = sources[j];
+    ValueDelegate vd = values[j];
+    Slice out;
+    ASSERT_OK(reader->Read(vd.offset, vd.size, &out, buf));
+    ASSERT_EQ(out.size(), in.size());
+    ASSERT_EQ(0, memcmp(out.data(), in.data(), out.size()));
+  }
+
+  delete reader;
   delete builder;
 }
 

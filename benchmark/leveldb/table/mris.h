@@ -212,7 +212,47 @@ public:
   			return s;
   		}
   	}
-  	return file_->Read(offset, n, result, scratch);
+    return ReadFromFile(file_, offset, n, result, scratch);
+  }
+
+  static Status ReadFixed32(RandomAccessFile* file, uint64_t offset, 
+                            uint32_t* value) {
+    char buf[sizeof(*value) + 1];
+    Slice result;
+    Status s = file->Read(offset, sizeof(*value), &result, buf);
+    if (s.ok()) {
+      *value = DecodeFixed32(buf);
+    }
+    return s;
+  }
+
+  // read a value from file
+  static Status ReadFromFile(RandomAccessFile* file, uint64_t offset,
+                             uint64_t n, Slice* result, char *scratch) {
+    // read prefixed data size
+    uint32_t data_size;
+    Status s = ReadFixed32(file, offset, &data_size);
+    if (! s.ok()) return s;
+    if (n != data_size) {
+      return Status::Corruption("[mris] data size mismatch");
+    }
+
+    // read real data
+    offset += sizeof(data_size);
+    s = file->Read(offset, n, result, scratch);
+    if (! s.ok()) return s;
+
+    // read crc and compare
+    uint32_t crc1, crc2;
+    offset += data_size;
+    s = ReadFixed32(file, offset, &crc1);
+    if (! s.ok()) return s;
+    crc2 = crc32c::Value(scratch, data_size);
+    if (crc1 != crc2) {
+      return Status::Corruption("[mris] crc mismatch");
+    }
+
+    return s;
   }
 };
 
@@ -220,22 +260,6 @@ class LargeBlockBuilder : public LargeBlockHandle {
 private:
   Env* env_;
   MrisAppendReadFile* file_;
-
-  Status WriteFixed32(uint32_t value) {
-    std::string buf;
-    PutFixed32(&buf, value);
-    return file_->Append(buf);
-  }
-
-  Status ReadFixed32(uint64_t offset, uint32_t* value) {
-    char buf[sizeof(*value) + 1];
-    Slice result;
-    Status s = file_->Read(offset, sizeof(*value), &result, buf);
-    if (s.ok()) {
-      *value = DecodeFixed32(buf);
-    }
-    return s;
-  }
 
 public:
   LargeBlockBuilder(Env* env) : file_(NULL), env_(env) {}
@@ -254,32 +278,15 @@ public:
   Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
   	if (! file_) {
   		return Status::IOError("[mris] out of file bound", name_);
-  	} 
-
-    // read prefixed data size
-    uint32_t data_size;
-    Status s = ReadFixed32(offset, &data_size);
-    if (! s.ok()) return s;
-    if (n != data_size) {
-      return Status::Corruption("[mris] data size mismatch");
+  	} else {
+      return LargeBlockReader::ReadFromFile(file_, offset, n, result, scratch);
     }
+  }
 
-    // read real data
-    offset += sizeof(data_size);
-    s = file_->Read(offset, n, result, scratch);
-    if (! s.ok()) return s;
-
-    // read crc and compare
-    uint32_t crc1, crc2;
-    offset += data_size;
-    s = ReadFixed32(offset, &crc1);
-    if (! s.ok()) return s;
-    crc2 = crc32c::Value(scratch, data_size);
-    if (crc1 != crc2) {
-      return Status::Corruption("[mris] crc mismatch");
-    }
-
-  	return s;
+  static Status WriteFixed32(WritableFile* file, uint32_t value) {
+    std::string buf;
+    PutFixed32(&buf, value);
+    return file->Append(buf);
   }
 
   // Value format:
@@ -300,7 +307,7 @@ public:
 
     // write size of read data
     uint32_t data_size = data.size();
-    s = WriteFixed32(data_size);
+    s = WriteFixed32(file_, data_size);
     if (! s.ok()) return s;
 
     // write value
@@ -309,7 +316,7 @@ public:
 
     // write crc
     uint32_t crc = crc32c::Value(data.data(), data.size());
-    s = WriteFixed32(crc);
+    s = WriteFixed32(file_, crc);
     if (! s.ok()) return s;
 
     size_ += sizeof(data_size) + data.size() + sizeof(crc);
