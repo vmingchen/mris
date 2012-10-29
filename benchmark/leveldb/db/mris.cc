@@ -12,6 +12,7 @@
  * ===========================================================================
  */
 
+#include <stdlib.h>
 #include <string.h>
 #include <sstream>
 #include "db/filename.h"
@@ -48,7 +49,7 @@ std::string LargeHeadFileName(const std::string& dbname) {
 	return dbname + "/LARGEHEAD";
 }
 
-uint64_t LoadFixedUint64(uint64_t offset, SequentialFile* file) {
+uint64_t LoadFixedUint64(uint64_t offset, RandomAccessFile* file) {
 	uint64_t result;
 	Slice buffer;
 	char scrach[8+1];
@@ -57,7 +58,7 @@ uint64_t LoadFixedUint64(uint64_t offset, SequentialFile* file) {
 	return DecodeFixed64(scrach);
 }
 
-uint32_t LoadFixedUint32(uint64_t offset, SequentialFile* file) {
+uint32_t LoadFixedUint32(uint64_t offset, RandomAccessFile* file) {
 	uint32_t result;
 	Slice buffer;
 	char scrach[4+1];
@@ -69,14 +70,16 @@ uint32_t LoadFixedUint32(uint64_t offset, SequentialFile* file) {
 void LargeBlockHandle::EncodeTo(std::string* dst) const {
 	assert(size_ > 0);
 	PutLengthPrefixedSlice(dst, name_);
-	PutVarint64(offset_);
-	PutVarint64(size_);
+	PutVarint64(dst, offset_);
+	PutVarint64(dst, size_);
 }
 
 Status LargeBlockHandle::DecodeFrom(Slice* input) {
-	if (GetLengthPrefixedSlice(input, &name_) &&
+	Slice name;
+	if (GetLengthPrefixedSlice(input, &name) &&
 			GetVarint64(input, &offset_) &&
 			GetVarint64(input, &size_)) {
+		name_.assign(name.data(), name.size());
 		return Status::OK();
 	} else {
     return Status::Corruption("bad block handle");
@@ -90,7 +93,6 @@ Status LargeSpace::LargeMeta::Load(const std::string& fname) {
 	std::string metadata;
 	Status s = ReadFileToString(space->env_, fname, &metadata);
 	if (!s.ok()) {
-		MaybeIgnoreError(&s);
 		return s;
 	}
 	Slice buffer(metadata);
@@ -108,7 +110,7 @@ Status LargeSpace::LargeMeta::DecodeFrom(Slice* input) {
 
 	// pointer to block metadata
 	const char *block_raw = input->data();
-	uint64_t *block_length = input->size();
+	uint64_t block_length = static_cast<uint64_t>(input->size());
 
 	// read if there is any writer block
 	uint32_t nwblock;
@@ -117,12 +119,13 @@ Status LargeSpace::LargeMeta::DecodeFrom(Slice* input) {
 	}
 
 	// decode block information and build space.blocks_
+	Status s;
 	for (uint64_t i = 0; i < nblock; ++i) {
 		LargeBlockReader *block = new LargeBlockReader(space->env_);
 		s = block->DecodeFrom(input);
 		if (!s.ok())
 			return s;
-		space.blocks_.push_back(block);
+		space->blocks_.push_back(block);
 	}
 
 	// decode writer block and build space.writer_
@@ -145,13 +148,16 @@ Status LargeSpace::LargeMeta::DecodeFrom(Slice* input) {
 	// check crc
 	uint32_t crc1 = crc32c::Value(block_raw, block_length);
 	uint32_t crc2;
-	s = GetVarint32(input, &crc2);
-	if (!s.ok( || crc1 != crc2)) {
+	if (!GetVarint32(input, &crc2) || crc1 != crc2) {
 		return Status::Corruption("crc error");
 	}
 
-	return s;
+	return Status::OK();
 }
+
+// A utility routine: write "data" to the named file and Sync() it.
+extern Status WriteStringToFileSync(Env* env, const Slice& data,
+                                    const std::string& fname);
 
 Status LargeSpace::LargeMeta::Dump(const std::string& fname) {
 	std::string metadata;
@@ -163,7 +169,7 @@ Status LargeSpace::LargeMeta::Dump(const std::string& fname) {
 
 void LargeSpace::LargeMeta::EncodeTo(std::string* dst) const {
 	// save the begining of the metadata
-	size_t block_offset = dst.length();
+	size_t block_offset = dst->length();
 
 	uint64_t nblock;
 	PutVarint64(dst, nblock);
@@ -173,12 +179,12 @@ void LargeSpace::LargeMeta::EncodeTo(std::string* dst) const {
 		space->blocks_[i]->EncodeTo(dst);
 	}
 
-	if (writer_) {
+	if (space->writer_) {
 		space->writer_->EncodeTo(dst);
 	}
 
-	uint64_t block_length = static_cast<uint64_t>(dst.length() - block_offset);
-	const char *block_raw = dst.c_str() + block_offset;
+	uint64_t block_length = static_cast<uint64_t>(dst->length() - block_offset);
+	const char *block_raw = dst->c_str() + block_offset;
 	PutVarint64(dst, block_length);
 
 	uint32_t crc = crc32c::Value(block_raw, block_length);
@@ -201,11 +207,10 @@ LargeSpace::LargeSpace(const Options *opt, const std::string& dbname)
 	}
 }
 
-~LargeSpace::LargeSpace() {
+LargeSpace::~LargeSpace() {
 	if (writer_) {
-		Status s = writer_.Close();
-		if (!s.ok())
-			return s;
+		Status s = writer_->Close();
+		assert(s.ok());
 		delete writer_;
 		writer_ = NULL;
 	}
@@ -232,7 +237,7 @@ Status LargeSpace::LoadLargeSpace() {
 	}
 
 	// Load block information from file given by head
-	meta_sequence_ = static_cast<uint64_t>(atoll(head));
+	meta_sequence_ = static_cast<uint64_t>(atoll(head.c_str()));
 	return meta_.Load(LargeBlockFileName(dbname_, meta_sequence_));
 }
 
@@ -245,7 +250,7 @@ Status LargeSpace::DumpLargeSpace() {
 
 	// write meta sequence number
 	std::ostringstream oss;
-	oss << meta_sequence_ << endl;
+	oss << meta_sequence_ << std::endl;
 
 	return WriteStringToFileSync(env_, LargeHeadFileName(dbname_), oss.str());
 }
@@ -298,14 +303,14 @@ Status LargeSpace::Write(const Slice& slice, uint64_t& offset) {
 	// lazy init: create a new writer if there is no current writer
 	Status s;
 	if (writer_ == NULL) {
-		s = NewWriter(DataSize());
+		s = NewWriter();
 		if (!s.ok()) {
 			return s;
 		}
 	}
 
 	offset = writer_->offset();
-	Status s = writer_->Write(slice);
+	s = writer_->Write(slice);
 	if (!s.ok()) 
 		return s;
 

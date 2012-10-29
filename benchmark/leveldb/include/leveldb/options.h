@@ -30,7 +30,7 @@ enum CompressionType {
 // Options to control the behavior of a database (passed to DB::Open)
 struct Options {
 #ifdef MRIS
-	MrisOptions mris_options;
+	//MrisOptions mris_options;
 #endif
   // -------------------
   // Parameters that affect behavior

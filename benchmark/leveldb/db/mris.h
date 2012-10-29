@@ -17,6 +17,7 @@
 #include <string>
 #include "db/filename.h"
 #include "db/dbformat.h"
+#include "leveldb/db.h"
 #include "leveldb/env.h"
 
 #define MRIS
@@ -76,9 +77,11 @@ public:
 	}
 	bool initialized() const { return name_.length() > 0; }
 	bool empty() const { return size_ == 0; }
+	void EncodeTo(std::string* dst) const;
+	Status DecodeFrom(Slice* input);
 };
 
-class LargeBlockReader : LargeBlockHandle {
+class LargeBlockReader : public LargeBlockHandle {
 private:
 	Env* env_;
 	RandomAccessFile *file_;
@@ -105,7 +108,7 @@ public:
 	}
 };
 
-class LargeBlockWriter : LargeBlockHandle {
+class LargeBlockWriter : public LargeBlockHandle {
 private:
 	Env* env_;
 	WritableFile* file_;
@@ -139,7 +142,7 @@ public:
 			size_ += data.size();
 		return s;
 	}
-	Status Fulsh() { return file_ ? file_->Flush() : Status::OK(); }
+	Status Flush() { return file_ ? file_->Flush() : Status::OK(); }
 	Status Close() { return file_ ? file_->Close() : Status::OK(); }
 };
 
@@ -156,11 +159,11 @@ private:
 	// [crc]
 	struct LargeMeta {
 		LargeSpace* space;
-		LargeSpace(LargeSpace* sp) : space(sp) {}
+		LargeMeta(LargeSpace* sp) : space(sp) {}
 		Status Load(const std::string& filename);
 		Status Dump(const std::string& filename);
 		Status DecodeFrom(Slice* input);
-		Status EncodeTo(std::string* dst) const;
+		void EncodeTo(std::string* dst) const;
 	};
 
 	Env* env_;
@@ -173,14 +176,14 @@ private:
 	// means no meta file, which means the space is empty
 	uint64_t meta_sequence_;
 
-	// make sure it points to a ready writer all the time
-	LargeBlockWriter *writer_;
+	// make sure it points to a ready writer or NULL
+	LargeBlockWriter* writer_;
 
 	// find the file block contains @offset
 	LargeBlockReader* getBlockReader(uint64_t offset) {
 		// binary search
 		size_t first = 0;
-		size_t count = file_.size();
+		size_t count = blocks_.size();
 		assert(count > 0);
 		while (count > 1) {
 			size_t step = count / 2;
@@ -197,7 +200,7 @@ private:
 		return blocks_[first];
 	}
 
-	Status NewWriter(uint64_t offset);
+	Status NewWriter();
 
 	// instanciate from disk files
 	Status LoadLargeSpace();
@@ -210,7 +213,7 @@ private:
 	Status SealLargeBlock();
 
 public:
-  LargeSpace(const Options *opt, const char *db_name);
+  LargeSpace(const Options *opt, const std::string& dbname);
 	~LargeSpace();
 
 	// Load metadata from file given by @meta_name
@@ -218,8 +221,8 @@ public:
 
 	Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
 		LargeBlockReader* reader = getBlockReader(offset);
-		assert(block->contains(offset, n));
-		return block->Read(offset - block->offset(), n, result, scratch);
+		assert(reader->contains(offset, n));
+		return reader->Read(offset - reader->offset(), n, result, scratch);
 	}
 
 	Status Write(const Slice& slice, uint64_t& offset);
