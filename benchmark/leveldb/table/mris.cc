@@ -354,7 +354,7 @@ Status LargeSpace::SealLargeBlock() {
   return Status::OK();
 }
 
-Status LargeSpace::Write(const Slice& slice, uint64_t& offset) {
+Status LargeSpace::Write(const Slice& slice, uint64_t* offset) {
   // TODO: mutex_.AssertHeld() ? 
   // lazy init: create a new writer if there is no current writer
   Status s;
@@ -365,8 +365,7 @@ Status LargeSpace::Write(const Slice& slice, uint64_t& offset) {
   	}
   }
 
-  offset = builder_->offset();
-  s = builder_->Write(slice);
+  s = builder_->Write(slice, offset);
   if (!s.ok()) 
   	return s;
 

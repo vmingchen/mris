@@ -22,6 +22,7 @@
 #include "db/filename.h"
 #include "leveldb/db.h"
 #include "leveldb/env.h"
+#include "util/crc32c.h"
 
 #define MRIS
 
@@ -126,8 +127,10 @@ struct MrisOptions {
   Status DecodeFrom(Slice* input);
 };
 
+// The real value is encapsulated in a record, which has the following format:
+//  [4-bytes-value-size] [value] [4-bytes-crc32]
 struct ValueDelegate {
-  // offset of real value
+  // offset of the record containing real value
   size_t offset;
   // size of real value
   size_t size;
@@ -218,6 +221,22 @@ private:
   Env* env_;
   MrisAppendReadFile* file_;
 
+  Status WriteFixed32(uint32_t value) {
+    std::string buf;
+    PutFixed32(&buf, value);
+    return file_->Append(buf);
+  }
+
+  Status ReadFixed32(int64_t offset, uint32_t* value) {
+    char buf[sizeof(*value) + 1];
+    Slice* result;
+    Status s = file_->Read(offset, sizeof(*value), &result, buf);
+    if (s.ok()) {
+      *value = DecodeFixed32(buf);
+    }
+    return s;
+  }
+
 public:
   LargeBlockBuilder(Env* env) : file_(NULL), env_(env) {}
   LargeBlockBuilder(Env* env, uint64_t off, const std::string& name) 
@@ -233,16 +252,41 @@ public:
   }
 
   Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
-  	Status s;
   	if (! file_) {
-  		s = Status::IOError("[mris] out of file bound", name_);
-  	} else {
-  		s = file_->Read(offset, n, result, scratch);
-  	}
+  		return Status::IOError("[mris] out of file bound", name_);
+  	} 
+
+    // read prefixed data size
+    uint32_t data_size;
+    Status s = ReadFixed32(offset, &data_size);
+    if (! s.ok()) return s;
+    if (n != data_size) {
+      return Status::Corruption("[mris] data size mismatch");
+    }
+
+    // read real data
+    offset += sizeof(data_size);
+    s = file_->Read(offset, n, result, scratch);
+    if (! s.ok()) return s;
+
+    // read crc and compare
+    uint32_t crc1, crc2;
+    offset += data_size;
+    s = ReadFixed32(offset, &crc1);
+    if (! s.ok()) return s;
+    crc2 = crc32c::Value(scratch, data_size);
+    if (crc1 != crc2) {
+      return Status::Corruption("[mris] crc mismatch");
+    }
+
   	return s;
   }
 
-  Status Write(const Slice& data) {
+  // Value format:
+  // [value-length] Fixed Uint32
+  // [value]
+  // [crc] Fixed Uint32
+  Status Write(const Slice& data, uint64_t* offset) {
   	assert(initialized());
   	Status s;
   	if (file_ == NULL) {
@@ -252,9 +296,25 @@ public:
   			return s;
   		}
   	}
+    uint64_t record_offset = offset() + size();
+
+    // write size of read data
+    uint32_t data_size = data.size();
+    s = WriteFixed32(data_size);
+    if (! s.ok()) return s;
+
+    // write value
   	s = file_->Append(data);
-  	if (s.ok()) 
-  		size_ += data.size();
+    if (! s.ok()) return s;
+
+    // write crc
+    uint32_t crc = crc32c::Value(data.data(), data.size());
+    s = WriteFixed32(crc);
+    if (! s.ok()) return s;
+
+    size_ += sizeof(data_size) + data.size() + sizeof(crc);
+    *offset = record_offset;
+
   	return s;
   }
 
@@ -362,7 +422,7 @@ public:
   	return s;
   }
 
-  Status Write(const Slice& slice, uint64_t& offset);
+  Status Write(const Slice& slice, uint64_t* offset);
 
   // size of all data
   uint64_t DataSize() const {
