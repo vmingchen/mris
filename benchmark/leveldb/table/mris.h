@@ -221,7 +221,7 @@ public:
     Slice result;
     Status s = file->Read(offset, sizeof(*value), &result, buf);
     if (s.ok()) {
-      *value = DecodeFixed32(buf);
+      *value = DecodeFixed32(result.data());
     }
     return s;
   }
@@ -247,7 +247,7 @@ public:
     offset += data_size;
     s = ReadFixed32(file, offset, &crc1);
     if (! s.ok()) return s;
-    crc2 = crc32c::Value(scratch, data_size);
+    crc2 = crc32c::Value(result->data(), data_size);
     if (crc1 != crc2) {
       return Status::Corruption("[mris] crc mismatch");
     }
@@ -286,7 +286,7 @@ public:
   static Status WriteFixed32(WritableFile* file, uint32_t value) {
     std::string buf;
     PutFixed32(&buf, value);
-    return file->Append(buf);
+    return file->Append(Slice(buf.c_str(), sizeof(value)));
   }
 
   // Value format:

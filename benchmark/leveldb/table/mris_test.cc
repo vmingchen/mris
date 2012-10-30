@@ -169,7 +169,7 @@ TEST(MrisTest, MrisAppendReadFileTest) {
 }
 
 // write a random value, then read it, and compare
-TEST(MrisTest, BuilderTestSimple) {
+TEST(MrisTest, BuilderTestBasic) {
   std::string filename = NewBlockFileName();
   LargeBlockBuilder* builder = new LargeBlockBuilder(env, 0, filename);
 
@@ -193,7 +193,7 @@ TEST(MrisTest, BuilderTestSimple) {
 }
 
 // write 100 random value, then randomly read some of them, and compare
-TEST(MrisTest, BuilderTest100) {
+TEST(MrisTest, BuilderTestFull) {
   std::string filename = NewBlockFileName();
   LargeBlockBuilder* builder = new LargeBlockBuilder(env, 0, filename);
   std::vector<Slice> sources;
@@ -231,7 +231,25 @@ TEST(MrisTest, BuilderTest100) {
   delete builder;
 }
 
-TEST(MrisTest, LargeBlockReaderTest) {
+TEST(MrisTest, ReaderTestBasic) {
+  std::string filename = NewBlockFileName();
+  LargeBlockBuilder* builder = new LargeBlockBuilder(env, 0, filename);
+  uint64_t offset = 0;
+  std::string message = "hello";
+  Slice input(message);
+
+  ASSERT_OK(builder->Write(input, &offset));
+  ASSERT_OK(builder->Sync());
+
+  LargeBlockReader* reader = new LargeBlockReader(env, builder);
+  Slice output;
+  char buf[10];
+  ASSERT_OK(reader->Read(offset, input.size(), &output, buf));
+  ASSERT_EQ(input.size(), output.size());
+  ASSERT_EQ(0, memcmp(input.data(), output.data(), input.size()));
+}
+
+TEST(MrisTest, ReaderTestFull) {
   std::string filename = NewBlockFileName();
   LargeBlockBuilder* builder = new LargeBlockBuilder(env, 0, filename);
   std::vector<Slice> sources;
@@ -242,6 +260,7 @@ TEST(MrisTest, LargeBlockReaderTest) {
   for (size_t i = 0; i < N; ++i) {
     size_t size = rand.Uniform(LEN);
     Slice in = rgen.Generate(size);
+    ASSERT_EQ(size, in.size());
     sources.push_back(in);
 
     uint64_t offset = 0;
@@ -252,6 +271,12 @@ TEST(MrisTest, LargeBlockReaderTest) {
   ASSERT_OK(builder->Sync());
 
   LargeBlockReader* reader = new LargeBlockReader(env, builder);
+
+  Slice result;
+  ValueDelegate del = values[0];
+  ASSERT_OK(reader->Read(del.offset, del.size, &result, buf));
+  ASSERT_EQ(result.size(), del.size);
+  ASSERT_EQ(0, memcmp(sources[0].data(), result.data(), result.size()));
 
   for (size_t i = 0; i < 256; ++i) {
     size_t j = rand.Uniform(N);
