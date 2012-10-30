@@ -145,7 +145,7 @@ Status LargeSpace::LargeMeta::DecodeFrom(Slice* input) {
   }
 
   // decode block information and build space.blocks_
-  for (uint64_t i = 0; i < nblock; ++i) {
+  for (uint64_t i = 0; i < nblock + nwblock; ++i) {
   	LargeBlockReader *block = new LargeBlockReader(space->env_);
   	s = block->DecodeFrom(input);
   	if (!s.ok())
@@ -153,14 +153,15 @@ Status LargeSpace::LargeMeta::DecodeFrom(Slice* input) {
   	space->blocks_.push_back(block);
   }
 
+  // TODO: should we enable a block file to be appended after reopen?
   // decode writer block and build space->builder_
-  if (nwblock > 0) {
-  	assert(space->builder_ == NULL);
-  	space->builder_ = new LargeBlockBuilder(space->env_);
-  	s = space->builder_->DecodeFrom(input);
-  	if (!s.ok())
-  		return s;
-  }
+  //if (nwblock > 0) {
+    //assert(space->builder_ == NULL);
+    //space->builder_ = new LargeBlockBuilder(space->env_);
+    //s = space->builder_->DecodeFrom(input);
+    //if (!s.ok())
+      //return s;
+  //}
 
   // check meta_size
   uint64_t meta_size = 0;

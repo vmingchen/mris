@@ -329,8 +329,6 @@ TEST(MrisTest, LargeSpaceTestFull) {
 
   std::vector<Slice> sources;
   std::vector<ValueDelegate> values;
-  char buf[LEN+1];
-  const size_t N = 5000;
 
   ASSERT_OK(space->Open());
 
@@ -347,8 +345,36 @@ TEST(MrisTest, LargeSpaceTestFull) {
   TestRead(1000, sources, values, space);
 
   // write more and test
-  //TestWrite(1000, &sources, &values, space, space);
-  //TestRead(1000, sources, values, space);
+  TestWrite(2000, &sources, &values, space, space);
+  TestRead(1000, sources, values, space);
+
+  ASSERT_OK(space->Close());
+  delete space;
+}  
+
+TEST(MrisTest, LargeSpaceTestRandom) {
+  Options opt;
+  LargeSpace* space = new LargeSpace(&opt, dbname);
+
+  std::vector<Slice> sources;
+  std::vector<ValueDelegate> values;
+  const int MAXN = 100;
+
+  ASSERT_OK(space->Open());
+
+  for (size_t i = 0; i < 100; ++i) {
+    int N = rand.Uniform(MAXN);
+    TestWrite(N, &sources, &values, space, space);
+    // we randomly close and reopen the space in the middle
+    if ((N & 0x7) == 0x7) {
+      ASSERT_OK(space->Close());
+      delete space;
+      space = new LargeSpace(&opt, dbname);
+      ASSERT_OK(space->Open());
+    }
+    int M = rand.Uniform(MAXN);
+    TestRead(M, sources, values, space);
+  }
 
   ASSERT_OK(space->Close());
   delete space;
