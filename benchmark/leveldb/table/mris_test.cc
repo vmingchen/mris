@@ -323,7 +323,9 @@ TEST(MrisTest, LargeSpaceTestFull) {
   std::vector<Slice> sources;
   std::vector<ValueDelegate> values;
   char buf[LEN+1];
-  const size_t N = 2000;
+  const size_t N = 5000;
+
+  ASSERT_OK(space->Open());
 
   for (size_t i = 0; i < N; ++i) {
     size_t size = rand.Uniform(LEN);
@@ -346,6 +348,26 @@ TEST(MrisTest, LargeSpaceTestFull) {
     ASSERT_EQ(0, memcmp(out.data(), in.data(), out.size()));
   }
 
+  ASSERT_OK(space->Close());
+  delete space;
+
+  // reopen
+  space = new LargeSpace(&opt, dbname);
+  ASSERT_OK(space->Open());
+
+  for (size_t i = 0; i < 256; ++i) {
+    size_t j = rand.Uniform(N);
+    Slice in = sources[j];
+
+    Slice out;
+    ValueDelegate vd = values[j];
+    ASSERT_OK(space->Read(vd.offset, vd.size, &out, buf));
+    ASSERT_EQ(out.size(), in.size());
+    ASSERT_EQ(0, memcmp(out.data(), in.data(), out.size()));
+  }
+
+  ASSERT_OK(space->Close());
+  delete space;
 }
 
 } }
