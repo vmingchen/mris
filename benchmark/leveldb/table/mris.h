@@ -461,7 +461,7 @@ public:
   		s = Status::IOError("[mris] invalid offset");
   	} else if (builder_ && offset >= builder_->offset()) {
   		if (builder_->contains(offset, n)) {
-  			s = builder_->Read(offset, n, result, scratch);
+  			s = builder_->Read(offset - builder_->offset(), n, result, scratch);
   		} else {
   			s = Status::IOError("[mris] out-of-bound read");
   		}

@@ -355,6 +355,7 @@ Status LargeSpace::Write(const Slice& slice, uint64_t* offset) {
   s = builder_->Write(slice, offset);
   if (!s.ok()) 
   	return s;
+  offset += builder_->offset();
 
   if (builder_->size() > mris_options_.kSplitThreshold) {
   	SealLargeBlock();

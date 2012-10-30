@@ -26,7 +26,7 @@
 
 static int sequence = 0;
 
-static const size_t LEN = 1024;
+static const size_t LEN = 102400;
 static const size_t HALF_LEN = LEN / 2;
 
 namespace leveldb { namespace mris {
@@ -314,6 +314,38 @@ TEST(MrisTest, LargeSpaceTestBasic) {
   ASSERT_EQ(0, memcmp(result.data(), input.data(), result.size()));
 
   delete space;
+}
+
+TEST(MrisTest, LargeSpaceTestFull) {
+  Options opt;
+  LargeSpace* space = new LargeSpace(&opt, dbname);
+
+  std::vector<Slice> sources;
+  std::vector<ValueDelegate> values;
+  char buf[LEN+1];
+  const size_t N = 2000;
+
+  for (size_t i = 0; i < N; ++i) {
+    size_t size = rand.Uniform(LEN);
+    Slice in = rgen.Generate(size);
+    sources.push_back(in);
+
+    uint64_t offset = 0;
+    ASSERT_OK(space->Write(in, &offset));
+    values.push_back(ValueDelegate(offset, size));
+  }
+
+  for (size_t i = 0; i < 256; ++i) {
+    size_t j = rand.Uniform(N);
+    Slice in = sources[j];
+
+    Slice out;
+    ValueDelegate vd = values[j];
+    ASSERT_OK(space->Read(vd.offset, vd.size, &out, buf));
+    ASSERT_EQ(out.size(), in.size());
+    ASSERT_EQ(0, memcmp(out.data(), in.data(), out.size()));
+  }
+
 }
 
 } }
