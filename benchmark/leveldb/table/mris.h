@@ -16,6 +16,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <sys/stat.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include "db/dbformat.h"
@@ -32,8 +33,6 @@ uint64_t LoadFixedUint64(uint64_t offset, SequentialFile* file);
 
 class MrisAppendReadFile;
 
-Status NewMrisAppendReadFile(const std::string&, MrisAppendReadFile**);
-
 class MrisAppendReadFile : public WritableFile, public RandomAccessFile {
 private:
   std::string filename_;
@@ -41,10 +40,10 @@ private:
   size_t size_;
 
 public:
-  MrisAppendReadFile(const std::string& fname, int fd)
-  		: filename_(fname), fd_(fd), size_(0) { }
+  MrisAppendReadFile(const std::string& fname, int fd, int sz = 0)
+  		: filename_(fname), fd_(fd), size_(sz) { }
 
-  virtual ~MrisAppendReadFile() { 
+  virtual ~MrisAppendReadFile() {
   	assert(close(fd_) == 0);
   }
 
@@ -74,6 +73,7 @@ public:
 
   	off_t offset = static_cast<off_t>(size_);
   	while (s.ok() && len > 0) {
+      //ssize_t n = write(fd_, buf, len);
   		ssize_t n = pwrite(fd_, buf, len, offset);
   		if (n < 0) {
   			s = Status::IOError(filename_, strerror(errno));
@@ -105,6 +105,40 @@ public:
 
   virtual Status Flush() {
   	return Status::OK();
+  }
+
+  static Status New(const std::string& fname, MrisAppendReadFile** result) {
+    *result = NULL;
+    // create a file that we will append and read
+    //int fd = open(fname.c_str(), O_RDWR | O_EXCL | O_CREAT | O_APPEND, 0644);
+    int fd = open(fname.c_str(), O_RDWR | O_EXCL | O_CREAT, 0644);
+    if (fd == -1) {
+      return Status::IOError(fname, strerror(errno));
+    }
+
+    *result = new MrisAppendReadFile(fname, fd);
+    return Status::OK();
+  }
+
+  static Status Open(const std::string& fname, size_t size, 
+                     MrisAppendReadFile** result) {
+    *result = NULL;
+
+    struct stat info;
+    if (stat(fname.c_str(), &info) < 0) {
+      return Status::IOError(fname, strerror(errno));
+    }
+
+    int fd = open(fname.c_str(), O_RDWR | O_APPEND, 0644);
+    if (fd == -1) {
+      return Status::IOError(fname, strerror(errno));
+    }
+    if (info.st_size != size) {
+      return Status::IOError(fname, "file size mismatch");
+    }
+
+    *result = new MrisAppendReadFile(fname, fd, size);
+    return Status::OK();
   }
 };
 
@@ -276,11 +310,43 @@ public:
   }
 
   Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
+    if (! file_) {
+      if (size_ <= offset + n) {
+  			return Status::IOError("[mris] out-of-bound read");
+      }
+      Status s = MrisAppendReadFile::Open(name_, size_, &file_);
+  		if (! s.ok()) {
+  			assert(file_ == NULL);
+  			return s;
+  		}
+    } 
+    return LargeBlockReader::ReadFromFile(file_, offset, n, result, scratch);
+  }
+
+  Status Write(const Slice& data, uint64_t* offset) {
+  	assert(initialized());
+  	Status s;
   	if (! file_) {
-  		return Status::IOError("[mris] out of file bound", name_);
-  	} else {
-      return LargeBlockReader::ReadFromFile(file_, offset, n, result, scratch);
-    }
+  		s = MrisAppendReadFile::New(name_, &file_);
+  		if (! s.ok()) {
+  			assert(file_ == NULL);
+  			return s;
+  		}
+  	}
+    uint64_t record_offset = end();
+
+    s = WriteToFile(file_, data);
+    if (! s.ok()) return s;
+
+    // [value-size] + [value] + [crc32]
+    size_ += sizeof(uint32_t) + data.size() + sizeof(uint32_t);
+    *offset = record_offset;
+
+  	return s;
+  }
+
+  Status Sync() { 
+  	return file_ ? file_->Sync() : Status::OK();
   }
 
   static Status WriteFixed32(WritableFile* file, uint32_t value) {
@@ -290,43 +356,24 @@ public:
   }
 
   // Value format:
-  // [value-length] Fixed Uint32
+  // [value-size] Fixed Uint32
   // [value]
   // [crc] Fixed Uint32
-  Status Write(const Slice& data, uint64_t* offset) {
-  	assert(initialized());
-  	Status s;
-  	if (file_ == NULL) {
-  		s = NewMrisAppendReadFile(name_, &file_);
-  		if (!s.ok()) {
-  			assert(file_ == NULL);
-  			return s;
-  		}
-  	}
-    uint64_t record_offset = end();
-
+  static Status WriteToFile(WritableFile* file, const Slice& data) {
     // write size of read data
     uint32_t data_size = data.size();
-    s = WriteFixed32(file_, data_size);
+    Status s = WriteFixed32(file, data_size);
     if (! s.ok()) return s;
 
     // write value
-  	s = file_->Append(data);
+  	s = file->Append(data);
     if (! s.ok()) return s;
 
     // write crc
     uint32_t crc = crc32c::Value(data.data(), data.size());
-    s = WriteFixed32(file_, crc);
-    if (! s.ok()) return s;
+    s = WriteFixed32(file, crc);
 
-    size_ += sizeof(data_size) + data.size() + sizeof(crc);
-    *offset = record_offset;
-
-  	return s;
-  }
-
-  Status Sync() { 
-  	return file_ ? file_->Sync() : Status::OK();
+    return s;
   }
 };
 
@@ -412,7 +459,7 @@ public:
   	Status s;
   	if (offset > DataSize()) {
   		s = Status::IOError("[mris] invalid offset");
-  	} else if (builder_ && offset > builder_->offset()) {
+  	} else if (builder_ && offset >= builder_->offset()) {
   		if (builder_->contains(offset, n)) {
   			s = builder_->Read(offset, n, result, scratch);
   		} else {

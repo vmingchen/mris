@@ -26,7 +26,7 @@
 
 static int sequence = 0;
 
-static const size_t LEN = 10240;
+static const size_t LEN = 1024;
 static const size_t HALF_LEN = LEN / 2;
 
 namespace leveldb { namespace mris {
@@ -136,7 +136,7 @@ TEST(MrisTest, MrisAppendReadFileTest) {
   MrisAppendReadFile *mris_file = NULL;
 
   // create an empty file
-  ASSERT_OK(NewMrisAppendReadFile(filename, &mris_file));
+  ASSERT_OK(MrisAppendReadFile::New(filename, &mris_file));
   ASSERT_TRUE(mris_file);
   ASSERT_OK(mris_file->Sync());
   ASSERT_TRUE(env->FileExists(filename));
@@ -158,12 +158,12 @@ TEST(MrisTest, MrisAppendReadFileTest) {
   ASSERT_OK(mris_file->Append(second));
 
   char outbuf[LEN];
-  Slice result;
-  ASSERT_OK(mris_file->Read(0, LEN, &result, outbuf));
-  ASSERT_EQ(0, memcmp(inbuf, outbuf, LEN));
+  Slice output;
+  ASSERT_OK(mris_file->Read(HALF_LEN - 5, 10, &output, outbuf));
+  ASSERT_EQ(0, strncmp("aaaaabbbbb", output.data(), 10));
 
-  ASSERT_OK(mris_file->Read(HALF_LEN - 5, 10, &result, outbuf));
-  ASSERT_EQ(0, strncmp("aaaaabbbbb", outbuf, 10));
+  ASSERT_OK(mris_file->Read(0, LEN, &output, outbuf));
+  ASSERT_EQ(0, memcmp(inbuf, output.data(), LEN));
 
   delete mris_file;
 }
@@ -292,12 +292,12 @@ TEST(MrisTest, ReaderTestFull) {
   delete builder;
 }
 
-TEST(MrisTest, LargeSpaceTest) {
+TEST(MrisTest, LargeSpaceTestBasic) {
   Options opt;
   LargeSpace* space = new LargeSpace(&opt, dbname);
 
   uint64_t offset;
-  std::string message = "hello, world";
+  std::string message = "hello";
   Slice input(message);
   ASSERT_OK(space->Open());
   ASSERT_OK(space->Write(input, &offset));
@@ -311,7 +311,9 @@ TEST(MrisTest, LargeSpaceTest) {
   Slice result;
   ASSERT_OK(space->Open());
   ASSERT_OK(space->Read(offset, message.length(), &result, buf));
-  ASSERT_EQ(0, memcmp(buf, message.c_str(), message.length()));
+  ASSERT_EQ(0, memcmp(result.data(), input.data(), result.size()));
+
+  delete space;
 }
 
 } }

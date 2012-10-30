@@ -50,19 +50,6 @@ static std::string LargeHeadFileName(const std::string& dbname) {
   return dbname + "/LARGEHEAD";
 }
 
-Status NewMrisAppendReadFile(const std::string& fname, 
-  													 MrisAppendReadFile** result) {
-  *result = NULL;
-  // create a file that we will append and read
-  int fd = open(fname.c_str(), O_RDWR | O_EXCL | O_CREAT, 0644);
-  if (fd == -1) {
-  	return Status::IOError(fname, strerror(errno));
-  }
-
-  *result = new MrisAppendReadFile(fname, fd);
-  return Status::OK();
-}
-
 uint64_t LoadFixedUint64(uint64_t offset, RandomAccessFile* file) {
   uint64_t result;
   Slice buffer;
@@ -276,7 +263,7 @@ Status LargeSpace::LoadLargeSpace() {
 }
 
 Status LargeSpace::DumpLargeSpace() {
-  std::string metaname = LargeMetaFileName(dbname_, meta_sequence_);
+  std::string metaname = LargeMetaFileName(dbname_, ++meta_sequence_);
   Status s = meta_.Dump(metaname);
   if (!s.ok()) {
   	return s;
@@ -284,7 +271,7 @@ Status LargeSpace::DumpLargeSpace() {
 
   // write meta sequence number
   std::ostringstream oss;
-  oss << ++meta_sequence_ << std::endl;
+  oss << meta_sequence_ << std::endl;
 
   return WriteStringToFile(env_, oss.str(), LargeHeadFileName(dbname_));
 }
@@ -330,10 +317,6 @@ Status LargeSpace::NewBuilder() {
   	return Status::IOError("[mris] cannot create writer");
   }
 
-  // add reader for the new block
-  LargeBlockReader *reader = new LargeBlockReader(env_, builder_);
-  blocks_.push_back(reader);
-  
   // once a new block is created, it is dumped onto disk immediately
   return DumpLargeSpace();
 }
@@ -347,6 +330,10 @@ Status LargeSpace::SealLargeBlock() {
   	return s;
   }
 
+  // add reader for the new block
+  LargeBlockReader *reader = new LargeBlockReader(env_, builder_);
+  blocks_.push_back(reader);
+  
   // a new writer will be created lazily
   delete builder_;
   builder_ = NULL;
