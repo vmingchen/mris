@@ -15,6 +15,8 @@
 
 #include <vector>
 #include <string>
+#include <unistd.h>
+#include <fcntl.h>
 #include "db/dbformat.h"
 #include "db/filename.h"
 #include "leveldb/db.h"
@@ -26,12 +28,92 @@ namespace leveldb { namespace mris {
 
 uint64_t LoadFixedUint64(uint64_t offset, SequentialFile* file);
 
+Status NewMrisAppendReadFile(const std::string& fname, 
+														 MrisAppendReadFile** result) {
+	*result = NULL;
+	// TODO: add O_SYNC ? 
+	int fd = open(fname.c_str(), O_RDWR | O_EXCL | O_CREAT);
+	if (fd == -1) {
+		return Status::IOError(fname, errno);
+	}
+
+	result = new MrisAppendReadFile(fname, fd);
+	return Status::OK();
+}
+
+class MrisAppendReadFile : public WritableFile, public RandomAccessFile {
+private:
+	std::string filename_;
+	int fd_;
+	size_t size_;
+
+public:
+	MrisAppendReadFile(const std::string& fname, int fd)
+			: filename_(fname), fd_(fd), size_(0) { }
+
+	virtual ~MrisAppendReadFile() { 
+		assert(close(fd_) == 0);
+	}
+
+  virtual Status Read(uint64_t offset, size_t n, Slice* result,
+                      char* scratch) const {
+    Status s;
+    ssize_t r = pread(fd_, scratch, n, static_cast<off_t>(offset));
+    *result = Slice(scratch, (r < 0) ? 0 : r);
+    if (r < 0) {
+      // An error: return a non-ok status
+      s = Status::IOError(filename_, strerror(errno));
+    }
+    return s;
+  }
+
+	virtual Status Append(const Slice& data) {
+		Status s;
+		const char* buf = data.data();
+		size_t len = data.size();
+
+		if (ftruncate(fd_, size_ + len) != 0) {
+      s = Status::IOError(filename_, strerror(errno));
+		}
+
+		while (s.ok() && len > 0) {
+			// append, offset is always size_
+			ssize_t n = pwrite(fd_, buf, len, static_cast<off_t>(size_));
+			if (n < 0) {
+				s = Status::IOError(filename_, strerror(errno));
+				break;
+			}
+			size_ += n;
+			buf += n;
+			len -= n;
+		}
+
+		return s;
+	}
+
+  virtual Status Close() {
+		return Status::OK();
+	}
+
+  virtual Status Sync() {
+		Status s;
+		if (fdatasync(fd_) < 0) {
+			s = Status::IOError(filename_, strerror(errno));
+		}
+		return s;
+	}
+
+  virtual Status Flush() {
+		return Status::OK();
+	}
+};
+
 struct MrisOptions {
   // the threshold of taking record as large
   size_t kSizeThreshold;
 
   // size of block, which is the allocation unit for large files
-  size_t kLargeBlockSize;
+ size_t kLargeBlockSize;
 
   // the threshold of splitting file, default to 64MB
   size_t kSplitThreshold;
@@ -108,18 +190,18 @@ public:
 	}
 };
 
-class LargeBlockWriter : public LargeBlockHandle {
+class LargeBlockBuilder : public LargeBlockHandle {
 private:
 	Env* env_;
 	WritableFile* file_;
 
 public:
-	LargeBlockWriter(Env* env) : file_(NULL), env_(env) {}
-	LargeBlockWriter(Env* env, uint64_t off, const std::string& name) 
+	LargeBlockBuilder(Env* env) : file_(NULL), env_(env) {}
+	LargeBlockBuilder(Env* env, uint64_t off, const std::string& name) 
 			: env_(env), 
 			  LargeBlockHandle(off, 0, name),
 				file_(NULL) {}
-	~LargeBlockWriter() { 
+	~LargeBlockBuilder() { 
 		if (file_) {
 			file_->Flush();
 			file_->Close();
@@ -178,7 +260,7 @@ private:
 	uint64_t meta_sequence_;
 
 	// make sure it points to a ready writer or NULL
-	LargeBlockWriter* writer_;
+	LargeBlockBuilder* builder_;
 
 	// find the file block contains @offset
 	LargeBlockReader* getBlockReader(uint64_t offset) {
@@ -230,8 +312,8 @@ public:
 
 	// size of all data
 	uint64_t DataSize() const {
-		if (writer_) {
-			return writer_->offset() + writer_->size();
+		if (builder_) {
+			return builder_->offset() + builder_->size();
 		} else if (blocks_.size() > 0) {
 			return blocks_.back()->end();
 		} else {

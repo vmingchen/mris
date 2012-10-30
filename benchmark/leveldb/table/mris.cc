@@ -129,11 +129,11 @@ Status LargeSpace::LargeMeta::DecodeFrom(Slice* input) {
 		space->blocks_.push_back(block);
 	}
 
-	// decode writer block and build space.writer_
+	// decode writer block and build space->builder_
 	if (nwblock > 0) {
-		assert(space->writer_ == NULL);
-		space->writer_ = new LargeBlockWriter(space->env_);
-		s = space->writer_->DecodeFrom(input);
+		assert(space->builder_ == NULL);
+		space->builder_ = new LargeBlockBuilder(space->env_);
+		s = space->builder_->DecodeFrom(input);
 		if (!s.ok())
 			return s;
 	}
@@ -170,14 +170,14 @@ void LargeSpace::LargeMeta::EncodeTo(std::string* dst) const {
 
 	uint64_t nblock;
 	PutVarint64(dst, nblock);
-	PutVarint32(dst, space->writer_ ? 1 : 0);
+	PutVarint32(dst, space->builder_ ? 1 : 0);
 	
 	for (uint64_t i = 0; i < nblock; ++i) {
 		space->blocks_[i]->EncodeTo(dst);
 	}
 
-	if (space->writer_) {
-		space->writer_->EncodeTo(dst);
+	if (space->builder_) {
+		space->builder_->EncodeTo(dst);
 	}
 
 	uint64_t block_length = static_cast<uint64_t>(dst->length() - block_offset);
@@ -196,7 +196,7 @@ LargeSpace::LargeSpace(const Options *opt, const std::string& dbname)
 			dbname_(dbname),
 			meta_(this),
 			meta_sequence_(0),
-			writer_(NULL) {
+			builder_(NULL) {
 	if (env_->FileExists(LargeHeadFileName(dbname))) {
 		LoadLargeSpace();
 	} else {
@@ -205,11 +205,11 @@ LargeSpace::LargeSpace(const Options *opt, const std::string& dbname)
 }
 
 LargeSpace::~LargeSpace() {
-	if (writer_) {
-		Status s = writer_->Close();
+	if (builder_) {
+		Status s = builder_->Close();
 		assert(s.ok());
-		delete writer_;
-		writer_ = NULL;
+		delete builder_;
+		builder_ = NULL;
 	}
 	for (size_t i = 0; i < blocks_.size(); ++i) {
 		delete blocks_[i];
@@ -260,11 +260,11 @@ Status LargeSpace::NewLargeSpace() {
 }
 
 Status LargeSpace::NewWriter() {
-	assert(writer_ == NULL);
+	assert(builder_ == NULL);
 
 	std::string name = LargeBlockFileName(dbname_, blocks_.size());
-	writer_ = new LargeBlockWriter(env_, DataSize(), name);
-	if (!writer_) {
+	builder_ = new LargeBlockBuilder(env_, DataSize(), name);
+	if (!builder_) {
 		return Status::IOError("[mris] cannot create writer");
 	}
 
@@ -277,21 +277,21 @@ Status LargeSpace::NewWriter() {
 // TODO: consider concurrent issues
 Status LargeSpace::SealLargeBlock() {
 	// skip empty block
-	if (writer_ == NULL || writer_->empty()) {
+	if (builder_ == NULL || builder_->empty()) {
 		return Status::OK();
 	}
 
-	Status s = writer_->Flush();
+	Status s = builder_->Flush();
 	if (!s.ok()) {
 		return s;
 	}
 
-	LargeBlockReader *reader = new LargeBlockReader(env_, writer_);
+	LargeBlockReader *reader = new LargeBlockReader(env_, builder_);
 	blocks_.push_back(reader);
 	
 	// a new writer will be created lazily
-	delete writer_;
-	writer_ = NULL;
+	delete builder_;
+	builder_ = NULL;
 
 	return Status::OK();
 }
@@ -299,19 +299,19 @@ Status LargeSpace::SealLargeBlock() {
 Status LargeSpace::Write(const Slice& slice, uint64_t& offset) {
 	// lazy init: create a new writer if there is no current writer
 	Status s;
-	if (writer_ == NULL) {
+	if (builder_ == NULL) {
 		s = NewWriter();
 		if (!s.ok()) {
 			return s;
 		}
 	}
 
-	offset = writer_->offset();
-	s = writer_->Write(slice);
+	offset = builder_->offset();
+	s = builder_->Write(slice);
 	if (!s.ok()) 
 		return s;
 
-	if (writer_->size() > mris_options_.kSplitThreshold) {
+	if (builder_->size() > mris_options_.kSplitThreshold) {
 		SealLargeBlock();
 	}
 	return s;
