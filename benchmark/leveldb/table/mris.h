@@ -217,6 +217,15 @@ inline std::ostream& operator<<(std::ostream& oss, const LargeBlockHandle& b) {
     << ", size: " << b.size_ << std::endl;
 }
 
+// Object store interface
+class ObjectStore {
+public:
+  virtual ~ObjectStore();
+  virtual Status Read(uint64_t offset, uint64_t n, 
+                      Slice* result, char *scratch) = 0;
+  virtual Status Write(const Slice& data, uint64_t* offset) = 0;
+};
+
 class LargeBlockReader : public LargeBlockHandle {
 private:
   Env* env_;
@@ -290,7 +299,7 @@ public:
   }
 };
 
-class LargeBlockBuilder : public LargeBlockHandle {
+class LargeBlockBuilder : public LargeBlockHandle, public ObjectStore {
 private:
   Env* env_;
   MrisAppendReadFile* file_;
@@ -301,7 +310,7 @@ public:
   		: env_(env), 
   		  LargeBlockHandle(off, 0, name),
   			file_(NULL) {}
-  ~LargeBlockBuilder() { 
+  virtual ~LargeBlockBuilder() { 
   	if (file_) {
   		file_->Sync();
   		file_->Close();
@@ -309,7 +318,8 @@ public:
   	}
   }
 
-  Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
+  virtual Status Read(uint64_t offset, uint64_t n, 
+                      Slice* result, char *scratch) {
     if (! file_) {
       if (size_ <= offset + n) {
   			return Status::IOError("[mris] out-of-bound read");
@@ -323,7 +333,7 @@ public:
     return LargeBlockReader::ReadFromFile(file_, offset, n, result, scratch);
   }
 
-  Status Write(const Slice& data, uint64_t* offset) {
+  virtual Status Write(const Slice& data, uint64_t* offset) {
   	assert(initialized());
   	Status s;
   	if (! file_) {
@@ -379,7 +389,7 @@ public:
 
 const size_t kValueDelegateSize = sizeof(ValueDelegate);
 
-class LargeSpace {
+class LargeSpace : public ObjectStore {
 private:
   // meta_size is the size with the length prefix but not the crc suffix
   // meta_file format:
@@ -449,13 +459,14 @@ private:
 
 public:
   LargeSpace(const Options *opt, const std::string& dbname);
-  ~LargeSpace();
+  virtual ~LargeSpace();
 
   Status Open();
   Status Close();
 
   // We make sure no value expands more than one LargeBlock
-  Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
+  virtual Status Read(uint64_t offset, uint64_t n, 
+                      Slice* result, char *scratch) {
   	Status s;
   	if (offset > DataSize()) {
   		s = Status::IOError("[mris] invalid offset");
@@ -476,7 +487,7 @@ public:
   	return s;
   }
 
-  Status Write(const Slice& slice, uint64_t* offset);
+  virtual Status Write(const Slice& slice, uint64_t* offset);
 
   // size of all data
   uint64_t DataSize() const {
