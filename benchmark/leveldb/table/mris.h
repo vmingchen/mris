@@ -31,18 +31,16 @@ namespace leveldb { namespace mris {
 
 uint64_t LoadFixedUint64(uint64_t offset, SequentialFile* file);
 
-class MrisAppendReadFile;
-
 class MrisAppendReadFile : public WritableFile, public RandomAccessFile {
 private:
   std::string filename_;
   int fd_;
   size_t size_;
-
-public:
+  // can only be created using New or Open
   MrisAppendReadFile(const std::string& fname, int fd, int sz = 0)
   		: filename_(fname), fd_(fd), size_(sz) { }
 
+public:
   virtual ~MrisAppendReadFile() {
   	assert(close(fd_) == 0);
   }
@@ -67,14 +65,9 @@ public:
   	const char* buf = data.data();
   	size_t len = data.size();
 
-  	if (ftruncate(fd_, size_ + len) != 0) {
-      s = Status::IOError(filename_, strerror(errno));
-  	}
-
   	off_t offset = static_cast<off_t>(size_);
   	while (s.ok() && len > 0) {
-      //ssize_t n = write(fd_, buf, len);
-  		ssize_t n = pwrite(fd_, buf, len, offset);
+      ssize_t n = write(fd_, buf, len);
   		if (n < 0) {
   			s = Status::IOError(filename_, strerror(errno));
   			break;
@@ -110,8 +103,7 @@ public:
   static Status New(const std::string& fname, MrisAppendReadFile** result) {
     *result = NULL;
     // create a file that we will append and read
-    //int fd = open(fname.c_str(), O_RDWR | O_EXCL | O_CREAT | O_APPEND, 0644);
-    int fd = open(fname.c_str(), O_RDWR | O_EXCL | O_CREAT, 0644);
+    int fd = open(fname.c_str(), O_RDWR | O_EXCL | O_CREAT | O_APPEND, 0644);
     if (fd == -1) {
       return Status::IOError(fname, strerror(errno));
     }
@@ -134,7 +126,7 @@ public:
       return Status::IOError(fname, strerror(errno));
     }
     if (info.st_size != size) {
-      return Status::IOError(fname, "file size mismatch");
+      return Status::IOError(fname, "[mris] file size mismatch");
     }
 
     *result = new MrisAppendReadFile(fname, fd, size);

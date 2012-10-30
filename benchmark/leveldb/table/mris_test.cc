@@ -295,11 +295,11 @@ TEST(MrisTest, LargeSpaceTestBasic) {
   Options opt;
   LargeSpace* space = new LargeSpace(&opt, dbname);
 
-  uint64_t offset;
+  uint64_t offset1;
   std::string message = "hello";
   Slice input(message);
   ASSERT_OK(space->Open());
-  ASSERT_OK(space->Write(input, &offset));
+  ASSERT_OK(space->Write(message, &offset1));
   ASSERT_OK(space->Close());
 
   delete space;
@@ -309,8 +309,16 @@ TEST(MrisTest, LargeSpaceTestBasic) {
   char buf[1024];
   Slice result;
   ASSERT_OK(space->Open());
-  ASSERT_OK(space->Read(offset, message.length(), &result, buf));
-  ASSERT_EQ(0, memcmp(result.data(), input.data(), result.size()));
+  ASSERT_OK(space->Read(offset1, message.size(), &result, buf));
+  ASSERT_EQ(0, memcmp(result.data(), message.c_str(), result.size()));
+
+  // write more and read
+  message = "world";
+  uint64_t offset2;
+  ASSERT_OK(space->Write(message, &offset2));
+  Slice result2;
+  ASSERT_OK(space->Read(offset2, message.size(), &result2, buf));
+  ASSERT_EQ(0, memcmp(result2.data(), message.c_str(), result2.size()));
 
   delete space;
 }
