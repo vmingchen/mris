@@ -68,7 +68,8 @@ uint32_t LoadFixedUint32(uint64_t offset, RandomAccessFile* file) {
   return DecodeFixed32(scrach);
 }
 
-ObjectStore::~ObjectStore() {}
+ObjectReader::~ObjectReader() {}
+ObjectWriter::~ObjectWriter() {}
 
 // ======================= MrisOptions Begin ================================
 void MrisOptions::EncodeTo(std::string* dst) const {

@@ -217,16 +217,20 @@ inline std::ostream& operator<<(std::ostream& oss, const LargeBlockHandle& b) {
     << ", size: " << b.size_ << std::endl;
 }
 
-// Object store interface
-class ObjectStore {
+// Object store interfaces
+class ObjectReader {
 public:
-  virtual ~ObjectStore();
+  virtual ~ObjectReader();
   virtual Status Read(uint64_t offset, uint64_t n, 
                       Slice* result, char *scratch) = 0;
+};
+class ObjectWriter {
+public:
+  virtual ~ObjectWriter();
   virtual Status Write(const Slice& data, uint64_t* offset) = 0;
 };
 
-class LargeBlockReader : public LargeBlockHandle {
+class LargeBlockReader : public LargeBlockHandle, public ObjectReader {
 private:
   Env* env_;
   RandomAccessFile *file_;
@@ -243,9 +247,10 @@ public:
       : LargeBlockHandle(off, size, name),
         env_(env_),
         file_(NULL) {}
-  ~LargeBlockReader() { if (file_) delete file_; }
+  virtual ~LargeBlockReader() { if (file_) delete file_; }
 
-  Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
+  virtual Status Read(uint64_t offset, uint64_t n, 
+                      Slice* result, char *scratch) {
   	assert(initialized());
   	Status s;
   	if (file_ == NULL) {
@@ -299,7 +304,9 @@ public:
   }
 };
 
-class LargeBlockBuilder : public LargeBlockHandle, public ObjectStore {
+class LargeBlockBuilder : public LargeBlockHandle, 
+                          public ObjectReader,
+                          public ObjectWriter {
 private:
   Env* env_;
   MrisAppendReadFile* file_;
@@ -389,7 +396,7 @@ public:
 
 const size_t kValueDelegateSize = sizeof(ValueDelegate);
 
-class LargeSpace : public ObjectStore {
+class LargeSpace : public ObjectReader, public ObjectWriter {
 private:
   // meta_size is the size with the length prefix but not the crc suffix
   // meta_file format:

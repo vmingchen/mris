@@ -26,12 +26,13 @@
 
 static int sequence = 0;
 
+// The maximum size of object used in tests
 static const size_t LEN = 102400;
 static const size_t HALF_LEN = LEN / 2;
 
 namespace leveldb { namespace mris {
 
-TEST(LargeBlockHandle, basic) {
+TEST(LargeBlockHandle, BlockHandleTest) {
   std::string name = "block000001.lbf";
   LargeBlockHandle large_block(200, 299, name);
 
@@ -74,7 +75,7 @@ class RandomGenerator {
     // We use a limited amount of data over and over again and ensure
     // that it is larger than the compression window (32KB), and also
     // large enough to serve all typical value sizes we want to write.
-    Random rnd(301);
+    Random rnd((long)time(NULL));
     std::string piece;
     while (data_.size() < 2*LEN) {
       // Add a short fragment that is as compressible as specified
@@ -95,6 +96,7 @@ class RandomGenerator {
   }
 };
 
+// Base class of tests
 class MrisTest {
   public:
     Random rand;
@@ -128,6 +130,54 @@ class MrisTest {
                static_cast<unsigned long long>(sequence));
       ++sequence;
       return dbname + buf;
+    }
+
+    // generate N random objects and insert them into store
+    // @N: number of objects generated
+    // @sources: generated random objects
+    // @results: results returned by the insersion
+    // @writer: object writer who writes object into object store
+    // @reader: object reader who reades object from object store
+    void TestWrite(size_t N, std::vector<Slice> *sources,
+                   std::vector<ValueDelegate> *results,
+                   ObjectWriter *writer, ObjectReader *reader) {
+      char buf[LEN];
+      for (size_t i = 0; i < N; ++i) {
+        size_t size = rand.Uniform(LEN);
+        Slice in = rgen.Generate(size);
+        sources->push_back(in);
+
+        uint64_t offset = 0;
+        ASSERT_OK(writer->Write(in, &offset));
+        results->push_back(ValueDelegate(offset, size));
+
+        // read new inserted value out and check
+        Slice out;
+        ASSERT_OK(reader->Read(offset, size, &out, buf));
+        ASSERT_EQ(out.size(), size);
+        ASSERT_EQ(0, memcmp(in.data(), out.data(), size));
+      }
+    }
+
+    // read M random objects from store and compare them with origins
+    // @M: number of objects generated
+    // @sources: generated random objects
+    // @results: results returned by the insersion
+    // @reader: object reader who reades object from object store
+    void TestRead(size_t M, const std::vector<Slice> &sources,
+                  const std::vector<ValueDelegate> &results, 
+                  ObjectReader *reader) {
+      char buf[LEN];
+      size_t N = sources.size();
+      for (size_t i = 0; i < M; ++i) {
+        size_t j = rand.Uniform(N);
+        Slice in = sources[j];
+        Slice out;
+        ValueDelegate vd = results[j];
+        ASSERT_OK(reader->Read(vd.offset, vd.size, &out, buf));
+        ASSERT_EQ(out.size(), in.size());
+        ASSERT_EQ(0, memcmp(out.data(), in.data(), out.size()));
+      }
     }
 };
 
@@ -198,35 +248,10 @@ TEST(MrisTest, BuilderTestFull) {
   LargeBlockBuilder* builder = new LargeBlockBuilder(env, 0, filename);
   std::vector<Slice> sources;
   std::vector<ValueDelegate> values;
-  char buf[LEN+1];
-  const size_t N = 100;
 
-  for (size_t i = 0; i < N; ++i) {
-    size_t size = rand.Uniform(LEN);
-    Slice in = rgen.Generate(size);
-    sources.push_back(in);
-    ASSERT_EQ(size, in.size());
+  TestWrite(100, &sources, &values, builder, builder);
 
-    uint64_t offset = 0;
-    ASSERT_OK(builder->Write(in, &offset));
-
-    Slice out;
-    ASSERT_OK(builder->Read(offset, size, &out, buf));
-    ASSERT_EQ(out.size(), size);
-    ASSERT_EQ(0, memcmp(in.data(), out.data(), size));
-    values.push_back(ValueDelegate(offset, size));
-  }
-
-  for (size_t i = 0; i < 256; ++i) {
-    size_t j = rand.Uniform(N);
-    Slice in = sources[j];
-
-    Slice out;
-    ValueDelegate vd = values[j];
-    ASSERT_OK(builder->Read(vd.offset, vd.size, &out, buf));
-    ASSERT_EQ(out.size(), in.size());
-    ASSERT_EQ(0, memcmp(out.data(), in.data(), out.size()));
-  }
+  TestRead(256, sources, values, builder);
 
   delete builder;
 }
@@ -254,39 +279,13 @@ TEST(MrisTest, ReaderTestFull) {
   LargeBlockBuilder* builder = new LargeBlockBuilder(env, 0, filename);
   std::vector<Slice> sources;
   std::vector<ValueDelegate> values;
-  char buf[LEN+1];
-  const size_t N = 100;
 
-  for (size_t i = 0; i < N; ++i) {
-    size_t size = rand.Uniform(LEN);
-    Slice in = rgen.Generate(size);
-    ASSERT_EQ(size, in.size());
-    sources.push_back(in);
-
-    uint64_t offset = 0;
-    ASSERT_OK(builder->Write(in, &offset));
-    values.push_back(ValueDelegate(offset, size));
-  }
-
+  TestWrite(100, &sources, &values, builder, builder);
   ASSERT_OK(builder->Sync());
 
   LargeBlockReader* reader = new LargeBlockReader(env, builder);
 
-  Slice result;
-  ValueDelegate del = values[0];
-  ASSERT_OK(reader->Read(del.offset, del.size, &result, buf));
-  ASSERT_EQ(result.size(), del.size);
-  ASSERT_EQ(0, memcmp(sources[0].data(), result.data(), result.size()));
-
-  for (size_t i = 0; i < 256; ++i) {
-    size_t j = rand.Uniform(N);
-    Slice in = sources[j];
-    ValueDelegate vd = values[j];
-    Slice out;
-    ASSERT_OK(reader->Read(vd.offset, vd.size, &out, buf));
-    ASSERT_EQ(out.size(), in.size());
-    ASSERT_EQ(0, memcmp(out.data(), in.data(), out.size()));
-  }
+  TestRead(256, sources, values, reader);
 
   delete reader;
   delete builder;
@@ -327,44 +326,21 @@ TEST(MrisTest, LargeSpaceTestFull) {
 
   ASSERT_OK(space->Open());
 
-  for (size_t i = 0; i < N; ++i) {
-    size_t size = rand.Uniform(LEN);
-    Slice in = rgen.Generate(size);
-    sources.push_back(in);
+  TestWrite(5000, &sources, &values, space, space);
 
-    uint64_t offset = 0;
-    ASSERT_OK(space->Write(in, &offset));
-    values.push_back(ValueDelegate(offset, size));
-  }
-
-  for (size_t i = 0; i < 256; ++i) {
-    size_t j = rand.Uniform(N);
-    Slice in = sources[j];
-
-    Slice out;
-    ValueDelegate vd = values[j];
-    ASSERT_OK(space->Read(vd.offset, vd.size, &out, buf));
-    ASSERT_EQ(out.size(), in.size());
-    ASSERT_EQ(0, memcmp(out.data(), in.data(), out.size()));
-  }
+  TestRead(1000, sources, values, space);
 
   ASSERT_OK(space->Close());
   delete space;
 
-  // reopen
+  // reopen and test
   space = new LargeSpace(&opt, dbname);
   ASSERT_OK(space->Open());
+  TestRead(1000, sources, values, space);
 
-  for (size_t i = 0; i < 256; ++i) {
-    size_t j = rand.Uniform(N);
-    Slice in = sources[j];
-
-    Slice out;
-    ValueDelegate vd = values[j];
-    ASSERT_OK(space->Read(vd.offset, vd.size, &out, buf));
-    ASSERT_EQ(out.size(), in.size());
-    ASSERT_EQ(0, memcmp(out.data(), in.data(), out.size()));
-  }
+  // write more and test
+  //TestWrite(1000, &sources, &values, space, space);
+  //TestRead(1000, sources, values, space);
 
   ASSERT_OK(space->Close());
   delete space;
