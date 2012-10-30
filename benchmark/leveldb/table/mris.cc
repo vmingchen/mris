@@ -263,7 +263,7 @@ Status LargeSpace::NewWriter() {
 	assert(builder_ == NULL);
 
 	std::string name = LargeBlockFileName(dbname_, blocks_.size());
-	builder_ = new LargeBlockBuilder(env_, DataSize(), name);
+	builder_ = new LargeBlockBuilder(env, DataSize(), name);
 	if (!builder_) {
 		return Status::IOError("[mris] cannot create writer");
 	}

@@ -31,7 +31,7 @@ uint64_t LoadFixedUint64(uint64_t offset, SequentialFile* file);
 Status NewMrisAppendReadFile(const std::string& fname, 
 														 MrisAppendReadFile** result) {
 	*result = NULL;
-	// TODO: add O_SYNC ? 
+	// create a file that we will append and read
 	int fd = open(fname.c_str(), O_RDWR | O_EXCL | O_CREAT);
 	if (fd == -1) {
 		return Status::IOError(fname, errno);
@@ -76,16 +76,20 @@ public:
       s = Status::IOError(filename_, strerror(errno));
 		}
 
+		off_t offset = static_cast<off_t>(size_);
 		while (s.ok() && len > 0) {
-			// append, offset is always size_
-			ssize_t n = pwrite(fd_, buf, len, static_cast<off_t>(size_));
+			ssize_t n = pwrite(fd_, buf, len, offset);
 			if (n < 0) {
 				s = Status::IOError(filename_, strerror(errno));
 				break;
 			}
-			size_ += n;
+			offset += n;
 			buf += n;
 			len -= n;
+		}
+
+		if (s.ok()) {
+			size_ = static_cast<size_t>(offset);
 		}
 
 		return s;
@@ -193,7 +197,7 @@ public:
 class LargeBlockBuilder : public LargeBlockHandle {
 private:
 	Env* env_;
-	WritableFile* file_;
+	MrisAppendReadFile* file_;
 
 public:
 	LargeBlockBuilder(Env* env) : file_(NULL), env_(env) {}
@@ -203,17 +207,27 @@ public:
 				file_(NULL) {}
 	~LargeBlockBuilder() { 
 		if (file_) {
-			file_->Flush();
+			file_->Sync();
 			file_->Close();
 			delete file_;
 		}
+	}
+
+	Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
+		Status s;
+		if (! file_) {
+			s = Status::CorruptionError("Nothing to read", filename_);
+		} else {
+			s = file_->Read(offset, n, result, scratch);
+		}
+		return s;
 	}
 
 	Status Write(const Slice& data) {
 		assert(initialized());
 		Status s;
 		if (file_ == NULL) {
-			s = env_->NewWritableFile(name_, &file_);
+			s = NewMrisAppendReadFile(name_, &file_);
 			if (!s.ok()) {
 				assert(file_ == NULL);
 				return s;
@@ -224,8 +238,10 @@ public:
 			size_ += data.size();
 		return s;
 	}
-	Status Flush() { return file_ ? file_->Flush() : Status::OK(); }
-	Status Close() { return file_ ? file_->Close() : Status::OK(); }
+
+	Status Sync() { 
+		return file_ ? file_->Sync() : Status::OK();
+	}
 };
 
 const size_t kValueDelegateSize = sizeof(ValueDelegate);
@@ -302,10 +318,26 @@ public:
 	// Load metadata from file given by @meta_name
 	Status Load(const char *meta_name, uint64_t meta_size, uint64_t nblock);
 
+	// We make sure no value expands multiple LargeBlock
 	Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
-		LargeBlockReader* reader = getBlockReader(offset);
-		assert(reader->contains(offset, n));
-		return reader->Read(offset - reader->offset(), n, result, scratch);
+		Status s;
+		if (offset > DataSize()) {
+			s = Status::IOError("[mris] invalid offset");
+		} else if (offset > builder_->offset()) {
+			if (builder_ && builder_->contains(offset, n)) {
+				s = builder_->Read(offset, n, result, scratch);
+			} else {
+				s = Status::IOError("[mris] out-of-bound read");
+			}
+		} else {
+			LargeBlockReader* reader = getBlockReader(offset);
+			if (reader->contains(offset, n)) {
+				s = reader->Read(offset - reader->offset(), n, result, scratch);
+			} else {
+				s = Status::IOError("[mris] out-of-bound read");
+			}
+		}
+		return s;
 	}
 
 	Status Write(const Slice& slice, uint64_t& offset);
