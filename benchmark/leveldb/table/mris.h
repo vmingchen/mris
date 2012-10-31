@@ -28,18 +28,9 @@ namespace leveldb { namespace mris {
 
 uint64_t LoadFixedUint64(uint64_t offset, SequentialFile* file);
 
-Status NewMrisAppendReadFile(const std::string& fname, 
-														 MrisAppendReadFile** result) {
-	*result = NULL;
-	// create a file that we will append and read
-	int fd = open(fname.c_str(), O_RDWR | O_EXCL | O_CREAT);
-	if (fd == -1) {
-		return Status::IOError(fname, errno);
-	}
+class MrisAppendReadFile;
 
-	result = new MrisAppendReadFile(fname, fd);
-	return Status::OK();
-}
+Status NewMrisAppendReadFile(const std::string&, MrisAppendReadFile**);
 
 class MrisAppendReadFile : public WritableFile, public RandomAccessFile {
 private:
@@ -216,7 +207,7 @@ public:
 	Status Read(uint64_t offset, uint64_t n, Slice* result, char *scratch) {
 		Status s;
 		if (! file_) {
-			s = Status::CorruptionError("Nothing to read", filename_);
+			s = Status::Corruption("Nothing to read", name_);
 		} else {
 			s = file_->Read(offset, n, result, scratch);
 		}

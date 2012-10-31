@@ -50,6 +50,19 @@ std::string LargeHeadFileName(const std::string& dbname) {
 	return dbname + "/LARGEHEAD";
 }
 
+Status NewMrisAppendReadFile(const std::string& fname, 
+														 MrisAppendReadFile** result) {
+	*result = NULL;
+	// create a file that we will append and read
+	int fd = open(fname.c_str(), O_RDWR | O_EXCL | O_CREAT);
+	if (fd == -1) {
+		return Status::IOError(fname, strerror(errno));
+	}
+
+	*result = new MrisAppendReadFile(fname, fd);
+	return Status::OK();
+}
+
 uint64_t LoadFixedUint64(uint64_t offset, RandomAccessFile* file) {
 	uint64_t result;
 	Slice buffer;
@@ -206,7 +219,7 @@ LargeSpace::LargeSpace(const Options *opt, const std::string& dbname)
 
 LargeSpace::~LargeSpace() {
 	if (builder_) {
-		Status s = builder_->Close();
+		Status s = builder_->Sync();
 		assert(s.ok());
 		delete builder_;
 		builder_ = NULL;
@@ -263,7 +276,7 @@ Status LargeSpace::NewWriter() {
 	assert(builder_ == NULL);
 
 	std::string name = LargeBlockFileName(dbname_, blocks_.size());
-	builder_ = new LargeBlockBuilder(env, DataSize(), name);
+	builder_ = new LargeBlockBuilder(env_, DataSize(), name);
 	if (!builder_) {
 		return Status::IOError("[mris] cannot create writer");
 	}
@@ -281,7 +294,7 @@ Status LargeSpace::SealLargeBlock() {
 		return Status::OK();
 	}
 
-	Status s = builder_->Flush();
+	Status s = builder_->Sync();
 	if (!s.ok()) {
 		return s;
 	}
