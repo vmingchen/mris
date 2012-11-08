@@ -27,7 +27,7 @@
 static int sequence = 0;
 
 // The maximum size of object used in tests
-static const size_t LEN = 102400;
+static const size_t LEN = 1024;
 static const size_t HALF_LEN = LEN / 2;
 
 namespace leveldb { namespace mris {
@@ -61,6 +61,19 @@ TEST(LargeBlockHandle, BlockHandleTest) {
   Slice input(store);
   ASSERT_OK(new_block.DecodeFrom(&input));
   ASSERT_EQ(large_block, new_block);
+}
+
+TEST(ValueDelegate, ValueDelegateTest) {
+  offset = 120;
+  size = 160;
+  std::string vdstr;
+  EncodeTo(&vdstr);
+
+  ValueDelegate vd;
+  Slice input(vdstr);
+  ASSERT_OK(vd.DecodeFrom(&input));
+  ASSERT_EQ(vd.offset, offset);
+  ASSERT_EQ(vd.size, size);
 }
 
 // Copied from db_bench.cc
