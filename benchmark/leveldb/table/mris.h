@@ -572,7 +572,7 @@ public:
   bool IsEmpty() const { return meta_sequence_ == 0; }
 
   static LargeSpace* GetSpace(const std::string& dbname,
-                                    const Options* opt) {
+                              const Options* opt) {
     std::map<std::string, LargeSpace*>::iterator it = space_map_.find(dbname);
     if (it == space_map_.end()) {
       space_map_[dbname] = new LargeSpace(opt, dbname);

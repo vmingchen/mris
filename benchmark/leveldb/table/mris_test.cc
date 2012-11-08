@@ -393,6 +393,29 @@ TEST(MrisTest, LargeSpaceTestRandom) {
   delete space;
 }
 
+TEST(MrisTest, LargeSpaceTestInterface) {
+  Options opt;
+  LargeSpace* space = LargeSpace::GetSpace(dbname, &opt);
+
+  ASSERT_TRUE(space);
+
+  char buf[128];
+  std::string keystr = "largekey";
+  char* p = EncodeVarint32(buf, keystr.size() + 8);
+  size_t keylen = (p - buf) + keystr.size() + 8;
+  memcpy(p, keystr.data(), keystr.size());
+  p += keystr.size();
+  EncodeFixed64(p, (0xbeef << 8) | kTypeValue);
+  Slice key(buf, keylen);
+
+  Slice value = rgen.Generate(LEN);
+  std::string mris_key, mris_value;
+  ASSERT_OK(space->Deposit(key, value, &mris_key, &mris_value));
+
+  ASSERT_OK(space->Retrieve(&mris_value, 0));
+  ASSERT_EQ(0, memcmp(value.data(), mris_value.data(), value.size()));
+}
+
 } }
 
 int main(int argc, char** argv) {
