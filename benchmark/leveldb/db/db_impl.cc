@@ -1461,3 +1461,4 @@ Status DestroyDB(const std::string& dbname, const Options& options) {
 }
 
 }  // namespace leveldb
+// vim: set shiftwidth=2 tabstop=2 expandtab:

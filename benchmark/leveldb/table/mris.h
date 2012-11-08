@@ -459,6 +459,8 @@ private:
 
   Status SealLargeBlock();
 
+  static std::map<std::string, LargeSpace*> space_map_;
+
 public:
   LargeSpace(const Options *opt, const std::string& dbname);
   virtual ~LargeSpace();
@@ -522,8 +524,25 @@ public:
     return s;
   }
 
-  Status Retrieve(const Slice& key, const Slice& mris_value, Slice* value) {
+  Status Retrieve(std::string* value, size_t value_offset) {
+    ValueDelegate vd;
+    Slice input(value->data() + value_offset, value->size() - value_offset);
+    Status s = vd.DecodeFrom(input);
+    if (! s.ok()) {
+      return s;
+    }
 
+    Slice result;
+    value->resize(value_offset + vd.size);
+    char* scrach = const_cast<char *>(value->data() + value_offset);
+    s = Read(vd.offset, vd.size, &result, scrach);
+
+    // unget the allocated space when fail
+    if (! s.ok()) {
+      value->resize(value_offset);
+    }
+
+    return s;
   }
 
   // size of all data
@@ -551,6 +570,15 @@ public:
   }
 
   bool IsEmpty() const { return meta_sequence_ == 0; }
+
+  static LargeSpace* GetSpace(const std::string& dbname,
+                                    const Options& opt) {
+    std::map<std::string, LargeSpace*>::iterator it = space_map_.find(dbname);
+    if (it == space_map_::end()) {
+      space_map_[dbname] = new LargeSpace(opt, dbname);
+    }
+    return space_map_[dbname];
+  }
 };
 
 } }

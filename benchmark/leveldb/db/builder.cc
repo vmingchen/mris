@@ -12,6 +12,8 @@
 #include "leveldb/env.h"
 #include "leveldb/iterator.h"
 
+#include "table/mris.h"
+
 namespace leveldb {
 
 Status BuildTable(const std::string& dbname,
@@ -36,12 +38,26 @@ Status BuildTable(const std::string& dbname,
     meta->smallest.DecodeFrom(iter->key());
     for (; iter->Valid(); iter->Next()) {
       Slice key = iter->key();
-	  // [mris] small waste
+      // [mris] small waste
       meta->largest.DecodeFrom(key);
+#ifdef MRIS
+      mris::LargeSpace* lspace = mris::LargeSpace::GetSpace(dbname, options);
+      if (lspace->IsLargeValue(iter->value())) {
+        std::string mris_key, mris_value;
+        s = lspace->Deposit(key, iter->value(), &mris_key, &mris_value);
+        if (s.ok()) {
+          builder->Add(mris_key, mris_value);
+        } else {
+          builder->Add(key, iter->value());
+        }
+        s = Status::OK();
+      }
+#else
       builder->Add(key, iter->value());
+#endif
     }
 
-	// [mris] s.ok() is always true here
+    // [mris] s.ok() is always true here
     // Finish and check for builder errors
     if (s.ok()) {
       s = builder->Finish();
@@ -88,3 +104,5 @@ Status BuildTable(const std::string& dbname,
 }
 
 }  // namespace leveldb
+
+// vim: set shiftwidth=2 tabstop=2 expandtab:

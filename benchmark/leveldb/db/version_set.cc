@@ -18,6 +18,8 @@
 #include "util/coding.h"
 #include "util/logging.h"
 
+#include "table/mris.h"
+
 namespace leveldb {
 
 static const int kTargetFileSize = 2 * 1048576;
@@ -262,6 +264,9 @@ enum SaverState {
   kFound,
   kDeleted,
   kCorrupt,
+#ifdef MRIS
+  kFoundLargeValue,
+#endif
 };
 struct Saver {
   SaverState state;
@@ -277,7 +282,20 @@ static void SaveValue(void* arg, const Slice& ikey, const Slice& v) {
     s->state = kCorrupt;
   } else {
     if (s->ucmp->Compare(parsed_key.user_key, s->user_key) == 0) {
+#ifdef MRIS
+      switch (parsed_key.type) {
+        case kTypeValue:
+          s->state = kFound;
+          break;
+        case kTypeLargeValue:
+          s->state = kFoundLargeValue;
+          break;
+        default:
+          s->state = kDeleted;
+      }
+#else
       s->state = (parsed_key.type == kTypeValue) ? kFound : kDeleted;
+#endif
       if (s->state == kFound) {
         s->value->assign(v.data(), v.size());
       }
@@ -302,6 +320,10 @@ Status Version::Get(const ReadOptions& options,
   stats->seek_file_level = -1;
   FileMetaData* last_file_read = NULL;
   int last_file_read_level = -1;
+
+#ifdef MRIS
+  size_t value_old_size = value->size();
+#endif
 
   // We can search level-by-level since entries never hop across
   // levels.  Therefore we are guaranteed that if we find data
@@ -378,6 +400,13 @@ Status Version::Get(const ReadOptions& options,
         case kDeleted:
           s = Status::NotFound(Slice());  // Use empty error message for speed
           return s;
+#ifdef MRIS
+        case kFoundLargeValue:
+          mris::LargeSpace* lspace = 
+            mris::LargeSpace::GetSpace(vset_->dbname_, vset_->options_);
+          s = lspace->Retrieve(value, value_old_size);
+          return s;
+#endif
         case kCorrupt:
           s = Status::Corruption("corrupted key for ", user_key);
           return s;
@@ -1400,3 +1429,4 @@ void Compaction::ReleaseInputs() {
 }
 
 }  // namespace leveldb
+// vim: set shiftwidth=2 tabstop=2 expandtab:
