@@ -86,6 +86,29 @@ Status MrisOptions::DecodeFrom(Slice* input) {
   }
 }
 
+
+// ========================= ValueDelegate Begin ===========================
+void ValueDelegate::EncodeTo(std::string* dst) const {
+  // we add sizeof(ValueDelegate) at the beginning so that the value delegate
+  // has the same format as real internal value
+  PutVarint32(dst, sizeof(ValueDelegate));
+  PutVarint64(dst, offset);
+  PutVarint32(dst, size);
+}
+
+Status ValueDelegate::DecodeFrom(Slice* input) {
+  uint32_t del_size;
+  if (GetVarint32(input, &del_size) &&
+      GetVarint64(input, &offset) &&
+      GetVarint32(input, &size) &&
+      del_size == sizeof(ValueDelegate)) {
+    return Status::OK();
+  } else {
+    return Status::Corruption("[mris] bad value delegate");
+  }
+}
+
+
 // ======================= LargeBlockHandle Begin ===========================
 
 void LargeBlockHandle::EncodeTo(std::string* dst) const {

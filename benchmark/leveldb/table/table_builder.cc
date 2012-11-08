@@ -112,7 +112,12 @@ void TableBuilder::Add(const Slice& key, const Slice& value) {
 
   r->last_key.assign(key.data(), key.size());
   r->num_entries++;
+
+#ifdef MRIS
   r->data_block.Add(key, value);
+#else
+  r->data_block.Add(key, value);
+#endif
 
   const size_t estimated_block_size = r->data_block.CurrentSizeEstimate();
   if (estimated_block_size >= r->options.block_size) {

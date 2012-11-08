@@ -31,6 +31,6 @@ fixed size.
 
 This project is a follow-up work of my labmate's work publised in "An Efficient
 Multi-Tier Tablet Server Storage Architecture". The idea is also supported by
-some recent publication for example Facebook's Sigmetrics'12 paper "Workload
-analysis of a large-scale key-value store". The project will be based on KV
-database include LevelDB from Google and KVDB from FSL Stony Brook.
+some recent publications, for example, Facebook's Sigmetrics'12 paper "Workload
+analysis of a large-scale key-value store". The project is based on KV database
+include LevelDB from Google and KVDB from FSL Stony Brook.

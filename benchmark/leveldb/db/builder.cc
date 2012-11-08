@@ -36,10 +36,12 @@ Status BuildTable(const std::string& dbname,
     meta->smallest.DecodeFrom(iter->key());
     for (; iter->Valid(); iter->Next()) {
       Slice key = iter->key();
+	  // [mris] small waste
       meta->largest.DecodeFrom(key);
       builder->Add(key, iter->value());
     }
 
+	// [mris] s.ok() is always true here
     // Finish and check for builder errors
     if (s.ok()) {
       s = builder->Finish();

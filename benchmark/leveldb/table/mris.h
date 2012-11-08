@@ -67,6 +67,7 @@ public:
 
   	off_t offset = static_cast<off_t>(size_);
   	while (s.ok() && len > 0) {
+      // fd_ is opened with O_APPEND
       ssize_t n = write(fd_, buf, len);
   		if (n < 0) {
   			s = Status::IOError(filename_, strerror(errno));
@@ -159,8 +160,10 @@ struct ValueDelegate {
   // offset of the record containing real value
   uint64_t offset;
   // size of real value
-  size_t size;
+  uint32_t size;
   ValueDelegate(size_t off, size_t sz) : offset(off), size(sz) {}
+  void EncodeTo(std::string* dst) const;
+  Status DecodeFrom(Slice* input);
 };
 
 class LargeBlockHandle {
@@ -487,6 +490,41 @@ public:
   }
 
   virtual Status Write(const Slice& slice, uint64_t* offset);
+
+  bool IsLargeValue(const Slice& value) {
+    return value.size() > mris_options_.kSizeThreshold;
+  }
+
+  Status Deposit(const Slice& key, const Slice& value,
+                 std::string* mris_key, std::string* mris_value) {
+    ParsedInternalKey parsed_key;
+    if (! ParsedInternalKey(key, &parsed_key)) {
+      return Status::Corruption("[mris] invalid key");
+    }
+
+    assert(mris_key && mris_value);
+    assert(parsed_key.type == kTypeValue);
+
+    // set mris key
+    parsed_key.type = kTypeLargeValue;
+    AppendInternalKey(mris_key, parsed_key);
+
+    // set mris value
+    uint64_t value_offset;
+    s = Write(value, &value_offset);
+    if (! s.ok()) {
+      return s;
+    }
+
+    ValueDelegate vd(value_offset, value.size());
+    s = vd.EncodeTo(mris_value);
+
+    return s;
+  }
+
+  Status Retrieve(const Slice& key, const Slice& mris_value, Slice* value) {
+
+  }
 
   // size of all data
   uint64_t DataSize() const {
