@@ -4,12 +4,12 @@ CSE602 Course Project
 In many scenarios, the access patterns and the sizes of structured objects
 present a property that matches the property of the storage hierarchy. For
 example, in an image storage system, the attributes and thumbnails of stored
-images are small in size but frequently accessed, which makes them fits well in
+images are small in size but frequently accessed, which makes them fit well in
 small but fast and expensive top-tiered storage devices, such as NVRAM and SSD.
-Whereas the images are big but less accessed, which makes them suitable for
-large but slow and inexpensive bottom-tiered storage devices, such as HDD and
-tape. Moreover, slow seeks can usually be amortized by fast sequential access
-followed.
+Whereas the images themselves are big but less accessed, which makes them
+suitable for large but slow and inexpensive bottom-tiered storage devices, such
+as HDD and tape. Moreover, slow seeks of bottom-tiered devices can be amortized
+by fast sequential access followed.
 
 For small objects, throughput is important in term of op/sec. They tend to be
 accessed randomly because of their small sizes and the implication that they
@@ -32,5 +32,5 @@ fixed size.
 This project is a follow-up work of my labmate's work publised in "An Efficient
 Multi-Tier Tablet Server Storage Architecture". The idea is also supported by
 some recent publications, for example, Facebook's Sigmetrics'12 paper "Workload
-analysis of a large-scale key-value store". The project is based on KV database
-include LevelDB from Google and KVDB from FSL Stony Brook.
+analysis of a large-scale key-value store". The project is based on KV
+databases include LevelDB from Google and KVDB from FSL Stony Brook.

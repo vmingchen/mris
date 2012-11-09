@@ -55,7 +55,7 @@ TEST(LargeBlockHandle, BlockHandleTest) {
   large_block.EncodeTo(&store);
 
   LargeBlockHandle new_block;
-  ASSERT_TRUE(! new_block.initialized());
+  ASSERT_FALSE(new_block.initialized());
   ASSERT_TRUE(new_block.empty());
 
   Slice input(store);
