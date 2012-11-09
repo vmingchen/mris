@@ -58,7 +58,11 @@ enum ValueType {
 // and the value type is embedded as the low 8 bits in the sequence
 // number in internal keys, we need to use the highest-numbered
 // ValueType, not the lowest).
+#ifdef MRIS
+static const ValueType kValueTypeForSeek = kTypeLargeValue;
+#else
 static const ValueType kValueTypeForSeek = kTypeValue;
+#endif
 
 typedef uint64_t SequenceNumber;
 

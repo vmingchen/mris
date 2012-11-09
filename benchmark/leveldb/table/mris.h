@@ -16,6 +16,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <map>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -24,8 +25,6 @@
 #include "leveldb/db.h"
 #include "leveldb/env.h"
 #include "util/crc32c.h"
-
-#define MRIS
 
 namespace leveldb { namespace mris {
 
@@ -161,6 +160,7 @@ struct ValueDelegate {
   uint64_t offset;
   // size of real value
   uint32_t size;
+  ValueDelegate() : offset(0), size(0) {}
   ValueDelegate(size_t off, size_t sz) : offset(off), size(sz) {}
   void EncodeTo(std::string* dst) const;
   Status DecodeFrom(Slice* input);
@@ -500,7 +500,7 @@ public:
   Status Deposit(const Slice& key, const Slice& value,
                  std::string* mris_key, std::string* mris_value) {
     ParsedInternalKey parsed_key;
-    if (! ParsedInternalKey(key, &parsed_key)) {
+    if (! ParseInternalKey(key, &parsed_key)) {
       return Status::Corruption("[mris] invalid key");
     }
 
@@ -513,13 +513,13 @@ public:
 
     // set mris value
     uint64_t value_offset;
-    s = Write(value, &value_offset);
+    Status s = Write(value, &value_offset);
     if (! s.ok()) {
       return s;
     }
 
     ValueDelegate vd(value_offset, value.size());
-    s = vd.EncodeTo(mris_value);
+    vd.EncodeTo(mris_value);
 
     return s;
   }
@@ -527,7 +527,7 @@ public:
   Status Retrieve(std::string* value, size_t value_offset) {
     ValueDelegate vd;
     Slice input(value->data() + value_offset, value->size() - value_offset);
-    Status s = vd.DecodeFrom(input);
+    Status s = vd.DecodeFrom(&input);
     if (! s.ok()) {
       return s;
     }
@@ -572,9 +572,9 @@ public:
   bool IsEmpty() const { return meta_sequence_ == 0; }
 
   static LargeSpace* GetSpace(const std::string& dbname,
-                                    const Options& opt) {
+                              const Options* opt) {
     std::map<std::string, LargeSpace*>::iterator it = space_map_.find(dbname);
-    if (it == space_map_::end()) {
+    if (it == space_map_.end()) {
       space_map_[dbname] = new LargeSpace(opt, dbname);
     }
     return space_map_[dbname];

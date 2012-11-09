@@ -401,10 +401,12 @@ Status Version::Get(const ReadOptions& options,
           s = Status::NotFound(Slice());  // Use empty error message for speed
           return s;
 #ifdef MRIS
-        case kFoundLargeValue:
-          mris::LargeSpace* lspace = 
-            mris::LargeSpace::GetSpace(vset_->dbname_, vset_->options_);
-          s = lspace->Retrieve(value, value_old_size);
+        case kFoundLargeValue: 
+          {
+            mris::LargeSpace* lspace = 
+              mris::LargeSpace::GetSpace(vset_->dbname_, vset_->options_);
+            s = lspace->Retrieve(value, value_old_size);
+          }
           return s;
 #endif
         case kCorrupt:

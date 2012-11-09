@@ -89,19 +89,18 @@ Status MrisOptions::DecodeFrom(Slice* input) {
 
 // ========================= ValueDelegate Begin ===========================
 void ValueDelegate::EncodeTo(std::string* dst) const {
-  // we add sizeof(ValueDelegate) at the beginning so that the value delegate
-  // has the same format as real internal value
-  PutVarint32(dst, sizeof(ValueDelegate));
-  PutVarint64(dst, offset);
-  PutVarint32(dst, size);
+  std::string vdstr;
+  PutVarint64(&vdstr, offset);
+  PutVarint32(&vdstr, size);
+  PutLengthPrefixedSlice(dst, vdstr);
 }
 
 Status ValueDelegate::DecodeFrom(Slice* input) {
-  uint32_t del_size;
-  if (GetVarint32(input, &del_size) &&
-      GetVarint64(input, &offset) &&
-      GetVarint32(input, &size) &&
-      del_size == sizeof(ValueDelegate)) {
+  std::string vdstr;
+  Slice result(vdstr);
+  if (GetLengthPrefixedSlice(input, &result) &&
+      GetVarint64(&result, &offset) &&
+      GetVarint32(&result, &size)) {
     return Status::OK();
   } else {
     return Status::Corruption("[mris] bad value delegate");
@@ -239,6 +238,8 @@ void LargeSpace::LargeMeta::EncodeTo(std::string* dst) const {
 }
 
 // ========================== LargeSpace Begin ==============================
+
+std::map<std::string, LargeSpace*> LargeSpace::space_map_;
 
 LargeSpace::LargeSpace(const Options *opt, const std::string& dbname) 
   	: env_(opt->env), 

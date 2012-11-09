@@ -27,7 +27,7 @@
 static int sequence = 0;
 
 // The maximum size of object used in tests
-static const size_t LEN = 102400;
+static const size_t LEN = 1024;
 static const size_t HALF_LEN = LEN / 2;
 
 namespace leveldb { namespace mris {
@@ -61,6 +61,19 @@ TEST(LargeBlockHandle, BlockHandleTest) {
   Slice input(store);
   ASSERT_OK(new_block.DecodeFrom(&input));
   ASSERT_EQ(large_block, new_block);
+}
+
+TEST(ValueDelegate, ValueDelegateTest) {
+  offset = 120;
+  size = 160;
+  std::string vdstr;
+  EncodeTo(&vdstr);
+
+  ValueDelegate vd;
+  Slice input(vdstr);
+  ASSERT_OK(vd.DecodeFrom(&input));
+  ASSERT_EQ(vd.offset, offset);
+  ASSERT_EQ(vd.size, size);
 }
 
 // Copied from db_bench.cc
@@ -378,6 +391,29 @@ TEST(MrisTest, LargeSpaceTestRandom) {
 
   ASSERT_OK(space->Close());
   delete space;
+}
+
+TEST(MrisTest, LargeSpaceTestInterface) {
+  Options opt;
+  LargeSpace* space = LargeSpace::GetSpace(dbname, &opt);
+
+  ASSERT_TRUE(space);
+
+  char buf[128];
+  std::string keystr = "largekey";
+  char* p = EncodeVarint32(buf, keystr.size() + 8);
+  size_t keylen = (p - buf) + keystr.size() + 8;
+  memcpy(p, keystr.data(), keystr.size());
+  p += keystr.size();
+  EncodeFixed64(p, (0xbeef << 8) | kTypeValue);
+  Slice key(buf, keylen);
+
+  Slice value = rgen.Generate(LEN);
+  std::string mris_key, mris_value;
+  ASSERT_OK(space->Deposit(key, value, &mris_key, &mris_value));
+
+  ASSERT_OK(space->Retrieve(&mris_value, 0));
+  ASSERT_EQ(0, memcmp(value.data(), mris_value.data(), value.size()));
 }
 
 } }
