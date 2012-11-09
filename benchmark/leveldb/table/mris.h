@@ -5,7 +5,8 @@
  *         Author:  Ming Chen, v.mingchen@gmail.com
  *        Created:  10/21/2012 09:36:40 AM
  *
- *    Description:  
+ *    Description:  MRIS header. For simplicity, all MRIS classed are now
+ *    defined in this header.
  *
  * ===========================================================================
  */
@@ -37,11 +38,11 @@ private:
   size_t size_;
   // can only be created using New or Open
   MrisAppendReadFile(const std::string& fname, int fd, int sz = 0)
-  		: filename_(fname), fd_(fd), size_(sz) { }
+      : filename_(fname), fd_(fd), size_(sz) { }
 
 public:
   virtual ~MrisAppendReadFile() {
-  	assert(close(fd_) == 0);
+    assert(close(fd_) == 0);
   }
 
   virtual Status Read(uint64_t offset, size_t n, Slice* result,
@@ -60,44 +61,44 @@ public:
   }
 
   virtual Status Append(const Slice& data) {
-  	Status s;
-  	const char* buf = data.data();
-  	size_t len = data.size();
+    Status s;
+    const char* buf = data.data();
+    size_t len = data.size();
 
-  	off_t offset = static_cast<off_t>(size_);
-  	while (s.ok() && len > 0) {
+    off_t offset = static_cast<off_t>(size_);
+    while (s.ok() && len > 0) {
       // fd_ is opened with O_APPEND
       ssize_t n = write(fd_, buf, len);
-  		if (n < 0) {
-  			s = Status::IOError(filename_, strerror(errno));
-  			break;
-  		}
-  		offset += n;
-  		buf += n;
-  		len -= n;
-  	}
+      if (n < 0) {
+        s = Status::IOError(filename_, strerror(errno));
+        break;
+      }
+      offset += n;
+      buf += n;
+      len -= n;
+    }
 
-  	if (s.ok()) {
-  		size_ = static_cast<size_t>(offset);
-  	}
+    if (s.ok()) {
+      size_ = static_cast<size_t>(offset);
+    }
 
-  	return s;
+    return s;
   }
 
   virtual Status Close() {
-  	return Status::OK();
+    return Status::OK();
   }
 
   virtual Status Sync() {
-  	Status s;
-  	if (fdatasync(fd_) < 0) {
-  		s = Status::IOError(filename_, strerror(errno));
-  	}
-  	return s;
+    Status s;
+    if (fdatasync(fd_) < 0) {
+      s = Status::IOError(filename_, strerror(errno));
+    }
+    return s;
   }
 
   virtual Status Flush() {
-  	return Status::OK();
+    return Status::OK();
   }
 
   static Status New(const std::string& fname, MrisAppendReadFile** result) {
@@ -145,9 +146,9 @@ struct MrisOptions {
   bool cealed;
 
   MrisOptions() 
-  		: kSizeThreshold(128 << 10),
-  			kSplitThreshold(64 << 20),
-  			cealed(false) { }
+      : kSizeThreshold(128 << 10),
+        kSplitThreshold(64 << 20),
+        cealed(false) { }
 
   void EncodeTo(std::string* dst) const;
   Status DecodeFrom(Slice* input);
@@ -178,17 +179,17 @@ protected:
 public:
   LargeBlockHandle() : offset_(0), size_(0) { }
   LargeBlockHandle(const LargeBlockHandle* handle)
-  		: offset_(handle->offset()),
-  			size_(handle->size()),
-  			name_(handle->name()) {}
+      : offset_(handle->offset()),
+        size_(handle->size()),
+        name_(handle->name()) {}
   LargeBlockHandle(uint64_t off, uint64_t size, const std::string& name)
-  		: offset_(off), size_(size), name_(name) { }
+      : offset_(off), size_(size), name_(name) { }
   uint64_t offset() const { return offset_; }
   uint64_t size() const { return size_; }
   uint64_t end() const { return offset_ + size_; }
   const std::string& name() const { return name_; }
   bool contains(uint64_t offset, uint64_t n) const {
-  	return offset >= offset_ && (offset + n) <= end();
+    return offset >= offset_ && (offset + n) <= end();
   }
   bool initialized() const { return name_.length() > 0; }
   bool empty() const { return size_ == 0; }
@@ -233,9 +234,9 @@ private:
 public:
   LargeBlockReader(Env* env) : env_(env), file_(NULL) {}
   LargeBlockReader(Env* env, const LargeBlockHandle* handle)
-  		: LargeBlockHandle(handle),
-  		  env_(env), 
-  			file_(NULL) {}
+      : LargeBlockHandle(handle),
+        env_(env), 
+        file_(NULL) {}
 
   LargeBlockReader(Env* env, uint64_t off, 
                    uint64_t size, const std::string& name)
@@ -246,15 +247,15 @@ public:
 
   virtual Status Read(uint64_t offset, uint64_t n, 
                       Slice* result, char *scratch) {
-  	assert(initialized());
-  	Status s;
-  	if (file_ == NULL) {
-  		s = env_->NewRandomAccessFile(name_, &file_);
-  		if (!s.ok()) {
-  			assert(file_ == NULL);
-  			return s;
-  		}
-  	}
+    assert(initialized());
+    Status s;
+    if (file_ == NULL) {
+      s = env_->NewRandomAccessFile(name_, &file_);
+      if (!s.ok()) {
+        assert(file_ == NULL);
+        return s;
+      }
+    }
     return ReadFromFile(file_, offset, n, result, scratch);
   }
 
@@ -309,42 +310,42 @@ private:
 public:
   LargeBlockBuilder(Env* env) : file_(NULL), env_(env) {}
   LargeBlockBuilder(Env* env, uint64_t off, const std::string& name) 
-  		: env_(env), 
-  		  LargeBlockHandle(off, 0, name),
-  			file_(NULL) {}
+      : env_(env), 
+        LargeBlockHandle(off, 0, name),
+        file_(NULL) {}
   virtual ~LargeBlockBuilder() { 
-  	if (file_) {
-  		file_->Sync();
-  		file_->Close();
-  		delete file_;
-  	}
+    if (file_) {
+      file_->Sync();
+      file_->Close();
+      delete file_;
+    }
   }
 
   virtual Status Read(uint64_t offset, uint64_t n, 
                       Slice* result, char *scratch) {
     if (! file_) {
       if (size_ <= offset + n) {
-  			return Status::IOError("[mris] out-of-bound read");
+        return Status::IOError("[mris] out-of-bound read");
       }
       Status s = MrisAppendReadFile::Open(name_, size_, &file_);
-  		if (! s.ok()) {
-  			assert(file_ == NULL);
-  			return s;
-  		}
+      if (! s.ok()) {
+        assert(file_ == NULL);
+        return s;
+      }
     } 
     return LargeBlockReader::ReadFromFile(file_, offset, n, result, scratch);
   }
 
   virtual Status Write(const Slice& data, uint64_t* offset) {
-  	assert(initialized());
-  	Status s;
-  	if (! file_) {
-  		s = MrisAppendReadFile::New(name_, &file_);
-  		if (! s.ok()) {
-  			assert(file_ == NULL);
-  			return s;
-  		}
-  	}
+    assert(initialized());
+    Status s;
+    if (! file_) {
+      s = MrisAppendReadFile::New(name_, &file_);
+      if (! s.ok()) {
+        assert(file_ == NULL);
+        return s;
+      }
+    }
     uint64_t record_offset = end();
 
     s = WriteToFile(file_, data);
@@ -354,11 +355,11 @@ public:
     size_ += sizeof(uint32_t) + data.size() + sizeof(uint32_t);
     *offset = record_offset;
 
-  	return s;
+    return s;
   }
 
   Status Sync() { 
-  	return file_ ? file_->Sync() : Status::OK();
+    return file_ ? file_->Sync() : Status::OK();
   }
 
   static Status WriteFixed32(WritableFile* file, uint32_t value) {
@@ -378,7 +379,7 @@ public:
     if (! s.ok()) return s;
 
     // write value
-  	s = file->Append(data);
+    s = file->Append(data);
     if (! s.ok()) return s;
 
     // write crc
@@ -403,12 +404,12 @@ private:
   // [number-of-bytes-of-block-metadata] a.k.a. meta_size
   // [crc]
   struct LargeMeta {
-  	LargeSpace* space;
-  	LargeMeta(LargeSpace* sp) : space(sp) {}
-  	Status Load(const std::string& filename);
-  	Status Dump(const std::string& filename);
-  	Status DecodeFrom(Slice* input);
-  	void EncodeTo(std::string* dst) const;
+    LargeSpace* space;
+    LargeMeta(LargeSpace* sp) : space(sp) {}
+    Status Load(const std::string& filename);
+    Status Dump(const std::string& filename);
+    Status DecodeFrom(Slice* input);
+    void EncodeTo(std::string* dst) const;
   };
 
   Env* env_;
@@ -428,23 +429,23 @@ private:
 
   // find the file block contains @offset
   LargeBlockReader* getBlockReader(uint64_t offset) {
-  	// binary search
-  	size_t first = 0;
-  	size_t count = blocks_.size();
-  	assert(count > 0);
-  	while (count > 1) {
-  		size_t step = count / 2;
-  		size_t mid = first + step;
-  		if (blocks_[mid]->offset() == offset) {
-  			return blocks_[mid];
-  		} else if (blocks_[mid]->offset() > offset) {
-  			count = step;
-  		} else {
-  			first = mid;
-  			count -= step;
-  		}
-  	}
-  	return blocks_[first];
+    // binary search
+    size_t first = 0;
+    size_t count = blocks_.size();
+    assert(count > 0);
+    while (count > 1) {
+      size_t step = count / 2;
+      size_t mid = first + step;
+      if (blocks_[mid]->offset() == offset) {
+        return blocks_[mid];
+      } else if (blocks_[mid]->offset() > offset) {
+        count = step;
+      } else {
+        first = mid;
+        count -= step;
+      }
+    }
+    return blocks_[first];
   }
 
   Status NewBuilder();
@@ -471,24 +472,24 @@ public:
   // We make sure no value expands more than one LargeBlock
   virtual Status Read(uint64_t offset, uint64_t n, 
                       Slice* result, char *scratch) {
-  	Status s;
-  	if (offset > DataSize()) {
-  		s = Status::IOError("[mris] invalid offset");
-  	} else if (builder_ && offset >= builder_->offset()) {
-  		if (builder_->contains(offset, n)) {
-  			s = builder_->Read(offset - builder_->offset(), n, result, scratch);
-  		} else {
-  			s = Status::IOError("[mris] out-of-bound read");
-  		}
-  	} else {
-  		LargeBlockReader* reader = getBlockReader(offset);
-  		if (reader->contains(offset, n)) {
-  			s = reader->Read(offset - reader->offset(), n, result, scratch);
-  		} else {
-  			s = Status::IOError("[mris] out-of-bound read");
-  		}
-  	}
-  	return s;
+    Status s;
+    if (offset > DataSize()) {
+      s = Status::IOError("[mris] invalid offset");
+    } else if (builder_ && offset >= builder_->offset()) {
+      if (builder_->contains(offset, n)) {
+        s = builder_->Read(offset - builder_->offset(), n, result, scratch);
+      } else {
+        s = Status::IOError("[mris] out-of-bound read");
+      }
+    } else {
+      LargeBlockReader* reader = getBlockReader(offset);
+      if (reader->contains(offset, n)) {
+        s = reader->Read(offset - reader->offset(), n, result, scratch);
+      } else {
+        s = Status::IOError("[mris] out-of-bound read");
+      }
+    }
+    return s;
   }
 
   virtual Status Write(const Slice& slice, uint64_t* offset);
@@ -547,13 +548,13 @@ public:
 
   // size of all data
   uint64_t DataSize() const {
-  	if (builder_) {
-  		return builder_->offset() + builder_->size();
-  	} else if (blocks_.size() > 0) {
-  		return blocks_.back()->end();
-  	} else {
-  		return 0;
-  	}
+    if (builder_) {
+      return builder_->offset() + builder_->size();
+    } else if (blocks_.size() > 0) {
+      return blocks_.back()->end();
+    } else {
+      return 0;
+    }
   }
 
   void SetLargeThreshold(uint32_t size) {
