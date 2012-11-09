@@ -21,6 +21,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <errno.h>
 #include "db/dbformat.h"
 #include "db/filename.h"
 #include "leveldb/db.h"
