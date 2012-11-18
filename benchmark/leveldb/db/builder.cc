@@ -51,6 +51,8 @@ Status BuildTable(const std::string& dbname,
           builder->Add(key, iter->value());
         }
         s = Status::OK();
+      } else {
+        builder->Add(key, iter->value());
       }
 #else
       builder->Add(key, iter->value());

@@ -14,7 +14,12 @@
 #ifndef STORAGE_LEVELDB_INCLUDE_MRIS_H_
 #define STORAGE_LEVELDB_INCLUDE_MRIS_H_
 
-#ifdef MRIS
+#ifndef MRIS
+
+// empty when MRIS is not defined
+#define MRIS_LOG(format, arg...)
+
+#else
 
 #include <iostream>
 #include <vector>
@@ -29,6 +34,9 @@
 #include "leveldb/db.h"
 #include "leveldb/env.h"
 #include "util/crc32c.h"
+
+#define MRIS_LOG(format, arg...) \
+  do{fprintf(stderr, "%s:%d: " format "\n", __FILE__, __LINE__, ## arg);} while(0);
 
 namespace leveldb { namespace mris {
 

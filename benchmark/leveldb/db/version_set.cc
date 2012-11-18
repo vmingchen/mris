@@ -1300,7 +1300,7 @@ void VersionSet::SetupOtherInputs(Compaction* c) {
                                    &c->grandparents_);
   }
 
-  if (false) {
+  if (true) {
     Log(options_->info_log, "Compacting %d '%s' .. '%s'",
         level,
         smallest.DebugString().c_str(),
@@ -1322,6 +1322,7 @@ Compaction* VersionSet::CompactRange(
   std::vector<FileMetaData*> inputs;
   current_->GetOverlappingInputs(level, begin, end, &inputs);
   if (inputs.empty()) {
+    MRIS_LOG("inputs is empty");
     return NULL;
   }
 
