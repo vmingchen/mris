@@ -14,6 +14,8 @@
 #ifndef STORAGE_LEVELDB_INCLUDE_MRIS_H_
 #define STORAGE_LEVELDB_INCLUDE_MRIS_H_
 
+#ifdef MRIS
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -585,6 +587,7 @@ public:
 
 } }
 
+#endif
 #endif
 
 // vim: set shiftwidth=2 tabstop=2 expandtab:

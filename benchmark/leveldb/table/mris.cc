@@ -22,6 +22,8 @@
 #include "util/coding.h"
 #include "table/mris.h"
 
+#ifdef MRIS
+
 namespace leveldb { namespace mris {
 
 static const char* EMPTY_LARGESPACE = "EMPTY_LARGESPACE\n";
@@ -392,5 +394,7 @@ Status LargeSpace::Write(const Slice& slice, uint64_t* offset) {
 }
 
 }}
+
+#endif
 
 // vim: set shiftwidth=2 tabstop=2 expandtab:

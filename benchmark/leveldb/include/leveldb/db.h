@@ -10,8 +10,6 @@
 #include "leveldb/iterator.h"
 #include "leveldb/options.h"
 
-#define MRIS
-
 namespace leveldb {
 
 // Update Makefile if you change these
