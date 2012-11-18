@@ -1300,7 +1300,7 @@ void VersionSet::SetupOtherInputs(Compaction* c) {
                                    &c->grandparents_);
   }
 
-  if (true) {
+  if (false) {
     Log(options_->info_log, "Compacting %d '%s' .. '%s'",
         level,
         smallest.DebugString().c_str(),
