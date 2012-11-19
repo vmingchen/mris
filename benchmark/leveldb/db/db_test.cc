@@ -465,7 +465,6 @@ TEST(DBTest, MrisBasic) {
 
     //ASSERT_OK(Put("mris2", std::string(200, 'y')));  // Fills memtable
     //ASSERT_EQ(std::string(200, 'y'), Get("mris2"));
-    exit(0);
 }
 #endif
 
