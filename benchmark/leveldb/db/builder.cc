@@ -46,8 +46,10 @@ Status BuildTable(const std::string& dbname,
         std::string mris_key, mris_value;
         s = lspace->Deposit(key, iter->value(), &mris_key, &mris_value);
         if (s.ok()) {
+          MRIS_LOG("[mris] large key deposited");
           builder->Add(mris_key, mris_value);
         } else {
+          MRIS_LOG("[mris] cannot deposit large key");
           builder->Add(key, iter->value());
         }
         s = Status::OK();

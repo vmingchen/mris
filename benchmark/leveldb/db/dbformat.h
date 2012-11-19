@@ -186,7 +186,11 @@ inline bool ParseInternalKey(const Slice& internal_key,
   result->sequence = num >> 8;
   result->type = static_cast<ValueType>(c);
   result->user_key = Slice(internal_key.data(), n - 8);
+#ifdef MRIS
+  return (c <= static_cast<unsigned char>(kTypeLargeValue));
+#else
   return (c <= static_cast<unsigned char>(kTypeValue));
+#endif
 }
 
 // A helper class useful for DBImpl::Get()

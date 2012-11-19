@@ -36,7 +36,9 @@
 #include "util/crc32c.h"
 
 #define MRIS_LOG(format, arg...) \
-  do{fprintf(stderr, "%s:%d: " format "\n", __FILE__, __LINE__, ## arg);} while(0);
+  do {\
+    fprintf(stderr, "%s:%d: " format "\n", __FILE__, __LINE__, ## arg);\
+  } while(0)
 
 namespace leveldb { namespace mris {
 
@@ -513,6 +515,7 @@ public:
                  std::string* mris_key, std::string* mris_value) {
     ParsedInternalKey parsed_key;
     if (! ParseInternalKey(key, &parsed_key)) {
+      MRIS_LOG("[mris] invalid key");
       return Status::Corruption("[mris] invalid key");
     }
 
@@ -527,6 +530,7 @@ public:
     uint64_t value_offset;
     Status s = Write(value, &value_offset);
     if (! s.ok()) {
+      MRIS_LOG("[mris] cannot write large value");
       return s;
     }
 

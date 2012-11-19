@@ -17,6 +17,8 @@
 #include "util/testharness.h"
 #include "util/testutil.h"
 
+#include "table/mris.h"
+
 namespace leveldb {
 
 static std::string RandomString(Random* rnd, int len) {
@@ -428,6 +430,44 @@ class DBTest {
     return result;
   }
 };
+
+#ifdef MRIS
+TEST(DBTest, MrisBasic) {
+
+    Options options = CurrentOptions();
+    options.env = env_;
+    options.write_buffer_size = 1000000;
+    Reopen(&options);
+
+    // Trigger a long memtable compaction and reopen the database during it
+    ASSERT_OK(Put("foo", "v1"));                         // Goes to 1st log file
+    ASSERT_OK(Put("big1", std::string(10000000, 'x')));  // Fills memtable
+    ASSERT_OK(Put("big2", std::string(1000, 'y')));      // Triggers compaction
+    ASSERT_OK(Put("bar", "v2"));                         // Goes to new log file
+
+    Reopen(&options);
+    ASSERT_EQ("v1", Get("foo"));
+    ASSERT_EQ("v2", Get("bar"));
+
+    std::string big1_res = Get("big1");
+    std::cerr << "big1_res.size() = " << big1_res.length() << std::endl;
+    std::cerr << "big1_res = " << big1_res << std::endl;
+
+    ASSERT_EQ(std::string(10000000, 'x'), Get("big1"));
+    ASSERT_EQ(std::string(1000, 'y'), Get("big2"));
+
+    //Options options = CurrentOptions();
+    //options.env = env_;
+    //Reopen(&options);
+
+    //ASSERT_OK(Put("mris1", std::string(20000000, 'x')));  // Fills memtable
+    //ASSERT_EQ(std::string(20000000, 'x'), Get("mris1"));
+
+    //ASSERT_OK(Put("mris2", std::string(200, 'y')));  // Fills memtable
+    //ASSERT_EQ(std::string(200, 'y'), Get("mris2"));
+    exit(0);
+}
+#endif
 
 TEST(DBTest, Empty) {
   do {

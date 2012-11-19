@@ -1260,6 +1260,11 @@ Status DBImpl::MakeRoomForWrite(bool force) {
     } else if (!force &&
                (mem_->ApproximateMemoryUsage() <= options_.write_buffer_size)) {
       // There is room in current memtable
+      // MRIS begin
+      Log(options_.info_log, "Memory Usage (%lu) < buffer_size (%lu)",
+          mem_->ApproximateMemoryUsage(),
+          options_.write_buffer_size);
+      // MRIS end
       break;
     } else if (imm_ != NULL) {
       // We have filled up the current memtable, but the previous
