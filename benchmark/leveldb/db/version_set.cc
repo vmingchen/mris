@@ -293,12 +293,15 @@ static void SaveValue(void* arg, const Slice& ikey, const Slice& v) {
         default:
           s->state = kDeleted;
       }
+      if (s->state == kFound || s->state == kFoundLargeValue) {
+        s->value->assign(v.data(), v.size());
+      }
 #else
       s->state = (parsed_key.type == kTypeValue) ? kFound : kDeleted;
-#endif
       if (s->state == kFound) {
         s->value->assign(v.data(), v.size());
       }
+#endif
     }
   }
 }

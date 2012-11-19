@@ -451,7 +451,7 @@ TEST(DBTest, MrisBasic) {
 
     std::string big1_res = Get("big1");
     std::cerr << "big1_res.size() = " << big1_res.length() << std::endl;
-    std::cerr << "big1_res = " << big1_res << std::endl;
+    //std::cerr << "big1_res = " << big1_res << std::endl;
 
     ASSERT_EQ(std::string(10000000, 'x'), Get("big1"));
     ASSERT_EQ(std::string(1000, 'y'), Get("big2"));
