@@ -315,7 +315,9 @@ Status LargeSpace::NewLargeSpace() {
 
 Status LargeSpace::Open() {
   Status s;
+  MRIS_LOG("Openning Largespace");
   if (env_->FileExists(LargeHeadFileName(dbname_))) {
+    MRIS_LOG("Largespace Headfile exists");
     s = LoadLargeSpace();
   } else {
     s = NewLargeSpace();
@@ -391,6 +393,11 @@ Status LargeSpace::Write(const Slice& slice, uint64_t* offset) {
   	SealLargeBlock();
   }
   return s;
+}
+
+void mris_release() {
+  MRIS_LOG("releasing LargeSpace");
+  LargeSpace::FreeSpaces();
 }
 
 }}

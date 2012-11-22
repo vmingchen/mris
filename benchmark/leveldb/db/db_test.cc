@@ -456,6 +456,8 @@ TEST(DBTest, MrisBasic) {
     ASSERT_EQ(std::string(10000000, 'x'), Get("big1"));
     ASSERT_EQ(std::string(1000, 'y'), Get("big2"));
 
+	exit(0);
+
     //Options options = CurrentOptions();
     //options.env = env_;
     //Reopen(&options);

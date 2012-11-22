@@ -29,6 +29,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <stdlib.h>
 #include "db/dbformat.h"
 #include "db/filename.h"
 #include "leveldb/db.h"
@@ -41,6 +42,8 @@
   } while(0)
 
 namespace leveldb { namespace mris {
+
+void mris_release();
 
 uint64_t LoadFixedUint64(uint64_t offset, SequentialFile* file);
 
@@ -589,11 +592,32 @@ public:
 
   static LargeSpace* GetSpace(const std::string& dbname,
                               const Options* opt) {
+    LargeSpace* lspace = NULL;
     std::map<std::string, LargeSpace*>::iterator it = space_map_.find(dbname);
+    if (space_map_.empty()) {
+      atexit(mris_release);
+    }
     if (it == space_map_.end()) {
-      space_map_[dbname] = new LargeSpace(opt, dbname);
+      lspace = new LargeSpace(opt, dbname);
+      if (lspace->Open().ok()) {
+        space_map_[dbname] = lspace;
+      } else {
+        MRIS_LOG("Failed to open %s", dbname.c_str());
+        delete lspace;
+        lspace = NULL;
+      }
+    } else {
+      lspace = space_map_[dbname];
     }
     return space_map_[dbname];
+  }
+
+  static void FreeSpaces() {
+    std::map<std::string, LargeSpace*>::iterator it = space_map_.begin();
+    while (it != space_map_.end()) {
+      delete it->second;
+      ++it;
+    }
   }
 };
 

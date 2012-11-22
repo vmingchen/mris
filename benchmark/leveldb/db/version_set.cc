@@ -1325,7 +1325,6 @@ Compaction* VersionSet::CompactRange(
   std::vector<FileMetaData*> inputs;
   current_->GetOverlappingInputs(level, begin, end, &inputs);
   if (inputs.empty()) {
-    MRIS_LOG("inputs is empty");
     return NULL;
   }
 
