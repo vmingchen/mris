@@ -432,8 +432,7 @@ class DBTest {
 };
 
 #ifdef MRIS
-TEST(DBTest, MrisBasic) {
-
+TEST(DBTest, MrisBasicTest) {
     Options options = CurrentOptions();
     options.env = env_;
     options.write_buffer_size = 1000000;
@@ -451,22 +450,9 @@ TEST(DBTest, MrisBasic) {
 
     std::string big1_res = Get("big1");
     std::cerr << "big1_res.size() = " << big1_res.length() << std::endl;
-    //std::cerr << "big1_res = " << big1_res << std::endl;
 
     ASSERT_EQ(std::string(10000000, 'x'), Get("big1"));
     ASSERT_EQ(std::string(1000, 'y'), Get("big2"));
-
-	exit(0);
-
-    //Options options = CurrentOptions();
-    //options.env = env_;
-    //Reopen(&options);
-
-    //ASSERT_OK(Put("mris1", std::string(20000000, 'x')));  // Fills memtable
-    //ASSERT_EQ(std::string(20000000, 'x'), Get("mris1"));
-
-    //ASSERT_OK(Put("mris2", std::string(200, 'y')));  // Fills memtable
-    //ASSERT_EQ(std::string(200, 'y'), Get("mris2"));
 }
 #endif
 

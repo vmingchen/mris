@@ -315,9 +315,7 @@ Status LargeSpace::NewLargeSpace() {
 
 Status LargeSpace::Open() {
   Status s;
-  MRIS_LOG("Openning Largespace");
   if (env_->FileExists(LargeHeadFileName(dbname_))) {
-    MRIS_LOG("Largespace Headfile exists");
     s = LoadLargeSpace();
   } else {
     s = NewLargeSpace();

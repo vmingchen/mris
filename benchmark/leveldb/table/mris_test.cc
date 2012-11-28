@@ -14,6 +14,7 @@
 
 #include <string>
 #include <vector>
+#include <set>
 #include <string.h>
 #include "leveldb/slice.h"
 #include "leveldb/env.h"
@@ -27,7 +28,7 @@
 static int sequence = 0;
 
 // The maximum size of object used in tests
-static const size_t LEN = 1024;
+static const size_t LEN = 256 << 10;
 static const size_t HALF_LEN = LEN / 2;
 
 namespace leveldb { namespace mris {
@@ -145,6 +146,12 @@ class MrisTest {
       return dbname + buf;
     }
 
+    void NewKVPair(Slice *key, Slice *value) {
+      assert(key && value);
+      *key = rgen.Generate(64);
+      *value = rgen.Generate(rand.Uniform(LEN));
+    }
+
     // generate N random objects and insert them into store
     // @N: number of objects generated
     // @sources: generated random objects
@@ -193,6 +200,64 @@ class MrisTest {
       }
     }
 };
+
+TEST(MrisTest, MrisDBTest) {
+  DB* db;
+  Options opt;
+  opt.create_if_missing = true;
+  Status status = leveldb::DB::Open(opt, "mris-test-db", &db);
+  ASSERT_OK(status);
+  const size_t Test_size = 1000;
+
+  std::vector<std::pair<Slice, Slice> > kvs;
+  std::set<const char *> key_offsets;
+  WriteOptions wopt;
+  for (size_t i = 0; i < Test_size; ++i) {
+    Slice key, value;
+
+    do {
+      NewKVPair(&key, &value);
+    } while (key_offsets.find(key.data()) != key_offsets.end());
+    key_offsets.insert(key.data());
+
+    if (i == 0) {
+      std::cerr << i << " key: "; 
+      for (size_t j = 0; j < key.size(); ++j)
+        std::cerr << *(key.data() + j);
+      std::cerr << std::endl;
+      std::cerr << "value length: " << value.size() << std::endl;
+    }
+    kvs.push_back(std::pair<Slice, Slice>(key, value));
+    ASSERT_OK(db->Put(wopt, key, value));
+  }
+
+  ReadOptions ropt;
+  for (size_t i = 0; i < Test_size; ++i) {
+    Slice key, value; 
+    std::string result;
+    key = kvs[i].first;
+    value = kvs[i].second;
+    ASSERT_OK(db->Get(ropt, key, &result));
+    if (value.compare(Slice(result)) != 0) {
+      std::cerr << i << " key: "; 
+      for (size_t j = 0; j < key.size(); ++j)
+        std::cerr << *(key.data() + j);
+      std::cerr << std::endl;
+      std::cerr << "value length: " << value.size();
+      for (size_t j = 0; j < 64; ++j)
+        std::cerr << *(value.data() + j);
+      std::cerr << std::endl;
+      std::cerr << "result length: " << result.size();
+      for (size_t j = 0; j < 64; ++j)
+        std::cerr << *(result.c_str() + j);
+      std::cerr << std::endl;
+    }
+    ASSERT_EQ(0, value.compare(Slice(result)));
+  }
+
+  delete db;
+  exit(0);
+}
 
 TEST(MrisTest, MrisAppendReadFileTest) {
   std::string filename = NewBlockFileName();

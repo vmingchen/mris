@@ -602,7 +602,7 @@ public:
       if (lspace->Open().ok()) {
         space_map_[dbname] = lspace;
       } else {
-        MRIS_LOG("Failed to open %s", dbname.c_str());
+        MRIS_LOG("[mris] Failed to open %s", dbname.c_str());
         delete lspace;
         lspace = NULL;
       }
