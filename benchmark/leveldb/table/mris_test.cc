@@ -146,6 +146,15 @@ class MrisTest {
       return dbname + buf;
     }
 
+    Slice BuildInternalKey(const Slice &key, char *buf) {
+      char* p = EncodeVarint32(buf, key.size() + 8);
+      size_t keylen = (p - buf) + key.size() + 8;
+      memcpy(p, key.data(), key.size());
+      p += key.size();
+      EncodeFixed64(p, (0xbeef << 8) | kTypeValue);
+      return Slice(buf, keylen);
+    }
+
     void NewKVPair(Slice *key, Slice *value) {
       assert(key && value);
       *key = rgen.Generate(64);
@@ -201,6 +210,40 @@ class MrisTest {
     }
 };
 
+TEST(MrisTest, LargeSpaceTestIO) {
+  Options opt;
+  LargeSpace* space = LargeSpace::GetSpace(dbname, &opt);
+
+  ASSERT_TRUE(space);
+
+  std::vector<Slice> keys;
+  std::vector<Slice> values;
+  std::vector<std::string> mris_values;
+  const size_t Test_size = 1000;
+  char key_buf[1024];
+
+  for (size_t i = 0; i < Test_size; ++i) {
+    Slice key, value;
+    NewKVPair(&key, &value);
+    keys.push_back(key);
+    values.push_back(value);
+
+    Slice ikey = BuildInternalKey(key, key_buf);
+
+    std::string mris_key, mris_value;
+    ASSERT_OK(space->Deposit(ikey, value, &mris_key, &mris_value));
+    mris_values.push_back(mris_value);
+  }
+
+  for (size_t i = 0; i < Test_size; ++i) {
+    Slice value = values[i];
+    std::string mris_value = mris_values[i];
+    ASSERT_OK(space->Retrieve(&mris_value, 0));
+    ASSERT_EQ(0, memcmp(value.data(), mris_value.data(), value.size()));
+  }
+}
+
+/*
 TEST(MrisTest, MrisDBTest) {
   DB* db;
   Options opt;
@@ -258,6 +301,7 @@ TEST(MrisTest, MrisDBTest) {
   delete db;
   exit(0);
 }
+*/
 
 TEST(MrisTest, MrisAppendReadFileTest) {
   std::string filename = NewBlockFileName();
@@ -480,6 +524,7 @@ TEST(MrisTest, LargeSpaceTestInterface) {
   ASSERT_OK(space->Retrieve(&mris_value, 0));
   ASSERT_EQ(0, memcmp(value.data(), mris_value.data(), value.size()));
 }
+
 
 } }
 
