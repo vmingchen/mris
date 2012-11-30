@@ -107,7 +107,7 @@ $(LIBRARY): $(LIBOBJECTS)
 	rm -f $@
 	$(AR) -rs $@ $(LIBOBJECTS)
 
-## MRIS targets 
+## MRIS targets begin
 bench_histogram: db_bench
 	./db_bench --histogram=1
 
@@ -115,11 +115,13 @@ mris_seq_wt: db_bench all
 	./db_bench --histogram=1 --num=2000 --benchmarks=mris_seq_wt --value_size=-1 \
 		--compression_ratio=1.0 --threads=1 --db=mris_seq_wt_db
 
-install: $(SHARED) $(LIBRARY)
-	cp libleveldb.a libleveldb.so.1.5 /usr/local/lib/
-
 mris_twodb: mrisdb/SeparateDB.o $(TESTUTIL)
 	$(CXX) mrisdb/SeparateDB.o $(LIBOBJECTS) $(TESTUTIL) -o $@  $(LDFLAGS)
+
+## MRIS targets end
+
+install: $(SHARED) $(LIBRARY)
+	cp libleveldb.a libleveldb.so.1.5 /usr/local/lib/
 
 db_bench: db/db_bench.o $(LIBOBJECTS) $(TESTUTIL)
 	$(CXX) db/db_bench.o $(LIBOBJECTS) $(TESTUTIL) -o $@  $(LDFLAGS)
