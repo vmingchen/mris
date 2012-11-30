@@ -770,6 +770,10 @@ class Benchmark {
     options.block_cache = cache_;
     options.write_buffer_size = FLAGS_write_buffer_size;
     options.filter_policy = filter_policy_;
+    // disable compression for mris
+    if (FLAGS_mris && FLAGS_compression_ratio == 1.0) {
+      options.compression = leveldb::kNoCompression;
+    }
     Status s = DB::Open(options, FLAGS_db, &db_);
     if (!s.ok()) {
       fprintf(stderr, "open error: %s\n", s.ToString().c_str());

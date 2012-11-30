@@ -112,8 +112,8 @@ bench_histogram: db_bench
 	./db_bench --histogram=1
 
 mris_seq_wt: db_bench all
-	./db_bench --histogram=1 --num=100 --benchmarks=mris_seq_wt --value_size=-2 \
-		--compression_ratio=0.9 --threads=1
+	./db_bench --histogram=1 --num=2000 --benchmarks=mris_seq_wt --value_size=-2 \
+		--compression_ratio=1.0 --threads=1 --db=mris_seq_wt_db
 
 install: $(SHARED) $(LIBRARY)
 	cp libleveldb.a libleveldb.so.1.5 /usr/local/lib/

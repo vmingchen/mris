@@ -249,13 +249,22 @@ LargeSpace::LargeSpace(const Options *opt, const std::string& dbname)
   		dbname_(dbname),
   		meta_(this),
   		meta_sequence_(0),
-      closed_(false),
+      closed_(true),
+      nr_new_large_values_(0),
+      nr_success_lookups_(0),
+      nr_failed_lookups_(0),
+      nr_failed_inserts_(0),
   		builder_(NULL) { 
   // empty
 }
 
 LargeSpace::~LargeSpace() {
   Status s;
+  std::cerr << "----- " << dbname_ << " statistics: -----" << std::endl;
+  std::cerr << "nr_new_large_values_ \t" << nr_new_large_values_ << std::endl;
+  std::cerr << "nr_success_lookups_ \t" << nr_success_lookups_ << std::endl;
+  std::cerr << "nr_failed_lookups_ \t" << nr_failed_lookups_ << std::endl;
+  std::cerr << "nr_failed_inserts_ \t" << nr_failed_inserts_ << std::endl;
   if (!closed_) {
     s = Close();
     assert(s.ok());
@@ -315,11 +324,16 @@ Status LargeSpace::NewLargeSpace() {
 
 Status LargeSpace::Open() {
   Status s;
+  if (!env_->FileExists(dbname_) && !env_->CreateDir(dbname_).ok()) {
+    return Status::IOError(dbname_, "[mris] cannot create directory");
+  }
   if (env_->FileExists(LargeHeadFileName(dbname_))) {
     s = LoadLargeSpace();
   } else {
     s = NewLargeSpace();
   }
+  if (s.ok())
+    closed_ = false;
   return s;
 }
 

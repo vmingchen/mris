@@ -42,7 +42,7 @@ Status BuildTable(const std::string& dbname,
       meta->largest.DecodeFrom(key);
 #ifdef MRIS
       mris::LargeSpace* lspace = mris::LargeSpace::GetSpace(dbname, &options);
-      if (lspace->IsLargeValue(iter->value())) {
+      if (lspace && lspace->IsLargeValue(iter->value())) {
         std::string mris_key, mris_value;
         s = lspace->Deposit(key, iter->value(), &mris_key, &mris_value);
         if (s.ok()) {

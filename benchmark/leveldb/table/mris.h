@@ -440,6 +440,12 @@ private:
   uint64_t meta_sequence_;
   bool closed_;
 
+  // statistics
+  uint32_t nr_new_large_values_;
+  uint32_t nr_success_lookups_;
+  uint32_t nr_failed_lookups_;
+  uint32_t nr_failed_inserts_;
+
   // make sure it points to a ready writer or NULL
   LargeBlockBuilder* builder_;
 
@@ -518,6 +524,7 @@ public:
                  std::string* mris_key, std::string* mris_value) {
     ParsedInternalKey parsed_key;
     if (! ParseInternalKey(key, &parsed_key)) {
+      ++nr_failed_inserts_;
       MRIS_LOG("[mris] invalid key");
       return Status::Corruption("[mris] invalid key");
     }
@@ -533,6 +540,7 @@ public:
     uint64_t value_offset;
     Status s = Write(value, &value_offset);
     if (! s.ok()) {
+      ++nr_failed_inserts_;
       MRIS_LOG("[mris] cannot write large value");
       return s;
     }
@@ -540,6 +548,7 @@ public:
     ValueDelegate vd(value_offset, value.size());
     vd.EncodeTo(mris_value);
 
+    ++nr_new_large_values_;
     return s;
   }
 
@@ -548,6 +557,7 @@ public:
     Slice input(value->data() + value_offset, value->size() - value_offset);
     Status s = vd.DecodeFrom(&input);
     if (! s.ok()) {
+      ++nr_failed_lookups_;
       return s;
     }
 
@@ -557,6 +567,7 @@ public:
 
     char *scrach = new char[vd.size];
     if (!scrach) {
+      ++nr_failed_lookups_;
       return Status::IOError("[mris] Out of memory");
     }
 
@@ -569,6 +580,7 @@ public:
       //value->resize(value_offset);
     //}
 
+    ++nr_success_lookups_;
     delete[] scrach;
     return s;
   }
@@ -602,23 +614,25 @@ public:
   static LargeSpace* GetSpace(const std::string& dbname,
                               const Options* opt) {
     LargeSpace* lspace = NULL;
-    std::map<std::string, LargeSpace*>::iterator it = space_map_.find(dbname);
+    std::string mrisdb = "/mnt/largespace/";
+    mrisdb += dbname;
+    std::map<std::string, LargeSpace*>::iterator it = space_map_.find(mrisdb);
     if (space_map_.empty()) {
       atexit(mris_release);
     }
     if (it == space_map_.end()) {
-      lspace = new LargeSpace(opt, dbname);
+      lspace = new LargeSpace(opt, mrisdb);
       if (lspace->Open().ok()) {
-        space_map_[dbname] = lspace;
+        space_map_[mrisdb] = lspace;
       } else {
-        MRIS_LOG("[mris] Failed to open %s", dbname.c_str());
+        MRIS_LOG("[mris] Failed to open %s", mrisdb.c_str());
         delete lspace;
         lspace = NULL;
       }
     } else {
-      lspace = space_map_[dbname];
+      lspace = space_map_[mrisdb];
     }
-    return space_map_[dbname];
+    return space_map_[mrisdb];
   }
 
   static void FreeSpaces() {
