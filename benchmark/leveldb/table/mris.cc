@@ -396,7 +396,6 @@ Status LargeSpace::Write(const Slice& slice, uint64_t* offset) {
 }
 
 void mris_release() {
-  MRIS_LOG("releasing LargeSpace");
   LargeSpace::FreeSpaces();
 }
 

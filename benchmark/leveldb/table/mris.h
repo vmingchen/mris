@@ -543,31 +543,6 @@ public:
     return s;
   }
 
-  Status Retrieve(std::string* value, size_t value_offset, ValueDelegate other) {
-    ValueDelegate vd;
-    Slice input(value->data() + value_offset, value->size() - value_offset);
-    Status s = vd.DecodeFrom(&input);
-    if (! s.ok()) {
-      return s;
-    }
-
-    if (vd.offset != other.offset || vd.size != other.size) {
-      return Status::Corruption("vd");
-    }
-
-    Slice result(*value);
-    value->resize(value_offset + vd.size);
-    char* scrach = const_cast<char *>(value->data() + value_offset);
-    s = Read(vd.offset, vd.size, &result, scrach);
-
-    // unget the allocated space when fail
-    if (! s.ok()) {
-      value->resize(value_offset);
-    }
-
-    return s;
-  }
-
   Status Retrieve(std::string* value, size_t value_offset) {
     ValueDelegate vd;
     Slice input(value->data() + value_offset, value->size() - value_offset);
@@ -576,16 +551,25 @@ public:
       return s;
     }
 
-    Slice result;
-    value->resize(value_offset + vd.size);
-    char* scrach = const_cast<char *>(value->data() + value_offset);
-    s = Read(vd.offset, vd.size, &result, scrach);
+    // This does not work because sometimes the file is memory mapped
+    // value->resize(value_offset + vd.size);
+    // char* scrach = const_cast<char *>(value->data() + value_offset);
 
-    // unget the allocated space when fail
-    if (! s.ok()) {
-      value->resize(value_offset);
+    char *scrach = new char[vd.size];
+    if (!scrach) {
+      return Status::IOError("[mris] Out of memory");
     }
 
+    Slice result;
+    s = Read(vd.offset, vd.size, &result, scrach);
+
+    value->assign(result.data(), result.data() + vd.size);
+    // unget the allocated space when fail
+    //if (! s.ok()) {
+      //value->resize(value_offset);
+    //}
+
+    delete[] scrach;
     return s;
   }
 
