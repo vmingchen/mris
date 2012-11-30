@@ -67,7 +67,7 @@ static const char* FLAGS_benchmarks =
 static bool FLAGS_mris = false;
 
 // Ming: the number of layers
-static const int MRIS_max_layers = 5;
+static const int MRIS_max_layers = 4;
 
 // Ming: the data we generate is at most 10MB large
 static const int FLAGS_max_obj_size = 10485760;
