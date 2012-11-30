@@ -67,7 +67,7 @@ static const char* FLAGS_benchmarks =
 static bool FLAGS_mris = false;
 
 // Ming: the number of layers
-static const int MRIS_max_layers = 4;
+static const int MRIS_max_layers = 5;
 
 // Ming: the data we generate is at most 10MB large
 static const int FLAGS_max_obj_size = 10485760;
@@ -75,6 +75,7 @@ static const int FLAGS_max_obj_size = 10485760;
 // Ming: configurations of MRI layers
 static int MRIS_sizes[][MRIS_max_layers+1] = {
   {0, 0, 0, 0, 0},
+  {8196, 131072, 0, 0, 2},
   {1024, 16384, 0, 0, 2},
   {4096, 65536, 0, 0, 2},
   {4096, 65536, 1048576, 0, 3},
@@ -837,7 +838,7 @@ class Benchmark {
     WriteBatch batch;
     Status s;
     int64_t bytes = 0;
-    for (int i = 0; i < num_; i+= entries_per_batch_) {
+    for (int i = 0; i < num_; i += entries_per_batch_) {
       batch.Clear();
       for (int j = 0; j < entries_per_batch_; j++) {
         for (int k = 0; k < mris_nlayer_; ++k) {

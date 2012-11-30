@@ -511,7 +511,7 @@ public:
   virtual Status Write(const Slice& slice, uint64_t* offset);
 
   bool IsLargeValue(const Slice& value) {
-    return value.size() > mris_options_.kSizeThreshold;
+    return value.size() >= mris_options_.kSizeThreshold;
   }
 
   Status Deposit(const Slice& key, const Slice& value,
