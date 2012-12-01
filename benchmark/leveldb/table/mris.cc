@@ -254,7 +254,7 @@ LargeSpace::LargeSpace(const Options *opt, const std::string& dbname)
       nr_success_lookups_(0),
       nr_failed_lookups_(0),
       nr_failed_inserts_(0),
-  		builder_(NULL) { 
+      builder_(NULL) {
   // empty
 }
 
