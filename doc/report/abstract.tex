@@ -1,0 +1,35 @@
+\begin{abstract}
+
+% dummy entry to force emacs not to indent abstract text
+\vspace{0mm}
+
+The storage subsystem has been the performance bottleneck in many
+server workloads mostly because of slow mechanical HDDs, the primary
+storage device. Faster storage devices such as Flash are emerging as a
+hope of solving the problem. However, a drop-in replacment approach is
+not feasible because of their high price, assymmetric performance
+characteristics, and short life time.  This project presents a
+multi-tiered object storage system, which integrates good
+characteristics of different kinds of storage devices in speed,
+capacity, and price.  We distribute objects among mutliple devices
+based on not only their hotness but also their size, so that they can
+be stored efficiently in terms of performance and cost.  We
+implemented the system based on LevelDB, and benchmarked the system
+using a two-tiered store including a Flash tier and a HDD tier.  Our
+system presents up to XXX speedup over the single-tier store using
+HDD, or a XXX . Particularly, for a workload emulating Facebook's
+photo requests, we improve the throughput by XXX using only a small
+Flash of \% of the total storage capacity.
+
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% For Emacs:
+% Local variables:
+% fill-column: 70
+% End:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% For Vim:
+% vim:textwidth=70
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LocalWords:  

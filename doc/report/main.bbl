@@ -1,0 +1,47 @@
+\begin{thebibliography}{1}
+%%\addtocontents{toc}{\protect\vspace{1ex}}
+%%\addcontentsline{toc}{chapter}{\numberline{}{\bf Bibliography}}
+
+%\addtolength{\parsep}{-1.5\parsep}
+%\addtolength{\baselineskip}{-0.05\baselineskip}
+%\setlength{\parskip}{-0.5ex}
+%\small
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% For Emacs:
+% Local variables:
+% fill-column: 70
+% End:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LocalWords:  addtocontents toc vspace addcontentsline numberline LocalWords
+% LocalWords:  bf addtolength parsep baselineskip tlength parskip
+
+\bibitem{speed_up}
+Rob Flickenger.
+\newblock Speeding up linux using hdparm, June 2000.
+\newblock http://linuxdevcenter.com/pub/a/linux/2000-/06/29/hdparm.html.
+
+\bibitem{hdparm}
+ideguy.
+\newblock hdparm - get/set ata/sata drive parameters under linux.
+\newblock http://sourceforge.net/projects/hdparm/.
+
+\bibitem{hddcache}
+Gokul Soundararajan, Vijayan Prabhakaran, Mahesh Balakrishnan, and Ted Wobber.
+\newblock Extending ssd lifetimes with disk-based write caches.
+\newblock In {\em Proceedings of the 8th USENIX conference on File and storage
+  technologies}, FAST'10, pages 8--8, Berkeley, CA, USA, 2010. USENIX
+  Association.
+
+\bibitem{wiki_dm}
+Wikipedia.
+\newblock Device mapper, May 2012.
+
+\bibitem{Wildani_grouping}
+Avani Wildani, Ethan~L. Miller, and Lee Ward.
+\newblock Efficiently identifying working sets in block i/o streams.
+\newblock In {\em Proceedings of the 4th Annual International Conference on
+  Systems and Storage}, SYSTOR '11, pages 5:1--5:12, New York, NY, USA, 2011.
+  ACM.
+
+\end{thebibliography}
