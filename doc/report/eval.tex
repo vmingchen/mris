@@ -1,13 +1,31 @@
 \section{Evaluation} \label{sec:eval}
 
-We have evaluated our system on a 64-bit Dell server running Cent-OS
-Linux with kernel version 3.2.9. We used one SSD and one SATA disk and
-created linear and green virtual disk on them. The SSD is a Intel
-SSDSA2MH080G1GC 2.5-inch with 80G capacity. The SATA disk is a Toshiba
-MHZ2250BK 2.5-inch SATA HDD. Its capacity is 250GB and its rotational
-speed is 7200 rpm. 
+We have evaluated our system on a 64-bit Dell server running Ubuntu
+server with kernel version 3.2.9. We used one Flash based SSD and one
+SATA HDD and created linear and green virtual disk on them. The SSD is
+a Intel SSDSA2MH080G1GC 2.5-inch with 80G capacity. The SATA disk is a
+Toshiba MHZ2250BK 2.5-inch SATA HDD. Its capacity is 250GB and its
+rotational speed is 7200 rpm.
 
-\subsection{SSD Versus SATA}
+\subsection{Benchmark Platform}
+
+Firstly, we measured the two storage devices used in our benchmarks.
+The results we got support our argument that Flash is good in random
+I/O while HDD is not bad in sequential I/Os.
+
+We formated both devices using Ext2. 
+
+We remount devices before each benchmark to make sure that all disk
+caches are dropped.
+
+SSD vs SATA
+
+\subsection{Micro benchmarks}
+
+We first show micro benchmark results on simple workloads of
+sequential and random read and write of MRIS. To demonstrate the
+benefits of multi-tier system, we experimented every workload on three
+different setups. 
 
 \begin{figure}[t]
 \begin{centering}
@@ -82,7 +100,11 @@ stable, the energy is mainly affected by the time of the operations.
 That is why Figure \ref{fig:energy} resembles Figure
 \ref{fig:ssd_vs_sata}. 
 
-\subsection{The Best Scenario}
+\subsection{Facebook Workloads}
+
+1. 17 of Ran R on three setups
+
+2. RR workload of different ratios on hybrid.
 
 To evaluate the green target, we created virtual devices using our
 target, performed I/Os on the devices using \texttt{dd}, and compared
@@ -105,6 +127,8 @@ offsets of all the I/Os are larger than 256M so that all I/Os are
 served by the SATA for the linear device. However, in the case of the
 green device, all I/Os are served by SSD thanks to the flexible
 mapping mechanism.  
+
+\subsection{Wikipedia Workloads}
 
 We present the results in Figure \ref{fig:best}.  For read, the green
 device is more than 3 times faster for all 7 different I/O sizes.
