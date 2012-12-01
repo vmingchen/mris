@@ -27,12 +27,17 @@ RES=$LEVELDB_HOME/results
 DIR=/mnt/ssd
 
 function remount() {
+	rm -f /mnt/largespace
 	if mount -l | grep -q '^/dev/sdb1 '; then
-		umount /dev/sdb1
+		while ! umount /dev/sdb1; do
+			sleep 1
+		done
 	fi
 	mount /dev/sdb1 /mnt/ssd
 	if mount -l | grep -q '^/dev/sdc1 '; then
-		umount /dev/sdc1
+		while ! umount /dev/sdc1; do
+			sleep 1
+		done
 	fi
 	mount /dev/sdc1 /mnt/sata
 }
@@ -74,7 +79,9 @@ function run_bench() {
 	local setup_name="$2"
 	local epoch="$3"
 	local result=${RES}/${benchmark}_$setup_name.$epoch
-	clean $benchmark
+	local dbname="${benchmark}_db"
+
+	clean $dbname
 
 	# clear cash
 	remount
@@ -87,7 +94,7 @@ function run_bench() {
 
 	./db_bench --histogram=1 --num=$NUM --benchmarks=$benchmark \
 		--value_size=-1 --compression_ratio=1.0 --threads=1	\
-		--db=${benchmark}_db >${result}.log 2>&1
+		--db=${dbname} >${result}.log 2>&1
 
 	kill $PID_IOSTAT $PID_VMSTAT
 }
@@ -95,10 +102,12 @@ function run_bench() {
 for setup_name in ssd sata hybrid; do
 	setup $setup_name
 	for benchmark_name in mris_ran_wt; do
-		echo "--- setup: $setup_name; benchmark: $benchmark_name"
-		for epoch in 1 2; do
+		echo "--- [begin] setup: $setup_name; benchmark: $benchmark_name"
+		for epoch in 1 2 3; do
+			echo "-- epoch: $epoch"
 			run_bench $benchmark_name $setup_name $epoch
 		done
+		echo "--- [end] setup: $setup_name; benchmark: $benchmark_name"
 	done
 done
 
