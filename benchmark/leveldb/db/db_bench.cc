@@ -22,6 +22,8 @@
 //   MRIS benchmarks:
 //      mris_seq_wt   -- write N MRI in sequential key order in async mode
 //      mris_ran_wt   -- write N MRI in random key order in async mode
+//      mris_facebook -- do mris_ran_wt, and emulate the facebook workload,
+//                       which is randomly read 17 small image and 1 big one
 //   Actual benchmarks:
 //      fillseq       -- write N values in sequential key order in async mode
 //      fillrandom    -- write N values in random key order in async mode
@@ -63,16 +65,16 @@ static const char* FLAGS_benchmarks =
     "acquireload,"
     ;
 
-// Ming: MRIS workloads is never mixed with default leveldb workloads
+// MRIS: MRIS workloads is never mixed with default leveldb workloads
 static bool FLAGS_mris = false;
 
-// Ming: the number of layers
+// MRIS: the number of layers
 static const int MRIS_max_layers = 4;
 
-// Ming: the data we generate is at most 10MB large
+// MRIS: the data we generate is at most 10MB large
 static const int FLAGS_max_obj_size = 10485760;
 
-// Ming: configurations of MRI layers
+// MRIS: configurations of MRI layers
 static int MRIS_sizes[][MRIS_max_layers+1] = {
   {0, 0, 0, 0, 0},
   {8196, 131072, 0, 0, 2},
@@ -80,6 +82,9 @@ static int MRIS_sizes[][MRIS_max_layers+1] = {
   {4096, 65536, 0, 0, 2},
   {4096, 65536, 1048576, 0, 3},
 };
+
+// MRIS: access ratio of small/big
+static int FLAGS_mris_ratio = 17;
 
 // Number of key/values to place in database
 static int FLAGS_num = 1000000;
@@ -467,7 +472,7 @@ class Benchmark {
     if (!FLAGS_use_existing_db) {
       DestroyDB(FLAGS_db, Options());
     }
-    // Ming: set mris_index_ when it is running MRIS workloads
+    // MRIS: set mris_index_ when it is running MRIS workloads
     if (FLAGS_mris) {
       assert(value_size_ < sizeof(MRIS_sizes)/sizeof(MRIS_sizes[0]));
       mris_index_ = value_size_;
@@ -518,6 +523,9 @@ class Benchmark {
       } else if (name == Slice("mris_ran_wt")) {
         fresh_db = true;
         method = &Benchmark::MrisWriteRandom;
+      } else if (name == Slice("mris_facebook")) {
+        fresh_db = true;
+        method = &Benchmark::MrisFacebook;
       } else if (name == Slice("fillseq")) {
         fresh_db = true;
         method = &Benchmark::WriteSeq;
@@ -819,17 +827,17 @@ class Benchmark {
     thread->stats.AddBytes(bytes);
   }
 
-  // Ming: write Mri sequentially
+  // MRIS: write Mri sequentially
   void MrisWriteSeq(ThreadState* thread) {
     MrisWrite(thread, true);
   }
 
-  // Ming: write Mri randomly
+  // MRIS: write Mri randomly
   void MrisWriteRandom(ThreadState* thread) {
     MrisWrite(thread, false);
   }
 
-  // Ming: write @num_ MRI
+  // MRIS: write @num_ MRI
   void MrisWrite(ThreadState* thread, bool seq) {
     assert(FLAGS_mris);
     if (num_ != FLAGS_num) {
@@ -862,6 +870,42 @@ class Benchmark {
       }
     }
     thread->stats.AddBytes(bytes);
+  }
+
+  // MRIS: emulate Facebook Haystack workload
+  void MrisFacebook(ThreadState* thread) {
+    assert(FLAGS_mris);
+    assert(FLAGS_mris_ratio > 0);
+    int small_read = 0;
+    int small_fail = 0;
+    int big_read = 0;
+    int big_fail = 0;
+    ReadOptions options;
+    std::string value;
+    for (int i = 0; i < reads_ * FLAGS_mris_ratio; ++i) {
+      const int k = thread->rand.Next() % FLAGS_num;
+      char key[100];
+      snprintf(key, sizeof(key), "%015d%01d", k, 0); // keysize = 16
+      if (db_->Get(options, key, &value).ok()) {
+        small_read++;
+      } else {
+        small_fail++;
+      }
+      if (i % FLAGS_mris_ratio == 0) {
+        snprintf(key, sizeof(key), "%015d%01d", k, 1); // keysize = 16
+        if (db_->Get(options, key, &value).ok()) {
+          small_read++;
+        } else {
+          small_fail++;
+        }
+        thread->stats.FinishedSingleOp();
+      }
+      thread->stats.FinishedSingleOp();
+    }
+    char msg[100];
+    snprintf(msg, sizeof(msg), "small: %d/%d; big: %d/%d",
+        small_read, small_fail, big_read, big_fail);
+    thread->stats.AddMessage(msg);
   }
 
   void ReadSequential(ThreadState* thread) {
@@ -1073,7 +1117,7 @@ int main(int argc, char** argv) {
     } else if (sscanf(argv[i], "--threads=%d%c", &n, &junk) == 1) {
       FLAGS_threads = n;
     } else if (sscanf(argv[i], "--value_size=%d%c", &n, &junk) == 1) {
-      // Ming: negative value means MRIS workloads
+      // MRIS: negative value means MRIS workloads
       if (n < 0) {
         FLAGS_value_size = -n;
         FLAGS_mris = true;
@@ -1081,6 +1125,8 @@ int main(int argc, char** argv) {
         FLAGS_value_size = n;
         FLAGS_mris = false;
       }
+    } else if (sscanf(argv[i], "--mris_ratio==%d%c", &n, &junk) == 1) {
+      FLAGS_mris_ratio = n;
     } else if (sscanf(argv[i], "--write_buffer_size=%d%c", &n, &junk) == 1) {
       FLAGS_write_buffer_size = n;
     } else if (sscanf(argv[i], "--cache_size=%d%c", &n, &junk) == 1) {

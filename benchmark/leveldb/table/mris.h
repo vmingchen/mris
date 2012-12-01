@@ -424,7 +424,7 @@ private:
   // [large-size-threshold] MrisOptions.kSizeThreshold
   // [file-split-threshold] MrisOptions.kSplitThreshold
   // [number-of-reader-blocks] a.k.a. nblock
-  // [number-of-writer-blocks] a.k.a. 1 or 0
+  // [number-of-writer-blocks] it is either 1 or 0
   // [block-metadata]
   // [number-of-bytes-of-block-metadata] a.k.a. meta_size
   // [crc]

@@ -1,0 +1,61 @@
+\section{Related Work} 
+\label{sec:related} 
+
+hFS \ref{eurosys_hfs} also treats data differently based on their size and
+type. Metadata and small files are stored separately in a log partition like
+log-structured filesystem; data blocks of large regular files are stored in a
+partition in a FFS-like fashion. Our work provides a different user interface,
+which is an object store instead of a POSIX filesystem. Our work also focus
+more on different block storage techniques, which is under the filesystem
+layer.
+
+\ref{fast_12_deindirection} also treats metadata and data differently, and
+store them in virtual blocks and physical blocks respectively.
+
+TableFS \ref{tablefs} also proposed to use NoSQL store metadata and small
+files. However, TableFS is filesystem, which exposes POSIX interface to users,
+whereas our store is an object store that not restricted by the POSIX
+interface.  They do not privide extra functionalities like transaction and
+journaling and they also did not consider using hybrid stroage media in their
+work.
+
+hFAD \ref{Seltzer09hfad} described an tag-based object store API that supports
+full text search and it focused more on user interface. As our work is also
+able to provide tagging and text searching of metadata, we are more focused on
+workload specific performance optimization. Moreover, the design of hFAD is
+above block level storage, whereas our work integrate hybrid block levle
+stroage techniques into our storage system.
+
+Since multimedia files are primarily accessed sequentially, it may not be
+necessary to provide for efficient random access to every large file.
+\ref{evans2002study}.
+
+\ref{kvworkload_sigmetrics} strong locality metrics, such as keys accessed many
+millions of times a day, do not always suf- fice for a high hit rate; and there
+is still room for efficiency and hit rate improvements in Memcached’s
+implementation.  We found that the salient size characteristics follow
+power-law distributions, sim- ilar to other storage and Web-serving systems
+
+Why not cache in block level? Because block layer lacks the knowledge of
+objects and files.  
+
+It may even be worthwhile to investigate not caching large objects at all, to
+increase overall hit rates \ref{kvworkload_sigmetrics}.
+
+Forney et al. \ref{Forney2002fast} proposed storage aware caching for
+heterogeneous storage systems. They made memory cache aware of the different
+replacement costs and partitioned the cache for different storage devices.
+However, their study is set in a different context which is a network-attached
+disk system.  They did not consider data placement among different drives,
+     which is an important strategy employed by our study.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% For Emacs:
+% Local variables:
+% fill-column: 70
+% End:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% For Vim:
+% vim:textwidth=70
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LocalWords:  SMR HDDs drive's SMRs
