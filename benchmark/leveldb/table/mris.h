@@ -47,6 +47,15 @@ void mris_release();
 
 uint64_t LoadFixedUint64(uint64_t offset, SequentialFile* file);
 
+inline const char *basename(const char *path) {
+  assert(path);
+  int len = strlen(path);
+  const char *p = path + len;
+  for (int i = len; i >= 0 && *p != '/'; --i)
+    --p;
+  return ++p;
+}
+
 class MrisAppendReadFile : public WritableFile, public RandomAccessFile {
 private:
   std::string filename_;
@@ -615,7 +624,7 @@ public:
                               const Options* opt) {
     LargeSpace* lspace = NULL;
     std::string mrisdb = "/mnt/largespace/";
-    mrisdb += dbname;
+    mrisdb += basename(dbname.c_str());
     std::map<std::string, LargeSpace*>::iterator it = space_map_.find(mrisdb);
     if (space_map_.empty()) {
       atexit(mris_release);

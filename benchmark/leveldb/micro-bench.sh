@@ -64,14 +64,12 @@ function setup() {
 		echo "unknown setup $name" > /dev/stderr
 		exit 1;
 	fi
-	cp $LEVELDB_HOME/db_bench $DIR
-	cd $DIR
 }
 
 function clean() {
-	local benchmark="$1"
-	rm -rf /mnt/largespace/${benchmark}
-	rm -rf $DIR/${benchmark}
+	local dbname="$1"
+	rm -rf /mnt/largespace/${dbname}
+	rm -rf $DIR/${dbname}
 }
 
 function run_bench() {
@@ -94,14 +92,14 @@ function run_bench() {
 
 	./db_bench --histogram=1 --num=$NUM --benchmarks=$benchmark \
 		--value_size=-1 --compression_ratio=1.0 --threads=1	\
-		--db=${dbname} >${result}.log 2>&1
+		--db=${DIR}/${dbname} >${result}.log 2>&1
 
 	kill $PID_IOSTAT $PID_VMSTAT
 }
 
 for setup_name in ssd sata hybrid; do
 	setup $setup_name
-	for benchmark_name in mris_ran_wt; do
+	for benchmark_name in mris_seq_wt mris_ran_wt; do
 		echo "--- [begin] setup: $setup_name; benchmark: $benchmark_name"
 		for epoch in 1 2 3; do
 			echo "-- epoch: $epoch"
