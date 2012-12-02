@@ -20,7 +20,7 @@ hash -r                                 # clear the command path hash
 
 # number of MRI for test
 NUM=100000
-NREAD=5000
+NREAD=1000
 
 LEVELDB_HOME=/home/mchen/build/mris/benchmark/leveldb
 
@@ -118,7 +118,7 @@ for setup_name in ssd sata hybrid; do
 	setup $setup_name
 	echo "--- [begin] setup: $setup_name; benchmark: $benchmark"
 	echo "--- populating db"
-	populate_db $benchmark $setup_name
+	populate_db $setup_name
 	echo "--- db populated"
 	for ratio in 17; do
 	#for ratio in 1 2 4 8 16 32 64; do

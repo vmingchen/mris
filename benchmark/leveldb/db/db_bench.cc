@@ -524,7 +524,7 @@ class Benchmark {
         fresh_db = true;
         method = &Benchmark::MrisWriteRandom;
       } else if (name == Slice("mris_facebook")) {
-        fresh_db = true;
+        fresh_db = false;
         method = &Benchmark::MrisFacebook;
       } else if (name == Slice("fillseq")) {
         fresh_db = true;
@@ -853,8 +853,8 @@ class Benchmark {
     for (int i = 0; i < num_; i += entries_per_batch_) {
       batch.Clear();
       for (int j = 0; j < entries_per_batch_; j++) {
+        const int l = seq ? i+j : (thread->rand.Next() % num_);
         for (int k = 0; k < mris_nlayer_; ++k) {
-          const int l = seq ? i+j : (thread->rand.Next() % num_);
           char key[100];
           int vsz = MrisImageSizeAt(k); // value (image) size
           snprintf(key, sizeof(key), "%015d%01d", l, k); // keysize = 16
@@ -882,11 +882,13 @@ class Benchmark {
     int big_fail = 0;
     ReadOptions options;
     std::string value;
+    int64_t bytes = 0;
     for (int i = 0; i < reads_; ++i) {
       const int k = thread->rand.Next() % FLAGS_num;
       char key[100];
       snprintf(key, sizeof(key), "%015d%01d", k, 0); // keysize = 16
       if (db_->Get(options, key, &value).ok()) {
+        bytes += value.size();
         small_read++;
       } else {
         small_fail++;
@@ -894,9 +896,10 @@ class Benchmark {
       if (i % FLAGS_mris_ratio == 0) {
         snprintf(key, sizeof(key), "%015d%01d", k, 1); // keysize = 16
         if (db_->Get(options, key, &value).ok()) {
-          small_read++;
+          bytes += value.size();
+          big_read++;
         } else {
-          small_fail++;
+          big_fail++;
         }
         thread->stats.FinishedSingleOp();
       }
@@ -906,6 +909,7 @@ class Benchmark {
     snprintf(msg, sizeof(msg), "small: %d/%d; big: %d/%d",
         small_read, small_fail, big_read, big_fail);
     thread->stats.AddMessage(msg);
+    thread->stats.AddBytes(bytes);
   }
 
   void ReadSequential(ThreadState* thread) {
