@@ -20,7 +20,7 @@ hash -r                                 # clear the command path hash
 
 # number of MRI for test
 NUM=100000
-NREAD=1000
+NREAD=5000
 
 LEVELDB_HOME=/home/mchen/build/mris/benchmark/leveldb
 
