@@ -30,7 +30,6 @@ DIR=/mnt/ssd
 benchmark=mris_facebook
 
 function remount() {
-	rm -f /mnt/largespace
 	if mount -l | grep -q '^/dev/sdb1 '; then
 		while ! umount /dev/sdb1; do
 			sleep 1
@@ -46,12 +45,12 @@ function remount() {
 }
 
 function use_ssd() {
-	[ -L /mnt/largespace ] && rm /mnt/largespace
+	rm -f /mnt/largespace
 	ln -s /mnt/ssd /mnt/largespace
 }
 
 function use_sata() {
-	[ -L /mnt/largespace ] && rm /mnt/largespace
+	rm -f /mnt/largespace
 	ln -s /mnt/sata /mnt/largespace
 }
 
@@ -62,7 +61,7 @@ function setup() {
 	elif [ "x$name" = "xsata" ]; then
 		use_sata && DIR=/mnt/sata
 	elif [ "x$name" = "xhybrid" ]; then
-		use_ssd && DIR=/mnt/sata
+		use_sata && DIR=/mnt/ssd
 	else
 		echo "unknown setup $name" > /dev/stderr
 		exit 1;
@@ -97,7 +96,7 @@ function run_bench() {
 	local result=${RES}/${benchmark}_${setup_name}.${ratio}.$epoch
 	local dbname="${benchmark}_${setup_name}_db"
 
-	# clear cashe
+	# clear cache
 	remount
 
 	vmstat -n 5 >${result}.vmstat &
