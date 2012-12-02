@@ -882,23 +882,28 @@ class Benchmark {
     int big_fail = 0;
     ReadOptions options;
     std::string value;
+    Status status;
     int64_t bytes = 0;
     for (int i = 0; i < reads_; ++i) {
       const int k = thread->rand.Next() % FLAGS_num;
       char key[100];
       snprintf(key, sizeof(key), "%015d%01d", k, 0); // keysize = 16
-      if (db_->Get(options, key, &value).ok()) {
+      status = db_->Get(options, key, &value);
+      if (status.ok()) {
         bytes += value.size();
         small_read++;
       } else {
+        fprintf(stderr, "%s\n", status.ToString().c_str());
         small_fail++;
       }
       if (i % FLAGS_mris_ratio == 0) {
         snprintf(key, sizeof(key), "%015d%01d", k, 1); // keysize = 16
-        if (db_->Get(options, key, &value).ok()) {
+        status = db_->Get(options, key, &value);
+        if (status.ok()) {
           bytes += value.size();
           big_read++;
         } else {
+          fprintf(stderr, "%s\n", status.ToString().c_str());
           big_fail++;
         }
         thread->stats.FinishedSingleOp();

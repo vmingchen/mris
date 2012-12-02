@@ -259,6 +259,7 @@ TEST(MrisTest, MrisDBTest) {
   }
 
   delete db;
+  exit(0);
 }
 
 TEST(MrisTest, LargeSpaceTestIO) {
