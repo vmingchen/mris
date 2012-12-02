@@ -1125,7 +1125,7 @@ int main(int argc, char** argv) {
         FLAGS_value_size = n;
         FLAGS_mris = false;
       }
-    } else if (sscanf(argv[i], "--mris_ratio==%d%c", &n, &junk) == 1) {
+    } else if (sscanf(argv[i], "--mris_ratio=%d%c", &n, &junk) == 1) {
       FLAGS_mris_ratio = n;
     } else if (sscanf(argv[i], "--write_buffer_size=%d%c", &n, &junk) == 1) {
       FLAGS_write_buffer_size = n;
