@@ -330,12 +330,10 @@ TEST(MrisTest, LargeSpaceTestIO) {
   for (size_t i = 0; i < Test_size; ++i) {
     Slice value = values[i];
     std::string mris_value = mris_values[i];
-    ASSERT_OK(space->Retrieve(&mris_value, 0));
+    ASSERT_OK(space->Retrieve(&mris_value));
 
     ASSERT_EQ(0, memcmp(value.data(), mris_value.data(), value.size()));
   }
-
-  exit(0);
 }
 
 TEST(MrisTest, MrisAppendReadFileTest) {
@@ -556,7 +554,7 @@ TEST(MrisTest, LargeSpaceTestInterface) {
   std::string mris_key, mris_value;
   ASSERT_OK(space->Deposit(key, value, &mris_key, &mris_value));
 
-  ASSERT_OK(space->Retrieve(&mris_value, 0));
+  ASSERT_OK(space->Retrieve(&mris_value));
   ASSERT_EQ(0, memcmp(value.data(), mris_value.data(), value.size()));
 }
 

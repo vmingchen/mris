@@ -324,10 +324,6 @@ Status Version::Get(const ReadOptions& options,
   FileMetaData* last_file_read = NULL;
   int last_file_read_level = -1;
 
-#ifdef MRIS
-  size_t value_old_size = value->size();
-#endif
-
   // We can search level-by-level since entries never hop across
   // levels.  Therefore we are guaranteed that if we find data
   // in an smaller level, later levels are irrelevant.
@@ -408,7 +404,7 @@ Status Version::Get(const ReadOptions& options,
           {
             mris::LargeSpace* lspace = 
               mris::LargeSpace::GetSpace(vset_->dbname_, vset_->options_);
-            s = lspace->Retrieve(value, value_old_size);
+            s = lspace->Retrieve(value);
           }
           return s;
 #endif

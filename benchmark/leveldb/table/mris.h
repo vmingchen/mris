@@ -561,9 +561,9 @@ public:
     return s;
   }
 
-  Status Retrieve(std::string* value, size_t value_offset) {
+  Status Retrieve(std::string* value) {
     ValueDelegate vd;
-    Slice input(value->data() + value_offset, value->size() - value_offset);
+    Slice input(value->data(), value->size());
     Status s = vd.DecodeFrom(&input);
     if (! s.ok()) {
       ++nr_failed_lookups_;
@@ -571,8 +571,8 @@ public:
     }
 
     // This does not work because sometimes the file is memory mapped
-    // value->resize(value_offset + vd.size);
-    // char* scrach = const_cast<char *>(value->data() + value_offset);
+    // value->resize(vd.size);
+    // char* scrach = const_cast<char *>(value->data());
 
     char *scrach = new char[vd.size];
     if (!scrach) {
@@ -586,7 +586,7 @@ public:
     value->assign(result.data(), result.data() + vd.size);
     // unget the allocated space when fail
     //if (! s.ok()) {
-      //value->resize(value_offset);
+      //value->resize(0);
     //}
 
     ++nr_success_lookups_;
