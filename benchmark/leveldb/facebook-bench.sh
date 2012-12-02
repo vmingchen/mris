@@ -19,8 +19,8 @@ ulimit -H -c 0 --                       # disable core dump
 hash -r                                 # clear the command path hash
 
 # number of MRI for test
-NUM=1000
-NREAD=100
+NUM=100000
+NREAD=5000
 
 LEVELDB_HOME=/home/mchen/build/mris/benchmark/leveldb
 
@@ -77,9 +77,13 @@ function clean() {
 
 function populate_db() {
 	local setup_name="$1"
-	local dbname="${benchmark}_db"
+	local dbname="${benchmark}_${setup_name}_db"
 
-	clean $dbname
+	# ignore if db already exists
+	if [ -d /mnt/largespace/${dbname} -a -d $DIR/${dbname} ]; then
+		echo "--- ${dbname} already exists"
+		return
+	fi
 
 	./db_bench --histogram=1 --num=$NUM --benchmarks=mris_seq_wt \
 		--value_size=-1 --compression_ratio=1.0 --threads=1	\
@@ -91,9 +95,9 @@ function run_bench() {
 	local setup_name="$2"
 	local epoch="$3"
 	local result=${RES}/${benchmark}_${setup_name}.${ratio}.$epoch
-	local dbname="${benchmark}_db"
+	local dbname="${benchmark}_${setup_name}_db"
 
-	# clear cash
+	# clear cashe
 	remount
 
 	vmstat -n 5 >${result}.vmstat &
@@ -110,16 +114,15 @@ function run_bench() {
 	kill $PID_IOSTAT $PID_VMSTAT
 }
 
-#for setup_name in ssd sata hybrid; do
-for setup_name in ssd; do
+for setup_name in ssd sata hybrid; do
 	setup $setup_name
 	echo "--- [begin] setup: $setup_name; benchmark: $benchmark"
 	echo "--- populating db"
 	populate_db $benchmark $setup_name
+	echo "--- db populated"
 	for ratio in 17; do
 	#for ratio in 1 2 4 8 16 32 64; do
-		#for epoch in 1 2 3; do
-		for epoch in 1; do
+		for epoch in 1 2 3; do
 			echo "--- epoch: $epoch"
 			run_bench $ratio $setup_name $epoch
 		done
