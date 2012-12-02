@@ -882,7 +882,7 @@ class Benchmark {
     int big_fail = 0;
     ReadOptions options;
     std::string value;
-    for (int i = 0; i < reads_ * FLAGS_mris_ratio; ++i) {
+    for (int i = 0; i < reads_; ++i) {
       const int k = thread->rand.Next() % FLAGS_num;
       char key[100];
       snprintf(key, sizeof(key), "%015d%01d", k, 0); // keysize = 16
