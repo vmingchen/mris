@@ -210,7 +210,7 @@ class MrisTest {
     }
 };
 
-TEST(MrisTest, MrisDBTest) {
+TEST(MrisTest, MrisRWTest) {
   DB* db;
   Options opt;
   opt.create_if_missing = true;
@@ -223,7 +223,6 @@ TEST(MrisTest, MrisDBTest) {
   WriteOptions wopt;
   for (size_t i = 0; i < Test_size; ++i) {
     Slice key, value;
-
     do {
       NewKVPair(&key, &value);
     } while (key_offsets.find(key.data()) != key_offsets.end());
@@ -259,7 +258,47 @@ TEST(MrisTest, MrisDBTest) {
   }
 
   delete db;
-  exit(0);
+}
+
+TEST(MrisTest, MrisTwoTierTest) {
+  DB* db;
+  Options opt;
+  opt.create_if_missing = true;
+  Status status = leveldb::DB::Open(opt, "mris-two-tier-test", &db);
+  ASSERT_OK(status);
+
+  const int Test_size = 1000;
+  const int Ntier = 2;
+  int sizes[Ntier] = {8196, 131072};
+  WriteOptions wopt;
+  std::vector<Slice> values;
+  for (int i = 0; i < Test_size; ++i) {
+    for (int j = 0; j < Ntier; ++j) {
+      char key[100];
+      int vsz = sizes[j]; // value (image) size
+      snprintf(key, sizeof(key), "%015d%01d", i, j); // keysize = 16
+      Slice value = rgen.Generate(vsz);
+      values.push_back(value);
+      ASSERT_OK(db->Put(wopt, key, value));
+    }
+  }
+
+  db->CompactRange(NULL, NULL);
+
+  ReadOptions ropt;
+  for (int j = 0; j < 100; ++j) {
+    int r = rand.Uniform(Test_size * Ntier);
+    int i = r >> 1;
+    int j = r & 0x1;
+    char key[100];
+    snprintf(key, sizeof(key), "%015d%01d", i, j); // keysize = 16
+    Slice value;
+    std::string result;
+    ASSERT_OK(db->Get(ropt, key, &result));
+    ASSERT_EQ(0, values[r].compare(Slice(result)));
+  }
+
+  delete db;
 }
 
 TEST(MrisTest, LargeSpaceTestIO) {
@@ -296,6 +335,7 @@ TEST(MrisTest, LargeSpaceTestIO) {
     ASSERT_EQ(0, memcmp(value.data(), mris_value.data(), value.size()));
   }
 
+  exit(0);
 }
 
 TEST(MrisTest, MrisAppendReadFileTest) {
