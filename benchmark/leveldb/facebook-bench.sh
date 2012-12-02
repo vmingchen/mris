@@ -108,7 +108,7 @@ function run_bench() {
 
 	./db_bench --histogram=1 --num=$NUM --benchmarks=$benchmark \
 		--value_size=-1 --compression_ratio=1.0 --threads=1	\
-		--mris_ratio=$ratio --reads=$NREAD \
+		--mris_ratio=$ratio --reads=$NREAD --use_existing_db=1 \
 		--db=${DIR}/${dbname} >${result}.log 2>&1
 
 	kill $PID_IOSTAT $PID_VMSTAT
