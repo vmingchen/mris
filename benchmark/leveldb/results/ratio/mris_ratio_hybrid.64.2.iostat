@@ -1,0 +1,18 @@
+Linux 3.4.7 (chevron8.msl.cewit.stonybrook.edu) 	12/02/2012
+
+Time: 11:27:15 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.89    0.45    6.05    3.53    0.00   89.08
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.32     6.58    1.37    1.69   162.35   939.35   359.89     0.14   44.73   1.70   0.52
+sdc1              0.23     6.02    1.12    1.97   150.74  1086.44   400.26     0.20   65.58   5.29   1.64
+
+Time: 11:27:20 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           2.69    0.00   13.46   83.85    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1            170.00     0.20  888.60    1.20 103512.00    80.00   116.42     0.72    0.81   0.80  71.58
+sdc1              5.20     0.00   29.00    0.20  3548.80     1.60   121.59     0.17    5.70   5.62  16.42
+

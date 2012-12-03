@@ -105,7 +105,7 @@ function run_bench() {
 	iostat -t -x /dev/sdb1 /dev/sdc1 5 >${result}.iostat &
 	PID_IOSTAT=$!
 
-	./db_bench --histogram=1 --num=$NUM --benchmarks=$benchmark \
+	./db_bench --histogram=1 --num=$NUM --benchmarks=mris_facebook \
 		--value_size=-1 --compression_ratio=1.0 --threads=1	\
 		--mris_ratio=$ratio --reads=$NREAD --use_existing_db=1 \
 		--db=${DIR}/${dbname} >${result}.log 2>&1
