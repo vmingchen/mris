@@ -1,0 +1,5 @@
+This folder contains the results of mris_seq_wt and mris_ran_wt, which are
+writes to the MRIS store sequentially and randomly. Three different setups are
+compared: using pure SSD, pure SATA, and hybrid.
+
+Parsed figures and data sheets are in parse.
