@@ -1,7 +1,7 @@
 %!PS-Adobe-2.0 EPSF-2.0
 %%Title: mris_facebook_ops.eps
-%%Creator: gnuplot 4.2 patchlevel 6 
-%%CreationDate: Tue Dec  4 17:47:46 2012
+%%Creator: gnuplot 4.4 patchlevel 4
+%%CreationDate: Tue Dec  4 17:58:06 2012
 %%DocumentFonts: (atend)
 %%BoundingBox: 50 50 770 377
 %%EndComments
@@ -9,8 +9,8 @@
 /gnudict 256 dict def
 gnudict begin
 %
-% The following 6 true/false flags may be edited by hand if required
-% The unit line width may also be changed
+% The following true/false flags may be edited by hand if desired.
+% The unit line width and grayscale image gamma correction may also be changed.
 %
 /Color true def
 /Blacktext false def
@@ -19,9 +19,11 @@ gnudict begin
 /Landscape false def
 /Level1 false def
 /Rounded false def
+/ClipToBoundingBox false def
 /TransparentPatterns false def
 /gnulinewidth 5.000 def
 /userlinewidth gnulinewidth def
+/Gamma 1.0 def
 %
 /vshift -133 def
 /dl1 {
@@ -44,16 +46,24 @@ systemdict /pdfmark known not {
 SDict begin [
   /Title (mris_facebook_ops.eps)
   /Subject (gnuplot plot)
-  /Creator (gnuplot 4.2 patchlevel 6 )
-  /Author (Ming Chen)
+  /Creator (gnuplot 4.4 patchlevel 4)
+  /Author (mchen)
 %  /Producer (gnuplot)
 %  /Keywords ()
-  /CreationDate (Tue Dec  4 17:47:46 2012)
+  /CreationDate (Tue Dec  4 17:58:06 2012)
   /DOCINFO pdfmark
 end
 } ifelse
+/doclip {
+  ClipToBoundingBox {
+    newpath 50 50 moveto 770 50 lineto 770 377 lineto 50 377 lineto closepath
+    clip
+  } if
+} def
 %
-% Gnuplot Prolog Version 4.2 (August 2006)
+% Gnuplot Prolog Version 4.4 (August 2010)
+%
+%/SuppressPDFMark true def
 %
 /M {moveto} bind def
 /L {lineto} bind def
@@ -63,6 +73,8 @@ end
 /Z {closepath} bind def
 /C {setrgbcolor} bind def
 /f {rlineto fill} bind def
+/g {setgray} bind def
+/Gshow {show} def   % May be redefined later in the file to support UTF-8
 /vpt2 vpt 2 mul def
 /hpt2 hpt 2 mul def
 /Lshow {currentpoint stroke M 0 vshift R 
@@ -83,6 +95,7 @@ end
 	dup 1 lt {pop 1} if 10 mul /udl exch def} def
 /PL {stroke userlinewidth setlinewidth
 	Rounded {1 setlinejoin 1 setlinecap} if} def
+3.8 setmiterlimit
 % Default Line colors
 /LCw {1 1 1} def
 /LCb {0 0 0} def
@@ -424,6 +437,7 @@ end
 %%EndProlog
 gnudict begin
 gsave
+doclip
 50 50 translate
 0.050 0.050 scale
 0 setgray
@@ -432,167 +446,170 @@ newpath
 /Times-Roman findfont 400 scalefont setfont
 1.000 UL
 LTb
-1800 800 M
+1560 800 M
 63 0 V
-11937 0 R
+12055 0 R
 -63 0 V
-1800 800 M
+1560 800 M
 ( 0) Rshow
 1.000 UL
 LTb
-1800 1369 M
+1560 1559 M
 63 0 V
-11937 0 R
+12055 0 R
 -63 0 V
--11937 0 R
-( 2) Rshow
+-12055 0 R
+( 100) Rshow
 1.000 UL
 LTb
-1800 1938 M
+1560 2317 M
 63 0 V
-11937 0 R
+12055 0 R
 -63 0 V
--11937 0 R
-( 4) Rshow
+-12055 0 R
+( 200) Rshow
 1.000 UL
 LTb
-1800 2507 M
+1560 3076 M
 63 0 V
-11937 0 R
+12055 0 R
 -63 0 V
--11937 0 R
-( 6) Rshow
+-12055 0 R
+( 300) Rshow
 1.000 UL
 LTb
-1800 3076 M
+1560 3834 M
 63 0 V
-11937 0 R
+12055 0 R
 -63 0 V
--11937 0 R
-( 8) Rshow
+-12055 0 R
+( 400) Rshow
 1.000 UL
 LTb
-1800 3645 M
+1560 4593 M
 63 0 V
-11937 0 R
+12055 0 R
 -63 0 V
--11937 0 R
-( 10) Rshow
+-12055 0 R
+( 500) Rshow
 1.000 UL
 LTb
-1800 4214 M
+1560 5351 M
 63 0 V
-11937 0 R
+12055 0 R
 -63 0 V
--11937 0 R
-( 12) Rshow
+-12055 0 R
+( 600) Rshow
 1.000 UL
 LTb
-1800 4783 M
-63 0 V
-11937 0 R
--63 0 V
--11937 0 R
-( 14) Rshow
-1.000 UL
-LTb
-1800 5352 M
-63 0 V
-11937 0 R
--63 0 V
--11937 0 R
-( 16) Rshow
-1.000 UL
-LTb
-4800 800 M
+4590 800 M
 0 63 V
-0 4489 R
+0 4488 R
 0 -63 V
-0 -4689 R
+0 -4688 R
 (ssd) Cshow
 1.000 UL
 LTb
-7800 800 M
+7619 800 M
 0 63 V
-0 4489 R
+0 4488 R
 0 -63 V
-0 -4689 R
+0 -4688 R
 (hybrid) Cshow
 1.000 UL
 LTb
-10800 800 M
+10649 800 M
 0 63 V
-0 4489 R
+0 4488 R
 0 -63 V
-0 -4689 R
+0 -4688 R
 (sata) Cshow
 1.000 UL
 LTb
 1.000 UL
 LTb
-1800 5352 N
-0 -4552 V
-12000 0 V
-0 4552 V
--12000 0 V
+1560 5351 N
+0 -4551 V
+12118 0 V
+0 4551 V
+-12118 0 V
 Z stroke
 LCb setrgbcolor
-1120 3076 M
-currentpoint gsave translate 90 rotate 0 0 M
-(Throughput \(mb/sec\)) Cshow
+640 3075 M
+currentpoint gsave translate -270 rotate 0 0 M
+(Throughput \(ops/sec\)) Cshow
 grestore
 LTb
 LCb setrgbcolor
-7800 280 M
+7619 280 M
 (Setup) Cshow
 LTb
-7800 5952 M
-(Throughput of mris_facebook \(ratio = 17\)) Cshow
+7619 5951 M
+(Throughput of mris_facebook \(ops/sec\)) Cshow
 1.000 UP
 1.000 UL
 LTb
+% Begin plot #1
 2.000 UL
 LT0
 /Times-Roman findfont 400 scalefont setfont
-LTb
-12057 4289 M
+LCb setrgbcolor
+11935 4288 M
 ("mris_facebook_ops.dat" using 2:3:xticlabels\(1\)) Rshow
 LT0
-12297 4189 N
+12175 4188 N
 1023 0 V
 0 200 V
 -1023 0 V
 0 -200 V
 Z stroke
+3832 800 N
+0 4541 V
+1515 0 V
+0 -4541 V
+-1515 0 V
+Z stroke
+6862 800 N
+0 2820 V
+1514 0 V
+0 -2820 V
+-1514 0 V
+Z stroke
+9891 800 N
+0 529 V
+1515 0 V
+0 -529 V
+-1515 0 V
+Z stroke
 2.000 UL
+4590 5339 M
+0 5 V
+-31 -5 R
+62 0 V
+-62 5 R
+62 0 V
+7619 3612 M
+0 16 V
+-31 -16 R
+62 0 V
+-62 16 R
+62 0 V
+10649 1328 M
+0 1 V
+-31 -1 R
+62 0 V
+-62 1 R
+62 0 V
+stroke
 LT0
-2.000 UL
-LT0
-4050 800 N
-0 4552 V
-1500 0 V
-0 -4552 V
--1500 0 V
-Z stroke
-7050 800 N
-0 4552 V
-1500 0 V
-0 -4552 V
--1500 0 V
-Z stroke
-10050 800 N
-0 4552 V
-1500 0 V
-0 -4552 V
--1500 0 V
-Z stroke
+% End plot #1
 1.000 UL
 LTb
-1800 5352 N
-0 -4552 V
-12000 0 V
-0 4552 V
--12000 0 V
+1560 5351 N
+0 -4551 V
+12118 0 V
+0 4551 V
+-12118 0 V
 Z stroke
 1.000 UP
 1.000 UL
