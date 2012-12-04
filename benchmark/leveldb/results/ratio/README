@@ -1,0 +1,3 @@
+Results of MRI when the read ratio of small and large images varies.
+It runs mris_facebook in db_bench to the results. But the ratio is set to
+various values intead of being fixed at 17.
