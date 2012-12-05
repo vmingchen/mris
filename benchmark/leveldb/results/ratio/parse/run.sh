@@ -18,14 +18,15 @@ unset -f unalias                        # make sure unalias is not a function
 ulimit -H -c 0 --                       # disable core dump
 hash -r                                 # clear the command path hash
 
+workload=mris_ratio
+
 function parse() {
 	echo -ne "#setup\tratio\tepoch\top/s\tMB/s\n"
-	workload=mris_ratio
 	for setup in ssd hybrid sata; do
 		for ratio in 1 2 4 8 16 32 64; do
 			for epoch in 1 2 3; do
 				echo -ne "$setup\t$ratio\t$epoch\t"
-				filename=../${workload}_${setup}.${ratio}.${epoch}.log 
+				local filename=../${workload}_${setup}.${ratio}.${epoch}.log 
 				grep -w "mris_facebook" $filename | 
 					awk '{printf("%s\t%s\n", 1000000/$3, $5);}'
 			done
@@ -33,8 +34,36 @@ function parse() {
 	done
 }
 
+# get average thput from iostat csv file obtained by iostat2csv.sh
+function get_iostat_thput() {
+	local filename=$1
+	# ignore the header and the first record
+	# (sum * 0.5)/1024 turns sec/s to mb/s
+	awk -v FS=',' '(NR > 2) {
+		sum += $5;
+	} END {
+		printf("%.2f", (sum * 0.5) / (1024 * (NR - 2)));
+	}' ${filename}
+}
+
+function parse_iostat() {
+	echo -ne "#setup\tratio\tepoch\tMB/s(SSD)\tMB/s(SATA)\n"
+	for setup in ssd hybrid sata; do
+		for ratio in 1 2 4 8 16 32 64; do
+			for epoch in 1 2 3; do
+				local filename=../${workload}_${setup}.${ratio}.${epoch}.iostat
+				iostat2csv.sh $filename
+				# get thput of the SSD and SATA respectively
+				ssd_thput=`get_iostat_thput $filename.sdb1.csv`
+				sata_thput=`get_iostat_thput $filename.sdc1.csv`
+				echo -e "${setup}\t${ratio}\t${epoch}\t${ssd_thput}\t${sata_thput}"
+			done
+		done
+	done
+}
+
 function parse_column() {
-	n=$1
+	local n=$1
 	for ratio in 1 2 4 8 16 32 64; do
 		echo -ne "$ratio\t"
 		for setup in ssd hybrid sata; do
@@ -58,6 +87,8 @@ function parse_thput() {
 	parse_column 5 >> mris_ratio_thput.dat
 }
 
-parse > mris_ratio.dat
-parse_ops
-parse_thput
+#parse > mris_ratio.dat
+#parse_ops
+#parse_thput
+
+parse_iostat > mris_ratio_iostat.dat
