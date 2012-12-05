@@ -8,3 +8,4 @@
 * Come up with a cost model for replacement or migration that consider 1)
 	average latency per object, and 2) the Flash characteristics
 [FUTURE] * Use unionfs for differetiating small and large files
+[FUTURE] Come up with models to explain results!
