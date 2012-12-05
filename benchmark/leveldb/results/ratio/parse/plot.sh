@@ -29,7 +29,7 @@ set output "${name}.eps"
 
 set style data linespoints
 
-set title "Throughput of mris_facebook (${ylabel})"
+set title "Throughput of mris_ratio (${ylabel})"
 set xlabel "Ratio" offset 0,1.2
 set ylabel "Throughput (${ylabel})" offset 3.0,0
 set style histogram errorbars gap 1 lw 2
