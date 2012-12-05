@@ -63,28 +63,36 @@ function parse_iostat() {
 }
 
 function parse_column() {
-	local n=$1
+	local n="$1"
+	local filename="$2"
 	for ratio in 1 2 4 8 16 32 64; do
 		echo -ne "$ratio\t"
 		for setup in ssd hybrid sata; do
 			echo -ne "$setup\t"
-			grep "$setup	$ratio	" mris_ratio.dat | 
-				cut -f $n | 
-					calc.py -s | 
-						tr '\n' '\t'
+			for i in $n; do
+				grep "$setup	$ratio	" $filename | 
+					cut -f $i | 
+						calc.py -s | 
+							tr '\n' '\t'
+			done
 		done
 		echo ""
 	done
 }
 
 function parse_ops() {
-	echo -e "#setup\tops\tstddev" > mris_ratio_ops.dat
-	parse_column 4 >> mris_ratio_ops.dat
+	echo -e "#ratio\tsetup\tops\tstddev" > mris_ratio_ops.dat
+	parse_column 4 mris_ratio.dat >> mris_ratio_ops.dat
 }
 
 function parse_thput() {
-	echo -e "#setup\tmb/s\tstddev" > mris_ratio_thput.dat
-	parse_column 5 >> mris_ratio_thput.dat
+	echo -e "#ratio\tsetup\tmb/s\tstddev" > mris_ratio_thput.dat
+	parse_column 5 mris_ratio.dat >> mris_ratio_thput.dat
+}
+
+function parse_iostat_thput() {
+	echo -e "#ratio\tsetup\tssd\tstddev\tsata\tstddev" 
+	parse_column "4 5" mris_ratio_iostat.dat 
 }
 
 #parse > mris_ratio.dat
@@ -92,3 +100,4 @@ function parse_thput() {
 #parse_thput
 
 parse_iostat > mris_ratio_iostat.dat
+parse_iostat_thput > mris_ratio_iostat_thput.dat
