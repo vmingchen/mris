@@ -15,4 +15,4 @@ set ytics offset 1,0
 #set yrange [0:16]
 set key height 4
 
-plot "mris_ratio_iostat_thput.dat" using 3:4:xticlabels(1) w histogram lw 2 title "SSD-SSD", 	"" using 5:6:xticlabels(1) w histogram lw 2 title "SSD-SATA", 	"" using 8:9:xticlabels(1) w histogram lw 2 title "Hybrid-SSD", 	"" using 10:11:xticlabels(1) w histogram lw 2 title "Hybrid-SATA", 	"" using 13:14:xticlabels(1) w histogram lw 2 title "SATA-SSD", 	"" using 15:16:xticlabels(1) w histogram lw 2 title "SATA-SATA"
+plot "mris_ratio_iostat_thput.dat" using 3:4:xticlabels(1) w histogram lw 2 title "SSD-SSD", 	"" using 8:9:xticlabels(1) w histogram lw 2 title "Hybrid-SSD", 	"" using 10:11:xticlabels(1) w histogram lw 2 title "Hybrid-SATA", 	"" using 15:16:xticlabels(1) w histogram lw 2 title "SATA-SATA"
