@@ -1,3 +1,8 @@
 Results of MRI when the read ratio of small and large images varies.
 It runs mris_facebook in db_bench to the results. But the ratio is set to
 various values intead of being fixed at 17.
+
+The thput reported by iostat does not match that of db_bench. Further
+investigation required:
+1. iostat every second instead of 5
+2. make workload larger (because program finish soon when ratio is large)
