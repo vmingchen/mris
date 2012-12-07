@@ -34,6 +34,20 @@ function parse() {
 	done
 }
 
+# get average of columns in iostat csv file obtained by iostat2csv.sh
+function get_iostat_col_avg() {
+	local n=$1
+	local filename=$2
+	# ignore the header and the first record
+	# (sum * 0.5)/1024 turns sec/s to mb/s
+	awk -v n="$n" -v FS=',' '(NR > 2) {
+		sum += $n;
+	} END {
+		printf("%.2f", (sum * 0.5) / (1024 * (NR - 2)));
+	}' ${filename}
+}
+
+
 # get average thput from iostat csv file obtained by iostat2csv.sh
 function get_iostat_thput() {
 	local filename=$1
@@ -47,7 +61,7 @@ function get_iostat_thput() {
 }
 
 function parse_iostat() {
-	echo -ne "#setup\tratio\tepoch\tMB/s(SSD)\tMB/s(SATA)\n"
+	echo -ne "#setup\tratio\tepoch\tMB/s(SSD)\tMB/s(SATA)\tr/s(SSD)\tr/s(SATA)\trqsz(SSD)\trqst(SATA)\n"
 	for setup in ssd hybrid sata; do
 		for ratio in 1 2 4 8 16 32 64; do
 			for epoch in 1 2 3; do
@@ -56,7 +70,11 @@ function parse_iostat() {
 				# get thput of the SSD and SATA respectively
 				ssd_thput=`get_iostat_thput $filename.sdb1.csv`
 				sata_thput=`get_iostat_thput $filename.sdc1.csv`
-				echo -e "${setup}\t${ratio}\t${epoch}\t${ssd_thput}\t${sata_thput}"
+				ssd_ops=`get_iostat_col_avg 3 $filename.sdb1.csv`
+				sata_ops=`get_iostat_col_avg 3 $filename.sdc1.csv`
+				ssd_rqsz=`get_iostat_col_avg 7 $filename.sdb1.csv`
+				sata_rqsz=`get_iostat_col_avg 7 $filename.sdc1.csv`
+				echo -e "${setup}\t${ratio}\t${epoch}\t${ssd_thput}\t${sata_thput}\t${ssd_ops}\t${sata_ops}\t${ssd_rqsz}\t${sata_rqsz}"
 			done
 		done
 	done
@@ -95,9 +113,21 @@ function parse_iostat_thput() {
 	parse_column "4 5" mris_ratio_iostat.dat 
 }
 
-#parse > mris_ratio.dat
-#parse_ops
-#parse_thput
+function parse_iostat_ops() {
+	echo -e "#ratio\tsetup\tssd\tstddev\tsata\tstddev" 
+	parse_column "6 7" mris_ratio_iostat.dat 
+}
+
+function parse_iostat_rqsz() {
+	echo -e "#ratio\tsetup\tssd\tstddev\tsata\tstddev" 
+	parse_column "6 7" mris_ratio_iostat.dat 
+}
+
+parse > mris_ratio.dat
+parse_ops
+parse_thput
 
 parse_iostat > mris_ratio_iostat.dat
 parse_iostat_thput > mris_ratio_iostat_thput.dat
+parse_iostat_ops > mris_ratio_iostat_ops.dat
+parse_iostat_rqsz > mris_ratio_iostat_rqsz.dat
