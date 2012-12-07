@@ -11,7 +11,7 @@
 
 set -o nounset                          # treat unset variables as an error
 set -o errexit                          # stop script if command fail
-export PATH="/bin:/usr/bin:/sbin"             
+export PATH="/bin:/usr/bin:/sbin:/usr/sbin"             
 IFS=$' \t\n'                            # reset IFS
 unset -f unalias                        # make sure unalias is not a function
 \unalias -a                             # unset all aliases
@@ -20,7 +20,7 @@ hash -r                                 # clear the command path hash
 
 # number of MRI for test
 NUM=100000
-NREAD=5000
+NREAD=10000
 
 LEVELDB_HOME=/home/mchen/build/mris/benchmark/leveldb
 
@@ -99,11 +99,15 @@ function run_bench() {
 	# clear cache
 	remount
 
-	vmstat -n 5 >${result}.vmstat &
+	vmstat -n 1 >${result}.vmstat &
 	PID_VMSTAT=$!
 
-	iostat -t -x /dev/sdb1 /dev/sdc1 5 >${result}.iostat &
+	iostat -t -x /dev/sdb1 /dev/sdc1 1 >${result}.iostat &
 	PID_IOSTAT=$!
+
+	#btrace /dev/sdb1 /dev/sdc1 >${result}.btrace &
+	#blktrace /dev/sdb /dev/sdc &
+	#PID_BTRACE=$!
 
 	./db_bench --histogram=1 --num=$NUM --benchmarks=mris_facebook \
 		--value_size=-1 --compression_ratio=1.0 --threads=1	\
@@ -111,6 +115,8 @@ function run_bench() {
 		--db=${DIR}/${dbname} >${result}.log 2>&1
 
 	kill $PID_IOSTAT $PID_VMSTAT
+	#kill $PID_IOSTAT $PID_VMSTAT $PID_BTRACE
+	#sleep 1s && grep -p $PID_BTRACE && kill -9 $PID_BTRACE
 }
 
 for setup_name in ssd sata hybrid; do

@@ -1,0 +1,74 @@
+Linux 3.4.7 (chevron8.msl.cewit.stonybrook.edu) 	12/02/2012
+
+Time: 02:35:57 AM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.70    0.55    6.86    2.28    0.00   89.62
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.05     7.65    0.12    1.41     4.57   802.70   527.09     0.10   64.53   2.33   0.36
+sdc1              0.05     6.46    0.10    1.10     4.50   569.00   479.75     0.09   73.80   4.17   0.50
+
+Time: 02:36:02 AM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          29.15    0.00   28.34   42.51    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00    81.60    0.60   95.20     4.80 61859.20   645.76     2.28   23.48   4.93  47.24
+
+Time: 02:36:07 AM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          25.96    0.00   27.38   46.65    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00    81.40    0.40   99.80     3.20 63785.60   636.61     2.42   24.40   5.08  50.90
+
+Time: 02:36:12 AM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          25.66    0.00   27.49   46.84    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00    84.80    0.60  123.00     4.80 64377.60   520.89     3.00   23.67   4.18  51.70
+
+Time: 02:36:17 AM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          24.90    0.00   28.95   46.15    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00    83.60    0.40   99.20     3.20 63699.20   639.58     2.40   24.64   5.07  50.52
+
+Time: 02:36:22 AM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          26.02    0.00   27.85   46.14    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00    83.40    0.60  101.20     4.80 65340.80   641.90     2.40   23.65   4.95  50.44
+
+Time: 02:36:27 AM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          25.61    0.00   31.50   42.89    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00    83.60    0.40  101.60     3.20 64868.80   636.00     2.26   22.32   4.61  47.04
+
+Time: 02:36:32 AM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          25.20    0.00   30.49   44.31    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00    81.40    0.60  105.20     4.80 63160.00   597.02     2.38   22.53   4.58  48.50
+
+Time: 02:36:37 AM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          24.54    0.00   31.44   44.02    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00    83.20    0.40  106.40     3.20 63825.60   597.65     2.34   21.49   4.51  48.18
+
