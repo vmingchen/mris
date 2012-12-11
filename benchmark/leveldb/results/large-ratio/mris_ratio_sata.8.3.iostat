@@ -1,0 +1,2194 @@
+Linux 3.4.7 (chevron8.msl.cewit.stonybrook.edu) 	12/06/2012
+
+Time: 10:28:36 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.71    2.30   28.34   11.63    0.00   56.03
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.37     3.52    2.01    0.91   267.58   502.42   263.72     0.07   25.52   1.36   0.40
+sdc1              0.24     3.22    1.52    1.05   222.31   581.04   312.18     0.12   45.18   6.20   1.60
+
+Time: 10:28:37 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          16.83    0.00   39.60   43.56    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             80.00     1.00  130.00    6.00  9328.00   400.00    71.53     0.65    5.40   4.55  61.90
+
+Time: 10:28:38 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          33.33    0.00   66.67    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              4.00     0.00   15.00    0.00  1952.00     0.00   130.13     0.11    7.53   7.53  11.30
+
+Time: 10:28:39 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          41.00    0.00   43.00   16.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   42.00    0.00  4952.00     0.00   117.90     0.29    6.86   7.02  29.50
+
+Time: 10:28:40 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    2.02   97.98    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  133.00    0.00 15320.00     0.00   115.19     0.99    7.44   7.38  98.20
+
+Time: 10:28:41 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           2.00    0.00    3.00   95.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             15.00     0.00  138.00    0.00 15608.00     0.00   113.10     0.98    7.10   7.07  97.50
+
+Time: 10:28:42 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    4.04   94.95    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             16.00     0.00  131.00    0.00 15424.00     0.00   117.74     0.97    7.47   7.44  97.50
+
+Time: 10:28:43 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.00    0.00    2.00   97.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             22.00     0.00  127.00    0.00 15176.00     0.00   119.50     0.98    7.72   7.76  98.50
+
+Time: 10:28:44 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          10.00    0.00   29.00   61.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             12.00     0.00   98.00    0.00 11880.00     0.00   121.22     0.80    8.27   8.07  79.10
+
+Time: 10:28:45 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          33.00    0.00   67.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00   18.00    0.00  1816.00     0.00   100.89     0.13    7.00   7.11  12.80
+
+Time: 10:28:46 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          46.00    0.00   48.00    6.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              5.00     0.00   33.00    0.00  3768.00     0.00   114.18     0.24    7.36   7.36  24.30
+
+Time: 10:28:47 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           3.06    0.00    5.10   91.84    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             15.00     0.00  132.00    0.00 15832.00     0.00   119.94     0.97    7.39   7.38  97.40
+
+Time: 10:28:48 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.00    0.00    2.00   97.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             18.00     0.00  122.00    0.00 14264.00     0.00   116.92     0.97    7.89   7.99  97.50
+
+Time: 10:28:49 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           6.12    0.00   10.20   83.67    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             12.00     0.00  135.00    0.00 15168.00     0.00   112.36     0.98    7.30   7.23  97.60
+
+Time: 10:28:50 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.00    0.00    2.00   97.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             13.00     0.00  133.00    0.00 15288.00     0.00   114.95     0.97    7.36   7.33  97.50
+
+Time: 10:28:51 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           4.85    0.00   14.56   80.58    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             13.46     0.00  102.88    0.00 12069.23     0.00   117.31     0.84    8.19   8.12  83.56
+
+Time: 10:28:52 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          37.00    0.00   63.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    9.00    0.00   960.00     0.00   106.67     0.05    5.67   5.67   5.10
+
+Time: 10:28:53 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          47.00    0.00   53.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   18.00    0.00  2272.00     0.00   126.22     0.14    7.61   7.61  13.70
+
+Time: 10:28:54 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          25.74    0.00   28.71   45.54    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             14.00     0.00   86.00    0.00 10672.00     0.00   124.09     0.66    7.64   7.66  65.90
+
+Time: 10:28:55 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.00    0.00    2.00   97.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             15.00     0.00  132.00    0.00 16024.00     0.00   121.39     0.98    7.44   7.43  98.10
+
+Time: 10:28:56 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    3.03   95.96    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             14.00     0.00  128.00    0.00 15128.00     0.00   118.19     0.97    7.55   7.56  96.80
+
+Time: 10:28:57 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    2.02   97.98    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  127.00    0.00 15608.00     0.00   122.90     0.98    7.76   7.75  98.40
+
+Time: 10:28:58 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    1.01   97.98    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             15.00     0.00  127.00    0.00 15248.00     0.00   120.06     0.98    7.73   7.72  98.00
+
+Time: 10:28:59 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          15.15    0.00   54.55   30.30    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              4.00     0.00   46.00    0.00  5384.00     0.00   117.04     0.35    7.61   7.54  34.70
+
+Time: 10:29:00 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          44.55    0.00   55.45    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              4.00     0.00   17.00    0.00  2264.00     0.00   133.18     0.14    8.47   8.47  14.40
+
+Time: 10:29:01 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          29.59    0.00   37.76   32.65    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              8.00     0.00   56.00    0.00  6552.00     0.00   117.00     0.43    7.54   7.68  43.00
+
+Time: 10:29:02 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.99    0.00    2.97   96.04    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             14.00     0.00  135.00    0.00 15160.00     0.00   112.30     0.98    7.39   7.29  98.40
+
+Time: 10:29:03 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    5.05   93.94    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             21.00     0.00  129.00    0.00 15928.00     0.00   123.47     0.99    7.66   7.60  98.10
+
+Time: 10:29:04 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    1.02   98.98    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  122.00    0.00 15400.00     0.00   126.23     0.99    8.08   8.08  98.60
+
+Time: 10:29:05 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    1.01   97.98    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             20.00     0.00  122.00    0.00 15216.00     0.00   124.72     0.98    8.07   8.07  98.50
+
+Time: 10:29:06 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          15.00    0.00   35.00   50.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              9.00     4.00   87.00   13.00 10216.00   136.00   103.52     0.89    8.97   7.07  70.70
+
+Time: 10:29:07 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          32.32    0.00   67.68    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              4.00     0.00   12.00    0.00  1600.00     0.00   133.33     0.08    6.67   6.67   8.00
+
+Time: 10:29:08 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          51.49    0.00   48.51    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00   22.00    0.00  2416.00     0.00   109.82     0.11    5.23   5.23  11.50
+
+Time: 10:29:09 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          29.29    0.00   11.11   59.60    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             12.00     0.00  124.00    0.00 14592.00     0.00   117.68     0.97    7.85   7.85  97.40
+
+Time: 10:29:10 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          87.00    0.00    7.00    6.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             20.00     0.00  127.00    0.00 15792.00     0.00   124.35     1.00    7.84   7.72  98.00
+
+Time: 10:29:11 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          93.00    0.00    7.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     1.00  125.00    1.00 15512.00    16.00   123.24     1.05    8.24   7.75  97.70
+
+Time: 10:29:12 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          34.00    0.00    5.00   61.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             14.00     0.00  127.00    0.00 15048.00     0.00   118.49     0.97    7.74   7.68  97.50
+
+Time: 10:29:14 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          82.08    0.00   17.92    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             21.70     0.00   95.28    0.94 12875.47     7.55   133.88     0.82    8.55   8.39  80.75
+
+Time: 10:29:15 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          59.00    0.00   41.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00    9.00    0.00   952.00     0.00   105.78     0.07    8.22   8.22   7.40
+
+Time: 10:29:16 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          64.00    0.00   36.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    5.00    0.00   664.00     0.00   132.80     0.02    4.80   4.80   2.40
+
+Time: 10:29:17 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          70.00    0.00   30.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    9.00    0.00   944.00     0.00   104.89     0.08    9.22   9.22   8.30
+
+Time: 10:29:18 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          65.00    0.00   35.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00   11.00    0.00  1464.00     0.00   133.09     0.07    6.82   6.82   7.50
+
+Time: 10:29:19 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          84.85    0.00   14.14    1.01    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  117.00    0.00 14696.00     0.00   125.61     0.91    7.68   7.53  88.10
+
+Time: 10:29:20 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          93.07    0.00    6.93    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             24.00     0.00  122.00    0.00 15840.00     0.00   129.84     0.98    8.14   8.05  98.20
+
+Time: 10:29:21 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          88.89    0.00    6.06    5.05    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  128.00    0.00 15432.00     0.00   120.56     1.00    7.80   7.65  97.90
+
+Time: 10:29:22 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          93.00    0.00    7.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             15.00     0.00  123.00    0.00 15848.00     0.00   128.85     0.98    8.05   7.85  96.60
+
+Time: 10:29:23 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          49.49    0.00    6.06   44.44    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              9.90     0.00   89.11    0.00 11041.58     0.00   123.91     0.71    7.98   7.83  69.80
+
+Time: 10:29:24 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          58.42    0.00   41.58    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00    6.00    0.00   768.00     0.00   128.00     0.03    5.67   5.67   3.40
+
+Time: 10:29:25 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          62.00    0.00   38.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    4.00    0.00   288.00     0.00    72.00     0.04    7.00   8.75   3.50
+
+Time: 10:29:26 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          69.00    0.00   31.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    8.00    0.00  1048.00     0.00   131.00     0.02    3.00   2.12   1.70
+
+Time: 10:29:27 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          69.00    0.00   31.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00    9.00    0.00  1088.00     0.00   120.89     0.06    6.67   6.67   6.00
+
+Time: 10:29:28 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          64.00    0.00   20.00   16.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             13.00     0.00   87.00    0.00 10952.00     0.00   125.89     0.70    8.09   8.00  69.60
+
+Time: 10:29:29 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          93.00    0.00    7.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             21.00     0.00  130.00    0.00 16288.00     0.00   125.29     0.98    7.54   7.49  97.40
+
+Time: 10:29:30 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          91.00    0.00    7.00    2.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             24.00     0.00  118.00    0.00 15352.00     0.00   130.10     0.99    8.33   8.28  97.70
+
+Time: 10:29:31 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          94.00    0.00    6.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             18.00     0.00  121.00    0.00 15296.00     0.00   126.41     1.03    8.47   8.14  98.50
+
+Time: 10:29:32 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          92.00    0.00    8.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             15.00     0.00  125.00    0.00 15128.00     0.00   121.02     1.00    8.02   7.85  98.10
+
+Time: 10:29:33 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          48.48    0.00   32.32   19.19    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              4.00     0.00   33.00    0.00  4144.00     0.00   125.58     0.27    8.48   8.27  27.30
+
+Time: 10:29:34 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          57.00    0.00   43.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00    3.00    0.00   488.00     0.00   162.67     0.03    9.67   9.67   2.90
+
+Time: 10:29:35 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          69.00    0.00   31.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00    5.00    0.00   912.00     0.00   182.40     0.02    4.00   4.00   2.00
+
+Time: 10:29:36 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          70.30    0.00   29.70    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00   10.00    0.00  1184.00     0.00   118.40     0.08    7.60   6.30   6.30
+
+Time: 10:29:37 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          75.51    0.00   24.49    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              7.00     0.00   25.00    0.00  3496.00     0.00   139.84     0.20    7.92   7.96  19.90
+
+Time: 10:29:38 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          39.60    0.00    8.91   51.49    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             18.00     0.00  122.00    0.00 15728.00     0.00   128.92     0.96    7.83   7.86  95.90
+
+Time: 10:29:39 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          94.00    0.00    6.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             21.00     0.00  127.00    0.00 16776.00     0.00   132.09     0.99    7.86   7.72  98.10
+
+Time: 10:29:40 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          93.00    0.00    6.00    1.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             23.00     0.00  130.00    0.00 16576.00     0.00   127.51     0.99    7.58   7.57  98.40
+
+Time: 10:29:41 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          92.00    0.00    8.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  116.00    0.00 14808.00     0.00   127.66     1.00    8.59   8.43  97.80
+
+Time: 10:29:42 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          81.00    0.00   19.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              8.91     0.00   86.14    2.97 10693.07    23.76   120.27     1.08   12.21   7.63  68.02
+
+Time: 10:29:43 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          49.00    0.00   51.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   11.00    0.00  1472.00     0.00   133.82     0.10    9.36   9.36  10.30
+
+Time: 10:29:44 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          67.00    0.00   33.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    6.00    0.00   784.00     0.00   130.67     0.03    5.00   5.00   3.00
+
+Time: 10:29:45 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          73.27    0.00   26.73    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    9.00    0.00  1040.00     0.00   115.56     0.07    7.33   7.22   6.50
+
+Time: 10:29:46 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          71.00    0.00   29.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00    9.00    0.00  1672.00     0.00   185.78     0.05    5.33   5.33   4.80
+
+Time: 10:29:47 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          89.90    0.00   10.10    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             16.00     0.00  118.00    0.00 14288.00     0.00   121.08     0.94    7.92   7.75  91.40
+
+Time: 10:29:48 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          44.00    0.00    5.00   51.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  123.00    0.00 15872.00     0.00   129.04     0.97    7.89   7.81  96.10
+
+Time: 10:29:49 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          91.00    0.00    7.00    2.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             23.00     0.00  131.00    0.00 17712.00     0.00   135.21     0.99    7.55   7.46  97.70
+
+Time: 10:29:50 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          93.00    0.00    7.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             20.00     0.00  117.00    0.00 15544.00     0.00   132.85     0.98    8.37   8.37  97.90
+
+Time: 10:29:51 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          90.91    0.00    9.09    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             16.00     0.00  117.00    0.00 15136.00     0.00   129.37     0.91    7.79   7.74  90.50
+
+Time: 10:29:52 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          59.41    0.00   40.59    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00    9.00    0.00  1320.00     0.00   146.67     0.04    4.78   4.78   4.30
+
+Time: 10:29:53 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          56.00    0.00   44.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    3.00    0.00   352.00     0.00   117.33     0.01    3.00   3.00   0.90
+
+Time: 10:29:54 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          67.00    0.00   33.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00   12.00    0.00  1456.00     0.00   121.33     0.08    6.83   6.83   8.20
+
+Time: 10:29:55 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          68.00    0.00   32.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00    8.00    0.00  1336.00     0.00   167.00     0.07    8.50   8.50   6.80
+
+Time: 10:29:56 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          78.00    0.00   14.00    8.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             14.00     0.00   88.00    0.00 11200.00     0.00   127.27     0.70    8.01   7.77  68.40
+
+Time: 10:29:57 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          90.91    0.00    8.08    1.01    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             21.00     0.00  117.00    0.00 16000.00     0.00   136.75     0.97    8.26   8.31  97.20
+
+Time: 10:29:58 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          40.40    0.00    5.05   54.55    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             22.00     0.00  116.00    0.00 15448.00     0.00   133.17     0.98    8.44   8.45  98.00
+
+Time: 10:29:59 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          90.00    0.00    8.00    2.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  116.00    0.00 15360.00     0.00   132.41     0.97    8.34   8.37  97.10
+
+Time: 10:30:00 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          90.00    0.00    7.00    3.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  117.00    0.00 15192.00     0.00   129.85     0.99    8.55   8.38  98.10
+
+Time: 10:30:01 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          62.00    0.00   38.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00   40.00    0.00  4528.00     0.00   113.20     0.26    6.70   6.45  25.80
+
+Time: 10:30:02 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          60.00    0.00   40.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00    3.00    0.00   320.00     0.00   106.67     0.03    9.00   9.00   2.70
+
+Time: 10:30:03 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          60.00    0.00   40.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00    9.00    0.00  1120.00     0.00   124.44     0.06    7.00   7.00   6.30
+
+Time: 10:30:04 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          69.00    0.00   31.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00    8.00    0.00  1152.00     0.00   144.00     0.06    7.75   7.75   6.20
+
+Time: 10:30:05 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          83.00    0.00   17.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             10.00     0.00   54.00    0.00  7000.00     0.00   129.63     0.50    8.96   7.85  42.40
+
+Time: 10:30:06 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          89.11    0.00    9.90    0.99    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             18.00     0.00  121.00    0.00 16152.00     0.00   133.49     1.01    8.34   8.00  96.80
+
+Time: 10:30:07 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          90.82    0.00    7.14    2.04    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  122.00    0.00 16552.00     0.00   135.67     1.02    8.24   8.01  97.70
+
+Time: 10:30:08 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          37.62    0.00    6.93   55.45    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             15.00     0.00  120.00    0.00 16160.00     0.00   134.67     1.03    8.71   8.12  97.50
+
+Time: 10:30:09 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          89.80    0.00    7.14    3.06    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             18.00     0.00  121.00    0.00 16288.00     0.00   134.61     0.98    8.07   8.02  97.00
+
+Time: 10:30:10 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          72.28    0.00   27.72    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             11.00     0.00   64.00    0.00  8784.00     0.00   137.25     0.51    8.08   7.81  50.00
+
+Time: 10:30:11 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          61.00    0.00   39.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    8.00    0.00  1032.00     0.00   129.00     0.05    6.75   6.75   5.40
+
+Time: 10:30:12 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          70.00    0.00   30.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    4.00    0.00   288.00     0.00    72.00     0.03    8.25   8.25   3.30
+
+Time: 10:30:13 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          65.66    0.00   34.34    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   14.00    0.00  2016.00     0.00   144.00     0.12    8.57   7.50  10.50
+
+Time: 10:30:14 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          71.00    0.00   29.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   12.00    0.00  1640.00     0.00   136.67     0.09    7.50   6.33   7.60
+
+Time: 10:30:15 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          87.13    0.00    8.91    3.96    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             11.00     0.00  124.00    0.00 16424.00     0.00   132.45     0.96    7.77   7.69  95.40
+
+Time: 10:30:16 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          90.91    0.00    7.07    2.02    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  119.00    0.00 16128.00     0.00   135.53     1.02    8.52   8.19  97.50
+
+Time: 10:30:17 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          92.08    0.00    7.92    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             18.00     0.00  132.00    0.00 16776.00     0.00   127.09     1.09    8.21   7.38  97.40
+
+Time: 10:30:18 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          35.71    0.00    6.12   58.16    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             23.00     0.00  124.00    0.00 16984.00     0.00   136.97     0.98    7.95   7.75  96.10
+
+Time: 10:30:19 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          80.37    0.00   18.69    0.93    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             16.04     0.00  101.89    0.00 13660.38     0.00   134.07     0.85    8.45   7.82  79.72
+
+Time: 10:30:20 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          56.00    0.00   44.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00    5.00    0.00   912.00     0.00   182.40     0.05    9.40   9.40   4.70
+
+Time: 10:30:21 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          65.00    0.00   35.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00    6.00    0.00  1048.00     0.00   174.67     0.06   10.00  10.00   6.00
+
+Time: 10:30:22 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          70.71    0.00   29.29    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.98     0.00    8.91    0.00  1124.75     0.00   126.22     0.09    9.56   9.56   8.51
+
+Time: 10:30:23 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          64.36    0.00   35.64    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00    9.00    0.00  1272.00     0.00   141.33     0.08    8.44   8.44   7.60
+
+Time: 10:30:24 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          84.85    0.00   14.14    1.01    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              9.00     0.00   88.00    0.00 12304.00     0.00   139.82     0.81    9.23   8.65  76.10
+
+Time: 10:30:25 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          90.10    0.00    8.91    0.99    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             20.00     0.00  117.00    0.00 17096.00     0.00   146.12     0.99    8.44   8.37  97.90
+
+Time: 10:30:26 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          92.93    0.00    7.07    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             22.00     0.00  118.00    0.00 16320.00     0.00   138.31     1.00    8.45   8.31  98.10
+
+Time: 10:30:27 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          93.94    0.00    6.06    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             21.00     0.00  120.00    0.00 15840.00     0.00   132.00     1.08    9.04   8.18  98.20
+
+Time: 10:30:28 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          26.00    0.00    6.00   68.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             13.00     0.00   63.00    0.00  9280.00     0.00   147.30     0.57    9.06   8.62  54.30
+
+Time: 10:30:29 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          58.00    0.00   42.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   19.00    0.00  2728.00     0.00   143.58     0.14    7.79   7.05  13.40
+
+Time: 10:30:30 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          61.00    0.00   39.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+
+Time: 10:30:31 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          66.67    0.00   33.33    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00    9.00    0.00  1080.00     0.00   120.00     0.08    8.56   8.56   7.70
+
+Time: 10:30:32 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          69.31    0.00   30.69    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00   11.00    0.00  1744.00     0.00   158.55     0.06    5.82   5.82   6.40
+
+Time: 10:30:33 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          59.60    0.00   24.24   16.16    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             13.00     0.00   63.00    0.00  8664.00     0.00   137.52     0.59    9.32   8.29  52.20
+
+Time: 10:30:34 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          87.00    0.00    6.00    7.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             21.00     0.00  117.00    0.00 15960.00     0.00   136.41     1.03    8.69   8.38  98.10
+
+Time: 10:30:35 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          86.00    0.00    7.00    7.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  119.00    0.00 16672.00     0.00   140.10     1.06    8.97   8.24  98.10
+
+Time: 10:30:36 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          89.11    0.00    8.91    1.98    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             18.00     0.00  113.00    0.00 15744.00     0.00   139.33     1.00    8.82   8.65  97.80
+
+Time: 10:30:37 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          87.88    0.00   10.10    2.02    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             16.00     0.00  114.00    0.00 16728.00     0.00   146.74     1.04    9.22   8.55  97.50
+
+Time: 10:30:38 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          54.46    0.00   30.69   14.85    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              9.00     0.00   48.00    0.00  6840.00     0.00   142.50     0.38    8.02   7.50  36.00
+
+Time: 10:30:39 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          57.00    0.00   43.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00    7.00    0.00  1072.00     0.00   153.14     0.07   10.71  10.71   7.50
+
+Time: 10:30:40 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          69.70    0.00   30.30    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    3.00    0.00   400.00     0.00   133.33     0.02    7.00   7.00   2.10
+
+Time: 10:30:41 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          69.31    0.00   30.69    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              5.00     0.00   11.00    0.00  1600.00     0.00   145.45     0.08    6.91   6.91   7.60
+
+Time: 10:30:42 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          69.70    0.00   30.30    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00   10.00    0.00  1400.00     0.00   140.00     0.08    7.60   7.60   7.60
+
+Time: 10:30:43 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          41.41    0.00   10.10   48.48    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             10.00     0.00   90.00    0.00 12368.00     0.00   137.42     0.75    8.30   8.13  73.20
+
+Time: 10:30:44 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          36.00    0.00    9.00   55.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             22.00     0.00  122.00    0.00 17624.00     0.00   144.46     1.05    8.54   8.00  97.60
+
+Time: 10:30:45 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    2.04   97.96    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             22.00     0.00  122.00    0.00 16712.00     0.00   136.98     1.01    8.31   7.98  97.40
+
+Time: 10:30:46 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    4.04   94.95    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  132.00    0.00 17360.00     0.00   131.52     1.14    8.63   7.42  97.90
+
+Time: 10:30:47 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           7.92    0.00   15.84   76.24    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             15.84     0.00  106.93    0.00 13893.07     0.00   129.93     0.97    9.11   8.68  92.77
+
+Time: 10:30:48 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          29.29    0.00   70.71    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00   15.00    0.00  2120.00     0.00   141.33     0.10    6.80   5.60   8.40
+
+Time: 10:30:49 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          45.54    0.00   54.46    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   15.00    0.00  2584.00     0.00   172.27     0.13    8.67   7.87  11.80
+
+Time: 10:30:50 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           9.18    0.00    7.14   83.67    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  110.00    0.00 15776.00     0.00   143.42     0.95    8.59   8.11  89.20
+
+Time: 10:30:51 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.98    0.00    3.96   94.06    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             13.00     0.00  123.00    0.00 17232.00     0.00   140.10     1.07    8.67   7.98  98.20
+
+Time: 10:30:52 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.02    0.00    2.04   96.94    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  124.00    0.00 16856.00     0.00   135.94     1.09    8.78   7.94  98.40
+
+Time: 10:30:53 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           2.02    0.00    5.05   92.93    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  127.00    0.00 17000.00     0.00   133.86     1.05    8.29   7.69  97.60
+
+Time: 10:30:54 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           3.03    0.00    7.07   89.90    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             16.00     0.00  107.00    0.00 14808.00     0.00   138.39     1.05    9.74   9.08  97.20
+
+Time: 10:30:55 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          29.70    0.00   70.30    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   27.00    0.00  3488.00     0.00   129.19     0.23    9.11   7.15  19.30
+
+Time: 10:30:56 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          39.39    0.00   60.61    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              4.00     0.00   14.00    0.00  2648.00     0.00   189.14     0.10    7.43   7.43  10.40
+
+Time: 10:30:57 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          33.00    0.00   67.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             10.00     0.00   72.00    0.00 10136.00     0.00   140.78     0.61    8.46   8.07  58.10
+
+Time: 10:30:58 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          34.34    0.00   49.49   16.16    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             14.00     0.00  117.00    0.00 15736.00     0.00   134.50     0.98    8.42   8.08  94.50
+
+Time: 10:30:59 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          39.18    0.00   40.21   20.62    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             22.00     0.00  110.00    0.00 16552.00     0.00   150.47     0.99    8.99   8.41  92.50
+
+Time: 10:31:00 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          16.16    0.00   18.18   65.66    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             21.00     0.00  122.00    0.00 17408.00     0.00   142.69     1.08    8.85   7.89  96.30
+
+Time: 10:31:01 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          40.82    0.00   43.88   15.31    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             24.00     0.00  121.00    0.00 17200.00     0.00   142.15     1.08    8.97   7.69  93.10
+
+Time: 10:31:02 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          31.00    0.00   51.00   18.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              6.00     0.00   45.00    0.00  6568.00     0.00   145.96     0.40    9.00   7.82  35.20
+
+Time: 10:31:03 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          29.70    0.00   70.30    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00    4.00    0.00   536.00     0.00   134.00     0.03    7.75   7.75   3.10
+
+Time: 10:31:04 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          32.32    0.00   50.51   17.17    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00    6.00    0.00  1152.00     0.00   192.00     0.05    7.67   7.67   4.60
+
+Time: 10:31:05 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          38.61    0.00   52.48    8.91    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   19.00    0.00  2808.00     0.00   147.79     0.18    9.05   8.68  16.50
+
+Time: 10:31:06 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          44.44    0.00   52.53    3.03    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00    2.00    0.00   392.00     0.00   196.00     0.02   11.00   8.00   1.60
+
+Time: 10:31:07 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          22.00    0.00   45.00   33.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              8.00     0.00   36.00    0.00  5952.00     0.00   165.33     0.32    8.81   8.81  31.70
+
+Time: 10:31:08 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          36.00    0.00   39.00   25.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              4.00     0.00   19.00    0.00  2936.00     0.00   154.53     0.18    9.47   9.47  18.00
+
+Time: 10:31:09 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          37.37    0.00   40.40   22.22    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             61.00     0.00   35.00    0.00  4208.00     0.00   120.23     0.33    9.29   7.66  26.80
+
+Time: 10:31:10 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          10.10    0.00   16.16   73.74    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             58.00     0.00   52.00    0.00  5224.00     0.00   100.46     0.38    7.29   6.52  33.90
+
+Time: 10:31:11 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          12.00    0.00   33.00   55.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             54.00     0.00   35.00    0.00  3128.00     0.00    89.37     0.28    7.71   7.31  25.60
+
+Time: 10:31:13 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           6.08    0.00   24.71   69.20    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             68.00     0.00   48.00    0.00  3760.00     0.00    78.33     0.37    7.98   6.02  28.90
+
+Time: 10:31:14 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           6.32    0.00    9.47   84.21    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+
+Time: 10:31:19 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           4.38    0.00   14.54   81.08    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+
+Time: 10:31:25 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           9.48    0.00   20.89   69.63    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.42    0.00   0.00  41.53
+
+Time: 10:31:30 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          10.78    0.00   22.12   67.11    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     1.00    0.00   0.00  99.91
+
+Time: 10:31:31 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           2.00    0.00    3.00   95.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     1.00    0.00   0.00 100.00
+
+Time: 10:31:32 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    0.00  100.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     1.00    0.00   0.00 100.00
+
+Time: 10:31:33 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    0.99   99.01    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     1.00    0.00   0.00 100.00
+
+Time: 10:31:34 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          31.63    0.00   42.86   25.51    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             83.00     0.00   55.00    0.00  4984.00     0.00    90.62     0.54  200.73   9.38  51.60
+
+Time: 10:31:36 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           8.30    0.00   14.41   77.29    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             22.51     0.00   78.79    0.00  8827.71     0.00   112.04     0.64    8.12   8.05  63.42
+
+Time: 10:31:37 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.00    0.00    2.00   97.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             14.00     0.00  122.00    0.00 14264.00     0.00   116.92     0.99    8.11   8.10  98.80
+
+Time: 10:31:38 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    1.01   97.98    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             14.00     0.00  127.00    0.00 14416.00     0.00   113.51     0.98    7.65   7.70  97.80
+
+Time: 10:31:39 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          15.00    0.00   38.00   47.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             12.00     0.00   82.00    0.00  9768.00     0.00   119.12     0.65    7.96   7.89  64.70
+
+Time: 10:31:40 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          37.37    0.00   62.63    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00   16.00    0.00  1792.00     0.00   112.00     0.07    4.38   4.31   6.90
+
+Time: 10:31:41 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          38.24    0.00   46.08   15.69    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              8.00     0.00   46.00    0.00  5232.00     0.00   113.74     0.31    6.63   6.72  30.90
+
+Time: 10:31:42 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.00    0.00    2.00   97.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             12.00     0.00  134.00    0.00 15352.00     0.00   114.57     0.99    7.43   7.32  98.10
+
+Time: 10:31:43 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    1.03   98.97    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  127.00    0.00 15256.00     0.00   120.13     0.99    7.79   7.79  98.90
+
+Time: 10:31:44 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    2.02   96.97    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  123.00    0.00 14200.00     0.00   115.45     0.99    8.00   7.99  98.30
+
+Time: 10:31:45 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    2.02   96.97    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             20.00     0.00  127.00    0.00 15160.00     0.00   119.37     0.99    7.80   7.76  98.60
+
+Time: 10:31:46 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          17.17    0.00   39.39   43.43    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             11.00     0.00   97.00    0.00 11664.00     0.00   120.25     0.69    7.12   7.09  68.80
+
+Time: 10:31:47 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          35.35    0.00   64.65    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00   17.00    0.00  1672.00     0.00    98.35     0.10    5.71   5.71   9.70
+
+Time: 10:31:48 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          37.00    0.00   40.00   23.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              6.00     0.00   42.00    0.00  4880.00     0.00   116.19     0.35    8.33   8.38  35.20
+
+Time: 10:31:49 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.98    0.00    3.96   94.06    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  127.00    0.00 15152.00     0.00   119.31     0.99    7.76   7.79  98.90
+
+Time: 10:31:50 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    2.04   97.96    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             14.00     0.00  134.00    0.00 15864.00     0.00   118.39     0.98    7.31   7.31  97.90
+
+Time: 10:31:51 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           4.08    0.00    7.14   88.78    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             16.00     0.00  128.00    0.00 14968.00     0.00   116.94     0.97    7.62   7.62  97.50
+
+Time: 10:31:52 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    1.02   98.98    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             20.00     0.00  122.00    0.00 15432.00     0.00   126.49     0.98    8.04   8.02  97.80
+
+Time: 10:31:53 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          15.69    0.00   32.35   51.96    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  101.00    0.00 12504.00     0.00   123.80     0.79    7.83   7.73  78.10
+
+Time: 10:31:54 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          32.32    0.00   67.68    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   14.00    0.00  1664.00     0.00   118.86     0.14   10.00   9.71  13.60
+
+Time: 10:31:55 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          37.00    0.00   45.00   18.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              7.00     0.00   49.00    0.00  5808.00     0.00   118.53     0.30    6.04   6.10  29.90
+
+Time: 10:31:56 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           4.04    0.00    7.07   88.89    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             12.87     0.00  125.74    0.00 15239.60     0.00   121.20     1.00    7.98   7.73  97.23
+
+Time: 10:31:57 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    2.02   97.98    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             13.00     0.00  119.00    0.00 13784.00     0.00   115.83     0.99    8.26   8.31  98.90
+
+Time: 10:31:58 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           5.05    0.00    8.08   86.87    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  132.00    0.00 16080.00     0.00   121.82     0.98    7.42   7.40  97.70
+
+Time: 10:31:59 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    1.01   97.98    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             15.00     0.00  129.00    0.00 16040.00     0.00   124.34     0.98    7.62   7.62  98.30
+
+Time: 10:32:00 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          12.00    0.00   28.00   60.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             21.00     0.00  109.00    0.00 13448.00     0.00   123.38     0.79    7.25   7.27  79.20
+
+Time: 10:32:01 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          29.00    0.00   71.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              4.00     0.00   19.00    0.00  2384.00     0.00   125.47     0.12    6.84   6.58  12.50
+
+Time: 10:32:02 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          43.00    0.00   43.00   14.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   39.00    0.00  5184.00     0.00   132.92     0.27    6.72   7.00  27.30
+
+Time: 10:32:03 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           4.04    0.00   10.10   85.86    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             18.00     0.00  135.00    0.00 16728.00     0.00   123.91     0.97    7.26   7.21  97.40
+
+Time: 10:32:04 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    3.03   96.97    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             12.00     0.00  123.00    0.00 14984.00     0.00   121.82     1.00    8.06   7.98  98.20
+
+Time: 10:32:05 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           4.08    0.00    5.10   90.82    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             20.00     0.00  127.00    0.00 16312.00     0.00   128.44     0.97    7.72   7.65  97.20
+
+Time: 10:32:06 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.99    0.00    2.97   96.04    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             20.00     0.00  129.00    0.00 16672.00     0.00   129.24     0.97    7.56   7.56  97.50
+
+Time: 10:32:07 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           9.00    0.00   24.00   67.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             22.00     0.00  109.00    0.00 13608.00     0.00   124.84     0.80    7.39   7.28  79.30
+
+Time: 10:32:08 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          33.00    0.00   67.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   14.00    0.00  1736.00     0.00   124.00     0.11    7.79   8.07  11.30
+
+Time: 10:32:09 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          44.00    0.00   51.00    5.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              4.00     0.00   29.00    0.00  3456.00     0.00   119.17     0.21    7.07   7.14  20.70
+
+Time: 10:32:10 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           3.03    0.00    8.08   88.89    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  129.00    0.00 14840.00     0.00   115.04     0.98    7.63   7.56  97.50
+
+Time: 10:32:11 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.00    0.00    2.00   97.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             16.00     0.00  134.00    0.00 16056.00     0.00   119.82     0.99    7.47   7.29  97.70
+
+Time: 10:32:12 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           3.06    0.00    7.14   89.80    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  117.00    0.00 14080.00     0.00   120.34     1.00    8.53   8.44  98.70
+
+Time: 10:32:13 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    2.02   96.97    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             21.00     0.00  123.00    0.00 15688.00     0.00   127.54     0.99    8.00   8.02  98.60
+
+Time: 10:32:14 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           6.73    0.00   14.42   78.85    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             12.50     0.00  112.50    0.00 14376.92     0.00   127.79     0.87    7.74   7.62  85.77
+
+Time: 10:32:15 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          33.00    0.00   67.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   16.00    0.00  2120.00     0.00   132.50     0.12    7.38   7.38  11.80
+
+Time: 10:32:16 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          46.00    0.00   54.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              5.00     0.00   22.00    0.00  2936.00     0.00   133.45     0.13    6.00   5.68  12.50
+
+Time: 10:32:17 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           9.00    0.00   10.00   81.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             13.00     0.00  122.00    0.00 14280.00     0.00   117.05     0.95    7.80   7.72  94.20
+
+Time: 10:32:18 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.99    0.00    2.97   96.04    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  122.00    0.00 15488.00     0.00   126.95     0.98    8.02   8.01  97.70
+
+Time: 10:32:19 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    2.02   96.97    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             13.00     0.00  132.00    0.00 16760.00     0.00   126.97     0.98    7.42   7.42  98.00
+
+Time: 10:32:20 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.02    0.00   10.20   88.78    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             13.00     0.00   81.00    0.00 10152.00     0.00   125.33     0.67    8.20   8.22  66.60
+
+Time: 10:32:21 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           5.05    0.00    8.08   86.87    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             20.00     0.00  121.00    0.00 15800.00     0.00   130.58     0.96    7.98   7.93  95.90
+
+Time: 10:32:22 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          30.00    0.00   70.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00    9.00    0.00  1424.00     0.00   158.22     0.07    8.22   6.89   6.20
+
+Time: 10:32:23 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          42.00    0.00   58.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00   18.00    0.00  2192.00     0.00   121.78     0.12    6.94   6.50  11.70
+
+Time: 10:32:24 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          14.00    0.00   13.00   73.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             16.00     0.00   95.00    0.00 13024.00     0.00   137.09     0.79    8.28   8.33  79.10
+
+Time: 10:32:25 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    2.02   96.97    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             16.00     0.00  126.00    0.00 15848.00     0.00   125.78     1.00    7.93   7.78  98.00
+
+Time: 10:32:26 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           2.04    0.00    3.06   94.90    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             22.00     0.00  125.00    0.00 16480.00     0.00   131.84     0.98    7.86   7.83  97.90
+
+Time: 10:32:27 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    2.02   97.98    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             22.00     0.00  126.00    0.00 15880.00     0.00   126.03     0.98    7.77   7.77  97.90
+
+Time: 10:32:28 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.02    0.00    1.02   97.96    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  126.00    0.00 15552.00     0.00   123.43     0.99    7.81   7.75  97.70
+
+Time: 10:32:29 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          22.55    0.00   62.75   14.71    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.97     0.00   37.62    0.00  4910.89     0.00   130.53     0.30    8.16   8.11  30.50
+
+Time: 10:32:30 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          44.00    0.00   56.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   14.00    0.00  2072.00     0.00   148.00     0.12    8.86   8.86  12.40
+
+Time: 10:32:31 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          24.24    0.00   26.26   49.49    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             10.00     0.00   78.00    0.00  9368.00     0.00   120.10     0.61    7.83   7.54  58.80
+
+Time: 10:32:32 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.00    0.00    3.00   96.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             16.00     0.00  123.00    0.00 15056.00     0.00   122.41     1.01    8.26   7.89  97.00
+
+Time: 10:32:33 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.00    0.00    2.00   97.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             21.00     0.00  122.00    0.00 16400.00     0.00   134.43     0.99    8.10   8.00  97.60
+
+Time: 10:32:34 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           3.03    0.00    7.07   89.90    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             23.00     0.00  124.00    0.00 16504.00     0.00   133.10     0.99    7.97   7.81  96.80
+
+Time: 10:32:35 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    4.04   94.95    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             20.00     0.00  125.00    0.00 16280.00     0.00   130.24     0.98    7.90   7.85  98.10
+
+Time: 10:32:36 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          16.00    0.00   48.00   36.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              7.00     0.00   64.00    0.00  8032.00     0.00   125.50     0.54    8.58   7.78  49.80
+
+Time: 10:32:37 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          43.43    0.00   56.57    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00   15.00    0.00  1760.00     0.00   117.33     0.10    6.20   6.53   9.80
+
+Time: 10:32:38 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          34.00    0.00   34.00   32.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              9.00     0.00   58.00    0.00  7344.00     0.00   126.62     0.41    7.16   7.12  41.30
+
+Time: 10:32:39 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           2.00    0.00    4.00   94.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             25.00     0.00  116.00    0.00 16176.00     0.00   139.45     0.98    8.41   8.39  97.30
+
+Time: 10:32:40 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.02    0.00    2.04   96.94    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             14.00     0.00  119.00    0.00 15104.00     0.00   126.92     1.00    8.47   8.24  98.10
+
+Time: 10:32:41 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           2.00    0.00    5.00   93.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             14.00     0.00  122.00    0.00 16120.00     0.00   132.13     0.98    8.06   8.04  98.10
+
+Time: 10:32:42 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    1.01   97.98    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             18.00     0.00  113.00    0.00 15640.00     0.00   138.41     0.99    8.81   8.68  98.10
+
+Time: 10:32:43 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          13.13    0.00   35.35   51.52    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              5.00     0.00   69.00    0.00  9072.00     0.00   131.48     0.57    8.33   8.28  57.10
+
+Time: 10:32:44 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          37.62    0.00   62.38    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00   13.00    0.00  1432.00     0.00   110.15     0.07    5.46   5.46   7.10
+
+Time: 10:32:45 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          40.40    0.00   45.45   14.14    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              5.00     0.00   39.00    0.00  5152.00     0.00   132.10     0.32    7.97   8.15  31.80
+
+Time: 10:32:46 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           2.02    0.00    4.04   93.94    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  116.00    0.00 15376.00     0.00   132.55     0.98    8.44   8.46  98.10
+
+Time: 10:32:47 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.00    0.00    2.00   97.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             24.00     0.00  118.00    0.00 15512.00     0.00   131.46     1.00    8.50   8.35  98.50
+
+Time: 10:32:48 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    2.02   96.97    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             24.00     0.00  113.00    0.00 16288.00     0.00   144.14     1.03    9.18   8.61  97.30
+
+Time: 10:32:49 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           3.00    0.00    5.00   92.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             20.00     0.00  127.00    0.00 16488.00     0.00   129.83     0.98    7.74   7.66  97.30
+
+Time: 10:32:50 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           9.09    0.00   21.21   69.70    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             13.00     0.00   89.00    0.00 11944.00     0.00   134.20     0.77    8.72   8.54  76.00
+
+Time: 10:32:51 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          32.00    0.00   68.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   13.00    0.00  1464.00     0.00   112.62     0.11    8.62   8.62  11.20
+
+Time: 10:32:52 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          44.44    0.00   55.56    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   16.00    0.00  2024.00     0.00   126.50     0.11    7.00   7.00  11.20
+
+Time: 10:32:53 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           9.00    0.00   11.00   80.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             12.00     0.00  102.00    0.00 13304.00     0.00   130.43     0.85    8.23   8.30  84.70
+
+Time: 10:32:54 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    2.04   97.96    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  124.00    0.00 16056.00     0.00   129.48     1.02    8.23   7.92  98.20
+
+Time: 10:32:55 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           2.97    0.00    5.94   91.09    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  120.00    0.00 16064.00     0.00   133.87     1.00    8.29   8.04  96.50
+
+Time: 10:32:56 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    1.03   98.97    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             16.00     0.00  119.00    0.00 15704.00     0.00   131.97     1.00    8.50   8.24  98.00
+
+Time: 10:32:57 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    2.02   96.97    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  128.00    0.00 17416.00     0.00   136.06     0.97    7.59   7.59  97.10
+
+Time: 10:32:58 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          28.71    0.00   66.34    4.95    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              3.00     0.00   23.00    0.00  2872.00     0.00   124.87     0.21    9.04   8.96  20.60
+
+Time: 10:32:59 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          40.59    0.00   59.41    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00   16.00    0.00  2056.00     0.00   128.50     0.09   11.94   5.31   8.50
+
+Time: 10:33:00 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          18.37    0.00   25.51   56.12    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             12.00     0.00   83.00    0.00 11312.00     0.00   136.29     0.67    8.00   7.87  65.30
+
+Time: 10:33:01 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           2.00    0.00    3.00   95.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             21.00     0.00  113.00    0.00 14792.00     0.00   130.90     0.99    8.76   8.61  97.30
+
+Time: 10:33:02 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.00    0.00    2.00   97.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             22.00     0.00  113.00    0.00 15712.00     0.00   139.04     1.00    8.93   8.68  98.10
+
+Time: 10:33:03 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.02    0.00    3.06   95.92    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             18.00     0.00  118.00    0.00 15712.00     0.00   133.15     1.00    8.48   8.24  97.20
+
+Time: 10:33:04 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           2.00    0.00    2.00   96.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             20.00     0.00  118.00    0.00 16000.00     0.00   135.59     0.98    8.29   8.29  97.80
+
+Time: 10:33:05 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          16.16    0.00   56.57   27.27    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              8.00     0.00   51.00    0.00  6800.00     0.00   133.33     0.43    8.45   8.04  41.00
+
+Time: 10:33:06 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          44.55    0.00   55.45    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00   16.00    0.00  2024.00     0.00   126.50     0.12    7.75   7.56  12.10
+
+Time: 10:33:07 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          28.00    0.00   33.00   39.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             13.00     0.00   57.00    0.00  7984.00     0.00   140.07     0.48    8.19   8.39  47.80
+
+Time: 10:33:08 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           2.00    0.00    4.00   94.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             18.00     0.00  121.00    0.00 16224.00     0.00   134.08     0.98    8.16   8.02  97.10
+
+Time: 10:33:09 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    2.02   96.97    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             25.00     0.00  124.00    0.00 16992.00     0.00   137.03     1.00    8.08   7.87  97.60
+
+Time: 10:33:10 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           3.03    0.00    4.04   92.93    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  119.00    0.00 16272.00     0.00   136.74     1.00    8.39   8.16  97.10
+
+Time: 10:33:11 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    2.02   96.97    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  117.00    0.00 15904.00     0.00   135.93     1.00    8.50   8.37  97.90
+
+Time: 10:33:12 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          12.12    0.00   39.39   48.48    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              8.00     0.00   77.00    0.00  9480.00     0.00   123.12     0.61    8.08   7.92  61.00
+
+Time: 10:33:13 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          36.36    0.00   63.64    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              1.00     0.00   10.00    0.00  1416.00     0.00   141.60     0.06    6.00   6.00   6.00
+
+Time: 10:33:14 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          37.62    0.00   46.53   15.84    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              5.00     0.00   41.00    0.00  5616.00     0.00   136.98     0.34    7.78   7.85  32.20
+
+Time: 10:33:15 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           3.03    0.00    5.05   91.92    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             20.00     0.00  120.00    0.00 16664.00     0.00   138.87     0.99    8.38   8.03  96.40
+
+Time: 10:33:16 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.01    0.00    2.02   96.97    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             21.00     0.00  124.00    0.00 17376.00     0.00   140.13     0.98    7.92   7.84  97.20
+
+Time: 10:33:17 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           2.02    0.00    3.03   94.95    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             20.00     0.00  110.00    0.00 15528.00     0.00   141.16     1.00    9.02   8.85  97.30
+
+Time: 10:33:18 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.00    0.00    2.00   97.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             21.00     0.00  113.00    0.00 15448.00     0.00   136.71     1.07    9.45   8.65  97.70
+
+Time: 10:33:19 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          10.10    0.00   23.23   66.67    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             16.00     0.00   93.00    0.00 13376.00     0.00   143.83     0.83    9.01   8.56  79.60
+
+Time: 10:33:20 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          35.00    0.00   65.00    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              2.00     0.00   11.00    0.00  1760.00     0.00   160.00     0.09    8.09   8.09   8.90
+
+Time: 10:33:21 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+          46.46    0.00   53.54    0.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1              4.00     0.00   17.00    0.00  2312.00     0.00   136.00     0.16    9.00   8.53  14.50
+
+Time: 10:33:22 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           3.00    0.00    7.00   90.00    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             14.00     0.00  113.00    0.00 14912.00     0.00   131.96     0.99    8.77   8.60  97.20
+
+Time: 10:33:23 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.00    0.00    2.04   97.96    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             18.00     0.00  111.00    0.00 15832.00     0.00   142.63     0.98    8.84   8.79  97.60
+
+Time: 10:33:24 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           3.92    0.00    4.90   91.18    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             17.00     0.00  119.00    0.00 16608.00     0.00   139.56     0.97    8.23   8.08  96.10
+
+Time: 10:33:25 PM
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           2.06    0.00    4.12   93.81    0.00    0.00
+
+Device:         rrqm/s   wrqm/s     r/s     w/s   rsec/s   wsec/s avgrq-sz avgqu-sz   await  svctm  %util
+sdb1              0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00   0.00   0.00
+sdc1             19.00     0.00  109.00    0.00 15640.00     0.00   143.49     1.00    9.14   8.99  98.00
+

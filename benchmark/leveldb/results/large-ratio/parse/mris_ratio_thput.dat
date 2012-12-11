@@ -1,0 +1,8 @@
+#ratio	setup	mb/s	stddev
+1	ssd	16.10	0.00	hybrid	4.77	0.05	sata	3.30	0.00	
+2	ssd	13.63	0.05	hybrid	4.50	0.00	sata	2.40	0.00	
+4	ssd	12.00	0.00	hybrid	4.20	0.00	sata	1.80	0.00	
+8	ssd	10.00	0.00	hybrid	4.33	0.11	sata	1.20	0.33	
+16	ssd	8.70	0.00	hybrid	4.40	0.00	sata	0.93	0.11	
+32	ssd	7.10	0.00	hybrid	4.50	0.16	sata	0.80	0.00	
+64	ssd	6.13	0.05	hybrid	4.80	0.19	sata	0.70	0.00	

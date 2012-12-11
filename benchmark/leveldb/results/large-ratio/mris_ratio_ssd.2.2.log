@@ -1,0 +1,100 @@
+LevelDB:    version 1.5
+Date:       Thu Dec  6 21:26:57 2012
+CPU:        1 * Intel(R) Xeon(TM) CPU 2.80GHz
+CPUCache:   2048 KB
+... finished 100 ops                              ... finished 200 ops                              ... finished 300 ops                              ... finished 400 ops                              ... finished 500 ops                              ... finished 600 ops                              ... finished 700 ops                              ... finished 800 ops                              ... finished 900 ops                              ... finished 1000 ops                              ... finished 1500 ops                              long op: 697559.0 micros                              long op: 573835.0 micros                              long op: 288403.0 micros                              long op: 333999.0 micros                              long op: 173363.0 micros                              long op: 132270.0 micros                              long op: 130788.0 micros                              ... finished 2000 ops                              ... finished 2500 ops                              ... finished 3000 ops                              ... finished 3500 ops                              long op: 281292.0 micros                              long op: 32484.0 micros                              long op: 363370.0 micros                              long op: 609929.0 micros                              long op: 212294.0 micros                              long op: 123600.0 micros                              long op: 245696.0 micros                              long op: 131183.0 micros                              long op: 131945.0 micros                              long op: 128546.0 micros                              long op: 23005.0 micros                              ... finished 4000 ops                              ... finished 4500 ops                              long op: 24405.0 micros                              ... finished 5000 ops                              long op: 305874.0 micros                              long op: 353957.0 micros                              long op: 549961.0 micros                              long op: 160702.0 micros                              long op: 112265.0 micros                              long op: 128894.0 micros                              long op: 266973.0 micros                              long op: 307833.0 micros                              long op: 49992.0 micros                              ... finished 6000 ops                              ... finished 7000 ops                              long op: 25830.0 micros                              long op: 310548.0 micros                              long op: 354082.0 micros                              long op: 390906.0 micros                              long op: 213581.0 micros                              long op: 206705.0 micros                              long op: 117618.0 micros                              long op: 305296.0 micros                              long op: 193619.0 micros                              long op: 134721.0 micros                              long op: 36792.0 micros                              ... finished 8000 ops                              ... finished 9000 ops                              ... finished 10000 ops                              long op: 273304.0 micros                              long op: 48304.0 micros                              long op: 353885.0 micros                              long op: 412469.0 micros                              long op: 325069.0 micros                              long op: 123520.0 micros                              long op: 270206.0 micros                              long op: 205074.0 micros                              long op: 127559.0 micros                              long op: 118992.0 micros                              long op: 33564.0 micros                              long op: 320628.0 micros                              long op: 361256.0 micros                              long op: 402708.0 micros                              long op: 313897.0 micros                              long op: 125151.0 micros                              long op: 117975.0 micros                              long op: 340010.0 micros                              long op: 135088.0 micros                              long op: 143669.0 micros                              long op: 310217.0 micros                              long op: 362201.0 micros                              long op: 341182.0 micros                              long op: 238541.0 micros                              long op: 65865.0 micros                              long op: 331286.0 micros                              long op: 378822.0 micros                              long op: 125374.0 micros                              long op: 122477.0 micros                              long op: 22437.0 micros                              ... finished 15000 ops                              Keys:       16 bytes each
+Values:     2 resolutions
+            8196 byte (8196 after compression)
+            131072 byte (131072 after compression)
+Entries:    100000
+RawSize:    0.13 MB (estimated)
+FileSize:   0.13 MB (estimated)
+WARNING: Snappy compression is not enabled
+------------------------------------------------
+mris_facebook :    3439.155 micros/op;   13.6 MB/s small: 10000/0; big: 5000/0
+Microseconds per op:
+Count: 15000  Average: 3439.1643  StdDev: 18657.02
+Min: 0.0000  Median: 1472.4852  Max: 697559.0000
+------------------------------------------------------
+[       0,       1 )      41   0.273%   0.273% 
+[       1,       2 )     420   2.800%   3.073% #
+[       2,       3 )    4028  26.853%  29.927% #####
+[       3,       4 )     397   2.647%  32.573% #
+[       4,       5 )      47   0.313%  32.887% 
+[       5,       6 )       9   0.060%  32.947% 
+[       6,       7 )       1   0.007%  32.953% 
+[      12,      14 )       4   0.027%  32.980% 
+[      14,      16 )       2   0.013%  32.993% 
+[      16,      18 )       1   0.007%  33.000% 
+[      20,      25 )       2   0.013%  33.013% 
+[      25,      30 )      30   0.200%  33.213% 
+[      30,      35 )      41   0.273%  33.487% 
+[      35,      40 )     189   1.260%  34.747% 
+[      40,      45 )     498   3.320%  38.067% #
+[      45,      50 )      31   0.207%  38.273% 
+[      50,      60 )      42   0.280%  38.553% 
+[      60,      70 )      16   0.107%  38.660% 
+[      70,      80 )      20   0.133%  38.793% 
+[      80,      90 )      16   0.107%  38.900% 
+[      90,     100 )      57   0.380%  39.280% 
+[     100,     120 )     206   1.373%  40.653% 
+[     120,     140 )      91   0.607%  41.260% 
+[     140,     160 )      47   0.313%  41.573% 
+[     160,     180 )      34   0.227%  41.800% 
+[     180,     200 )      28   0.187%  41.987% 
+[     200,     250 )      45   0.300%  42.287% 
+[     250,     300 )      15   0.100%  42.387% 
+[     300,     350 )       3   0.020%  42.407% 
+[     350,     400 )       2   0.013%  42.420% 
+[     400,     450 )       6   0.040%  42.460% 
+[     450,     500 )       4   0.027%  42.487% 
+[     500,     600 )      35   0.233%  42.720% 
+[     600,     700 )      32   0.213%  42.933% 
+[     700,     800 )      27   0.180%  43.113% 
+[     800,     900 )      28   0.187%  43.300% 
+[     900,    1000 )      84   0.560%  43.860% 
+[    1000,    1200 )     339   2.260%  46.120% 
+[    1200,    1400 )     337   2.247%  48.367% 
+[    1400,    1600 )     676   4.507%  52.873% #
+[    1600,    1800 )     240   1.600%  54.473% 
+[    1800,    2000 )      28   0.187%  54.660% 
+[    2000,    2500 )     249   1.660%  56.320% 
+[    2500,    3000 )    1202   8.013%  64.333% ##
+[    3000,    3500 )     379   2.527%  66.860% #
+[    3500,    4000 )     731   4.873%  71.733% #
+[    4000,    4500 )     302   2.013%  73.747% 
+[    4500,    5000 )     585   3.900%  77.647% #
+[    5000,    6000 )    1278   8.520%  86.167% ##
+[    6000,    7000 )    1307   8.713%  94.880% ##
+[    7000,    8000 )     445   2.967%  97.847% #
+[    8000,    9000 )     208   1.387%  99.233% 
+[    9000,   10000 )      26   0.173%  99.407% 
+[   10000,   12000 )       9   0.060%  99.467% 
+[   12000,   14000 )       8   0.053%  99.520% 
+[   14000,   16000 )       1   0.007%  99.527% 
+[   16000,   18000 )       1   0.007%  99.533% 
+[   18000,   20000 )       1   0.007%  99.540% 
+[   20000,   25000 )       3   0.020%  99.560% 
+[   25000,   30000 )       1   0.007%  99.567% 
+[   30000,   35000 )       2   0.013%  99.580% 
+[   35000,   40000 )       1   0.007%  99.587% 
+[   45000,   50000 )       2   0.013%  99.600% 
+[   60000,   70000 )       1   0.007%  99.607% 
+[  100000,  120000 )       4   0.027%  99.633% 
+[  120000,  140000 )      14   0.093%  99.727% 
+[  140000,  160000 )       1   0.007%  99.733% 
+[  160000,  180000 )       2   0.013%  99.747% 
+[  180000,  200000 )       1   0.007%  99.753% 
+[  200000,  250000 )       6   0.040%  99.793% 
+[  250000,  300000 )       5   0.033%  99.827% 
+[  300000,  350000 )      12   0.080%  99.907% 
+[  350000,  400000 )       8   0.053%  99.960% 
+[  400000,  450000 )       2   0.013%  99.973% 
+[  500000,  600000 )       2   0.013%  99.987% 
+[  600000,  700000 )       2   0.013% 100.000% 
+
+----- /mnt/largespace/mris_ratio_ssd_db statistics: -----
+nr_new_large_values_ 	0
+nr_success_lookups_ 	5000
+nr_failed_lookups_ 	0
+nr_failed_inserts_ 	0
