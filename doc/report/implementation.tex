@@ -88,14 +88,36 @@ storage~\cite{level_lifetime}.  However, memory is expensive and
 volatile. New NVRAM storage media such as Flash SSD provides an
 alternative solution, which can be cheaper and safer.
 
+\begin{figure}[t]
+\begin{centering}
+\epsfig{file=large-space.eps,width=1.00\linewidth}
+\caption{Large Space}
+\label{fig:space}
+\end{centering}
+\end{figure}
+
 Based on the idea of saving different data on different media, we
 modify LevelDB to save large values separately into a space called
 LargeSpace. LargeSpace is essentially a log. Upon a request of
 insertion, the value is appended into LargeSpace and an address is
 returned. The address is used for later retrieve of the value. To ease
 management, LargeSpace is splited into files called LargeBlocks. The
-size of LargeBlock is configurable parameter with a default value of
-64MB. 
+threshold of split is a configurable parameter with a default value of
+64MB. Although LargeSpace is splited, we enforce that no value will be
+splited among LargeBlocks. Therefore, it is possible that a LargeBlock
+is much larger than the split threshold if there is a huge value in
+that LargeBlock. LargeBlocks are recorded in a metadata file called
+LargeMeta. The formats of LargeMeta and LargeBlock and their
+relationship is illustruated in Figure~\ref{fig:space}.
+
+It is worth notice that LargeMeta is an immutable file. A new file is
+created every time it is updated. It can also be rebuilt using
+information from LargeBlocks. Many versions of LargeMeta are kept
+which provides a natural support for versioning. This makes the
+metadata resistent to harzardous situations such as system crash and
+file corruption.
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% For Emacs:
