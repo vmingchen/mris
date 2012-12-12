@@ -1,46 +1,51 @@
 This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
 The top-level auxiliary file: main.aux
 The style file: plain.bst
+I couldn't open database file gos.bib
+---line 46 of file main.aux
+ : \bibdata{template/master,gos
+ :                             }
+I'm skipping whatever remains of this command
 Database file #1: template/master.bib
-Database file #2: gos.bib
-You've used 5 entries,
+You've used 3 entries,
             2118 wiz_defined-function locations,
-            530 strings with 4781 characters,
-and the built_in function-call counts, 1591 in all, are:
-= -- 159
-> -- 62
-< -- 2
-+ -- 25
-- -- 20
-* -- 88
-:= -- 253
-add.period$ -- 16
-call.type$ -- 5
-change.case$ -- 25
+            520 strings with 4574 characters,
+and the built_in function-call counts, 1222 in all, are:
+= -- 116
+> -- 72
+< -- 1
++ -- 30
+- -- 26
+* -- 97
+:= -- 197
+add.period$ -- 9
+call.type$ -- 3
+change.case$ -- 23
 chr.to.int$ -- 0
-cite$ -- 5
-duplicate$ -- 63
-empty$ -- 140
-format.name$ -- 20
-if$ -- 352
+cite$ -- 3
+duplicate$ -- 39
+empty$ -- 87
+format.name$ -- 26
+if$ -- 254
 int.to.chr$ -- 0
-int.to.str$ -- 5
+int.to.str$ -- 3
 missing$ -- 2
-newline$ -- 27
-num.names$ -- 10
-pop$ -- 42
+newline$ -- 17
+num.names$ -- 4
+pop$ -- 27
 preamble$ -- 1
 purify$ -- 20
 quote$ -- 0
-skip$ -- 53
+skip$ -- 30
 stack$ -- 0
-substring$ -- 76
-swap$ -- 19
-text.length$ -- 2
+substring$ -- 65
+swap$ -- 10
+text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 20
+type$ -- 12
 warning$ -- 0
-while$ -- 16
-width$ -- 6
-write$ -- 57
+while$ -- 9
+width$ -- 4
+write$ -- 34
+(There was 1 error message)

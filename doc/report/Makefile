@@ -5,7 +5,6 @@ SRCS=	$(NAME).tex		\
 	abstract.tex		\
 	intro.tex		\
 	bg.tex			\
-	design.tex		\
 	implementation.tex	\
 	eval.tex		\
 	related.tex		\

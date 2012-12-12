@@ -9,6 +9,13 @@
 \end{centering}
 \end{figure}
 
+\begin{figure}[t]
+\begin{centering}
+\epsfig{file=leveldb-compact.eps,width=1.00\linewidth}
+\caption{LevelDB Compaction}
+\label{fig:compact}
+\end{centering}
+\end{figure}
 
 We implemented MRIS using LevelDB~\cite{leveldb-web}, an open source
 key/value database engine developed by Google. LevelDB is
@@ -55,7 +62,11 @@ secondary index for faster search.
 In LevelDB, there are two Memtables, once one is filled, the other one
 is used for further insertion. The filled one is flushed into a
 Memtable in background. Its compaction procedure is illustrated in
-Figure~\ref{fig:compact}.
+Figure~\ref{fig:compact}. One SSTable (a) at layer $n$ is merged with
+the SSTables at layer $n+1$ that have overlapping keys with (a) into
+new SSTables at layer $n+1$.
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% For Emacs:
