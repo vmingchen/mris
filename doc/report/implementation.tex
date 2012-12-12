@@ -110,13 +110,12 @@ that LargeBlock. LargeBlocks are recorded in a metadata file called
 LargeMeta. The formats of LargeMeta and LargeBlock and their
 relationship is illustruated in Figure~\ref{fig:space}.
 
-It is worth notice that LargeMeta is an immutable file. A new file is
-created every time it is updated. It can also be rebuilt using
-information from LargeBlocks. Many versions of LargeMeta are kept
-which provides a natural support for versioning. This makes the
+It is worth notice that LargeMeta is an immutable file. A new one is
+created every time it is updated. LargeMeta can be readily rebuilt
+using information from LargeBlocks. Many versions of LargeMeta are
+kept which provides a natural support for versioning. This makes the
 metadata resistent to harzardous situations such as system crash and
 file corruption.
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
