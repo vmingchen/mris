@@ -100,84 +100,20 @@ observation from Figure~\ref{fig:wikiimage} is that the request image
 of different sizes vary widely.  Particularly, images of sizes between
 $(4, 64]$ KB are most popular. They sum to 81.58\% of the total number
 of image requests. Moreover, 94.57\% of the requests are for images
-smaller than or equal to 128KB.
+smaller than or equal to 128KB. Despite the fact that small images
+(<=128KB) are the absolute majority in term of request numbers, the
+traffic (size$\times$frequency) introduced by them is just 2.96\% of
+the total. Although not all the requests make their way to the storage
+layer because of memory cache (such as Memcached~\cite{memcached}).
+This salient size-tiered property of requests still makes size-tiered
+storage a close match for multi-resolution image workloads.
 
-This salient size-tiered property.
-
-
-The first observation from Figure~\ref{fig:wikiimage} is that images of very
-small sizes (512B, 1K, 2K, and 4K) are rarely accessed. This is
-straightforward because 
+\subsection{Micro Benchmarks}
 
 We first show micro benchmark results on simple workloads of
 sequential and random read and write of MRIS. To demonstrate the
 benefits of multi-tier system, we experimented every workload on three
 different setups. 
-
-Before we evaluated the performance of out green target, we
-benchmarked the performance of the two physical disks.  We measured
-the time elapsed to read/write 1G of data randomly from the raw disks
-of the SSD and the SATA using the Linux \texttt{dd} command. We set
-the \texttt{direct} I/O flag in \texttt{dd} to make sure I/Os were
-directly served by disks instead of cache in memory.  In the tests, we
-also confined all I/Os to be within the first 1G of the two disks
-because the capacities of the virtual devices we created in the rest
-of the evaluation are 1G. The results are presented in Figure
-\ref{fig:ssd_vs_sata}. The most salient trend in Figure
-\ref{fig:ssd_vs_sata} is that I/O speed goes down quickly as I/O size
-decreases. This is true for both disks and for both read and write. 
-
-For read, the SSD is more than 4 times faster than the SATA disk on
-average. Actually, the advantage of the SSD is less than 4$\times$
-only when the I/O size is 4K.  One reason is that when I/O size is
-small, the number of times we need to invoke \texttt{dd} to serve 1G
-I/O is so large that the routines of executing commands, such as
-command lookup, security check, and creating process, slow down the
-test.  When the I/O size becomes as small as 4K, the number of
-execution of the \texttt{dd} command becomes as large as 256K in order
-to serve 1G I/O.  Particularly, when the I/O size is 256K, the SSD is
-7 times faster than the SATA disk. 
-
-For write, there is almost no differences between the SSD and the
-SATA. For all I/O sizes, it took the same time to serve the same
-amount of I/O. Moreover, writes of the SSD is significantly slower
-than reads of the SSD.  However, write is not always slower than read
-for the SATA disk. When the I/O size is small, e.g., 4K and 16K, write
-of the SATA disk is much faster than read. This is because of the disk
-cache within the SATA disk. Write can be served as long as the data
-get written into the disk cache. However, for read, we have to read
-from magnetic disks (unless it is within the small disk cache, which
-is unlikely for random reads), which incurs movement of mechanic
-components. This fact supports our design discussed in Section
-\ref{sec:migrate}, which is we do not migrate extents on secondary
-disks that are being written. 
-
-\begin{figure}[t]
-\begin{centering}
-\epsfig{file=figures/raw_power.eps,width=1.00\linewidth}
-\caption{Power of the SSD and the SATA disk.}
-\label{fig:power}
-\end{centering}
-\end{figure}
-
-\begin{figure}[t]
-\begin{centering}
-\epsfig{file=figures/raw_energy.eps,width=1.00\linewidth}
-\caption{Energy of the SSD and the SATA disk.}
-\label{fig:energy}
-\end{centering}
-\end{figure}
-
-We have also collected the power and energy consumption data of the
-tests. They are presented in Figure \ref{fig:power} and
-\ref{fig:energy}. Because we did not spin the disks, the power of the
-SSD and the SATA disk is close to each other. A remarkable trend in 
-Figure \ref{fig:power} is that when I/O size is larger than 256K, the
-power of writes is averagely 15 watt higher than smaller I/O sizes.
-This is true for both the SSD and the SATA disk. Because the power is
-stable, the energy is mainly affected by the time of the operations.
-That is why Figure \ref{fig:energy} resembles Figure
-\ref{fig:ssd_vs_sata}. 
 
 \subsection{Facebook Workloads}
 
