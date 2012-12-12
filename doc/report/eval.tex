@@ -67,7 +67,16 @@ However, we noticed that HDD performs better for write than for read.
 This is because the HDD has a 16MB internal cache, which is more
 helpful for write than for read.
 
+Above-mentioned results will serve as baselines of throughput for our
+further benchmarking. They also validate our design premise that SSD
+performs much better than HDD for random I/Os and HDD performs well
+for sequential I/Os.
+
 \subsection{Wikipedia Image Workload}
+
+To 
+
+http://dumps.wikimedia.org/other/pagecounts-raw/2012/2012-01/
 
 We first show micro benchmark results on simple workloads of
 sequential and random read and write of MRIS. To demonstrate the
