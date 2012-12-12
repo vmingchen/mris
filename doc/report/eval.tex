@@ -74,22 +74,37 @@ for sequential I/Os.
 
 \subsection{Wikipedia Image Workload}
 
-To 
+\begin{figure}[t]
+\begin{centering}
+\epsfig{file=figures/wiki-image.eps,width=1.00\linewidth}
+\caption{Image Requests to Wikipedia of January 2012}
+\label{fig:wikiimage}
+\end{centering}
+\end{figure}
 
-http://dumps.wikimedia.org/other/pagecounts-raw/2012/2012-01/
+To study the size-tiered property in workloads, we analyzed the
+requests of images made to Wikipedia site.  Wikipedia is the #5
+website in the world~\cite{wikipedia-web}, serving 492 million people
+every month~\cite{wikipedia-foundation}. It can reflect workloads of
+many large websites.
+
+Figure~\ref{fig:wikiimage} presents the requests of images made in
+January 2012. They are extraced from request log files, which are
+available at
+http://dumps.wikimedia.org/other/pagecounts-raw/2012/2012-01/. We
+extract requests of objects with a suffix of jpg, png, or gif, then
+round up their sizes into power of 2. The frequency of images of
+different sizes is counted and plotted in Figure~\ref{fig:wikiimage}.
+All images larger than 256M is counted in the 256M bin. 
+
+The first observation from Figure~\ref{fig:wikiimage} is that images of very
+small sizes (512B, 1K, 2K, and 4K) are rarely accessed. This is
+straightforward because 
 
 We first show micro benchmark results on simple workloads of
 sequential and random read and write of MRIS. To demonstrate the
 benefits of multi-tier system, we experimented every workload on three
 different setups. 
-
-\begin{figure}[t]
-\begin{centering}
-\epsfig{file=figures/raw_rand_speed.eps,width=1.00\linewidth}
-\caption{I/O performance of the SSD and the SATA disk. }
-\label{fig:ssd_vs_sata}
-\end{centering}
-\end{figure}
 
 Before we evaluated the performance of out green target, we
 benchmarked the performance of the two physical disks.  We measured

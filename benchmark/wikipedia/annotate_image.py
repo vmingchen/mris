@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/python
 '''
 Calculate statistics of file sizes (logarithmic).
 '''
