@@ -66,7 +66,17 @@ Figure~\ref{fig:compact}. One SSTable (a) at layer $n$ is merged with
 the SSTables at layer $n+1$ that have overlapping keys with (a) into
 new SSTables at layer $n+1$.
 
-
+A drawback of compaction is that pairs are read and written multiple
+times when they are gradually merged from the top layer to the bottom.
+Although compaction is scheduled in background, it still influences
+the overall system performance when the I/O traffic is heavy. Reads
+and writes of large pairs make compaction long and in turn introduce
+more negative effect on performance. Therefore, it is desirable to
+reduce the copying of large pairs. Because the log-structured nature
+of key/value store, once written, the pairs will never be updated. So
+it is reasonable to keep large values unmoved especially when the
+reduce of data copying can offset the cost of an extra disk seek.
+Because one disk seek can be amortized by fast sequential I/O.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% For Emacs:
