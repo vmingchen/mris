@@ -76,7 +76,26 @@ reduce the copying of large pairs. Because the log-structured nature
 of key/value store, once written, the pairs will never be updated. So
 it is reasonable to keep large values unmoved especially when the
 reduce of data copying can offset the cost of an extra disk seek.
-Because one disk seek can be amortized by fast sequential I/O.
+
+As cloud computing is spreading widely, high throughput storage system
+is required because, in consolidated cloud environment, data are
+generated fast in great volume. It demands not only high storage
+throughput but also large capacity. It is a natural choice to
+compromise between cost and performance and save different data on
+different media. Some companies achieved this using big memory for hot
+data and storing not-so-hot data into second-level
+storage~\cite{level_lifetime}.  However, memory is expensive and
+volatile. New NVRAM storage media such as Flash SSD provides an
+alternative solution, which can be cheaper and safer.
+
+Based on the idea of saving different data on different media, we
+modify LevelDB to save large values separately into a space called
+LargeSpace. LargeSpace is essentially a log. Upon a request of
+insertion, the value is appended into LargeSpace and an address is
+returned. The address is used for later retrieve of the value. To ease
+management, LargeSpace is splited into files called LargeBlocks. The
+size of LargeBlock is configurable parameter with a default value of
+64MB. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% For Emacs:
