@@ -1,26 +1,27 @@
 \section{Evaluation} \label{sec:eval}
 
 We have evaluated our system on a 64-bit Dell server running Ubuntu
-server with kernel version 3.2.9. We used one Flash based SSD and one
-SATA HDD and created linear and green virtual disk on them. The SSD is
-a Intel SSDSA2MH080G1GC 2.5-inch with 80G capacity. The SATA disk is a
-Toshiba MHZ2250BK 2.5-inch SATA HDD. Its capacity is 250GB and its
-rotational speed is 7200 rpm.
+server 8.04 with kernel version 3.2.9. We used one Flash based SSD and
+one SATA HDD. The SSD is an Intel SSDSA2CW300G3 2.5-inch with 300G
+capacity. The SATA disk is a Maxtor 7L250S0 3.5-inch SATA HDD. Its
+capacity is 250GB and its rotational speed is 7200 rpm.
 
 \subsection{Benchmark Platform}
 
 Firstly, we measured the two storage devices used in our benchmarks.
 The results we got support our argument that Flash is good in random
-I/O while HDD is not bad in sequential I/Os.
-
-We formated both devices using Ext2. 
-
-We remount devices before each benchmark to make sure that all disk
-caches are dropped.
+I/O while HDD is not bad in sequential I/Os. We formated both devices
+using Ext4. We remount devices before each benchmark to make sure that
+all disk caches are dropped. The devices were measured using
+Filebench~\cite{filebench-web}. Random read and write were measured
+using Filebench built-in workloads \texttt{randomread} and
+\texttt{randomwrite}; Sequential read and write were measured using
+Filebench built-in workloads \texttt{singalstreamread} and
+\texttt{singalstreamwrite}.
 
 SSD vs SATA
 
-\subsection{Micro benchmarks}
+\subsection{Wikipedia Image Workload}
 
 We first show micro benchmark results on simple workloads of
 sequential and random read and write of MRIS. To demonstrate the
