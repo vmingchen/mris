@@ -4,9 +4,11 @@ We have evaluated our system on a 64-bit Dell server running Ubuntu
 server 8.04 with kernel version 3.2.9. We used one Flash based SSD and
 one SATA HDD. The SSD is an Intel SSDSA2CW300G3 2.5-inch with 300G
 capacity. The SATA disk is a Maxtor 7L250S0 3.5-inch SATA HDD. Its
-capacity is 250GB and its rotational speed is 7200 rpm.
+capacity is 250GB and its rotational speed is 7200 rpm. The code and
+benchmark results are publicly available at
+https://github.com/brianchenming/mris.
 
-\subsection{Benchmark Platform}
+\subsection{Measure drives}
 
 Firstly, we measured the two storage devices used in our benchmarks.
 The results we got support our argument that Flash is good in random
@@ -19,7 +21,51 @@ using Filebench built-in workloads \texttt{randomread} and
 Filebench built-in workloads \texttt{singalstreamread} and
 \texttt{singalstreamwrite}.
 
-SSD vs SATA
+\begin{figure}[t]
+\begin{centering}
+\epsfig{file=figures/ssd_vs_sata_read.eps,width=1.00\linewidth}
+\caption{Read performance of SSD and HDD}
+\label{fig:driveread}
+\end{centering}
+\end{figure}
+
+The performance of read operations are presented in
+Figure~\ref{fig:driveread}. All benchmarks are performed for 3 times,
+and the standard deviation of the 3 runs are shown as error bar in
+figures. The results are stable and most error bars are imperceptible
+or negligible. As we can see in Figure~\ref{fig:driveread}, SSD is
+much better than that of HDD for random read for small I/O sizes. SSD
+is 23.1$\times$ faster than HDD when I/O size is 4K, and 18.4$\times$
+faster when I/O size is 8K. However, the speed advantage drops to
+8.4$times$ and 4.8$times$ when the I/O size grows to 64K and 256K.
+This is because disk head seek happens less frequently as I/O size
+increases. Specifically, the HDD read throughput is 0.4mb/s with an
+I/O size of 4K. This agrees with the 9ms average read time shown in
+the HDD's specification.  
+
+For sequential read, the most interesting observation is that HDD
+provided the same throughput as SSD when I/O size is 4K and 8K. HDD
+throughput stop grow after 8K, whereas SSD throughput grows until
+256K. 8K and 256K are the points when HDD and SSD achieve their
+respective maximum bandwidth.
+
+\begin{figure}[t]
+\begin{centering}
+\epsfig{file=figures/ssd_vs_sata_write.eps,width=1.00\linewidth}
+\caption{Write performance of SSD and HDD}
+\label{fig:drivewrite}
+\end{centering}
+\end{figure}
+
+The performances of write operations are presented in
+Figure~\ref{fig:drivewrite}. They present similar trend as of read.
+When I/O size is small (i.e. 4K, 8k, or 16k), SSD performs much better
+than HDD for random write, but their performance have no significant
+difference for sequential write. When I/O size becomes large,
+throughput of both drives are capped by their maximum bandwidth.
+However, we noticed that HDD performs better for write than for read.
+This is because the HDD has a 16MB internal cache, which is more
+helpful for write than for read.
 
 \subsection{Wikipedia Image Workload}
 
@@ -295,6 +341,6 @@ total storage capacity.
 % End:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% For Vim:
-% vim:textwidth=70
+% vim:textwidth=70 noai nocin nosi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LocalWords:  
