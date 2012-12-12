@@ -3,91 +3,80 @@
 
 \begin{figure}[t]
 \begin{centering}
-\epsfig{file=figures/metadata.eps,width=1.00\linewidth}
-\caption{Metadata of green device on a disk. Metadata is placed at the
-end of raw data, and it has a replica on each physical disk.}
-\label{fig:metadata}
+\epsfig{file=sstable.eps,width=1.00\linewidth}
+\caption{SSTable}
+\label{fig:sstable}
 \end{centering}
 \end{figure}
 
-
-We implemented our multi-disk driver as a Linux Device Mapper target.
-Figure \ref{fig:metadata} showes the metadata organization of a green
-device. Figure \ref{fig:rwpath} presents the pesudocode of the BIO
-redirection. When there is no need for extent migration, our target
-simply looks up into the mapping table and maps BIOs accordingly.
-Migration of extents are implemented using either \texttt{dm\_io}
-(migration not divided) or \texttt{dm\_kcopyd} (migration divided into
-promotion and demotion).  Both of them are infrastructure services of
-the Device Mapper framework.  \texttt{dm\_io} is used for performing
-disk I/O and it can be synchronous (if set callback function to null)
-or asynchronous (if callback function is not null).
-\texttt{dm\_kcopyd} provides asynchronous data copying between disks. 
-
 \begin{figure}[t]
-{\footnotesize 
-\begin{verbatim}
-int green_map(bio) {
-  ext_id = bio->offset / ext_size;
-  if (ext_id does not have mapping) {
-    if (there is space on cache disk) {
-      physical_ext = get_ext_from_cache();
-    } else {
-      physical_ext = get_ext_from_secondary();
-    }
-    table[ext_id] = physical_ext;
-  } 
-  physical_ext = table[ext_id];
-  if (physical_ext on cache and bio is Read) {
-    schedule_ext_migration(physical_ext);
-    return DM_MAPIO_SUBMITTED;
-  } 
-  map_bio_to_physical_device(bio, physical_ext);
-  return DM_MAPIO_REMAPPED;
-}
-\end{verbatim}
-}
-\caption{Pesudocode of the BIO redirection.} 
-\label{fig:rwpath}
+\begin{centering}
+\epsfig{file=leveldb-compact.eps,width=1.00\linewidth}
+\caption{LevelDB Compaction}
+\label{fig:compact}
+\end{centering}
 \end{figure}
 
+We implemented MRIS using LevelDB~\cite{leveldb-web}, an open source
+key/value database engine developed by Google. LevelDB is
+log-structured and organizes data into Sorted String Table (SSTable).
+SSTable, introduced in Bigtable~\cite{chang06osdi}, is an immutable
+data structure containing a sequence of key/value pairs sorted by the
+key as shown in Figure~\ref{fig:sstable}. Besides key and value, there
+might be optional fields such as CRC, compression type etc. SSTable
+are mostly saved as files and each of them can contains data
+structures, such as bloomfilter, to facilitate key lookup. SSTable
+have counterpart in the memory called Memtable. The key/value pairs in
+Memtable are often kept in data structures easy for insert and lookup
+such as red/black tree and skiplist.
 
-Because extent migration involves at least two I/Os (one read and one
-write), it is slow and not atomic. It is slow, so we limited the
-maximum number of concurrent migration. Otherwise, there can be too
-many migrations that the I/O performance degrades severely under heavy
-IO load. For example, when the whole disk is scanned
-multiple times, the SSD will thrash because of the LRU heuristic. It
-is not atomic, so we have to suspend the BIOs targeting those extents that
-are under migration. We kept a queue of BIOs for every migrating
-extent and we submit all the BIOs once migrating is done (no matter on
-success or failure). To achieve good throughput, we do not wait for
-migration to finish before continue to map more BIOs. We queued all
-migrations and returns immediately. A daemon, implemented using Linux
-\texttt{workqueue}, schedules them later.
+LevelDB, as well as most other key/value engines, use Log-Structured
+Merge Trees (LSM)~\cite{lsm} for internal storage. When key/value
+pairs are first added, they are inserted into Memtable.  Once the size
+of the Memtable growes beyond a certain threshold, the whole Memtable
+is flushed out into a SSTable, and a new Memtable is created for
+insertion. When key/value pairs get changed, the new pairs are
+inserted without modifying the old pairs. When key/value pairs get
+deleted, a mark of the deletion is inserted. This way key/value can
+provide large insertion throughput because data is written out using
+sequential I/Os, which have good performance on Hard Disk Drives
+(HDD). 
 
-Because I/O schedulers reorder I/O requests to maximize throughput,
-BIOs are not served in the same order as we submit them to underlying
-disks.  When we access an extent, it is possible that the extent to 
-which I/O request is raised gets migrated between the time we submit the request and the
-time the request is served. In this case, we end up getting wrong
-data.  To avoid this, we have to make sure all requests of an extent
-are finished before we migrate it. We associated an atomic counter
-with each extent. The counter is incremented before we send a request
-to the corresponding extent, and it is decremented after the request
-is finished. Then migration only occurs for those extents whose
-counters are zero.  (This part code is not finished). 
+To serve a key lookup, Memtable is queried firstly. If not found in
+Memtable, the SSTables are queried in reverse chronological order. A
+naive implementation of such a lookup can be very slow because the
+whole database need be read and checked in the worst case. To make
+lookup fast, SSTable are organized into several layers with the size
+of each table increasing from the top layer to the bottom. Background
+jobs are launched periodically to sort and merge small SSTables into
+larger ones in the next layer. This is called compaction. Deleted
+pairs are also removed during compaction. Then a lookup iterates the
+SSTables layer by layer and returns once the key is found.  Because
+SSTables are sorted by key, it enables fast lookup algorithm like
+binary search. There is also index for SSTables tells the key range
+covered by a particular SSTable so that it suffice just checking the
+SSTables whose key ranges cover the interested key. Inside each
+SSTable, we can have a bloomfilter to filter negative key lookup and a
+secondary index for faster search.
 
-We have written a userland program which accepts signal (with major
-and minor device number) from our target and invokes \texttt{hdparm}
-to put disks into low-power states.  There are two low-power states,
-which are standby (spin down) and sleeping (power down).
-\texttt{hdparm} can achieve both of them  as long as the disks has
-these features. There are also two ways to put disks into low-power
-states. One is to set a timeout and disks are put into low-power
-states when they are idle for that long time. Another is to spin/power
-down disks at once. We do not have to spin/power up in our code
-because disks go up once they are accessed. 
+In LevelDB, there are two Memtables, once one is filled, the other one
+is used for further insertion. The filled one is flushed into a
+Memtable in background. Its compaction procedure is illustrated in
+Figure~\ref{fig:compact}. One SSTable (a) at layer $n$ is merged with
+the SSTables at layer $n+1$ that have overlapping keys with (a) into
+new SSTables at layer $n+1$.
+
+A drawback of compaction is that pairs are read and written multiple
+times when they are gradually merged from the top layer to the bottom.
+Although compaction is scheduled in background, it still influences
+the overall system performance when the I/O traffic is heavy. Reads
+and writes of large pairs make compaction long and in turn introduce
+more negative effect on performance. Therefore, it is desirable to
+reduce the copying of large pairs. Because the log-structured nature
+of key/value store, once written, the pairs will never be updated. So
+it is reasonable to keep large values unmoved especially when the
+reduce of data copying can offset the cost of an extra disk seek.
+Because one disk seek can be amortized by fast sequential I/O.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% For Emacs:
@@ -96,6 +85,6 @@ because disks go up once they are accessed.
 % End:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% For Vim:
-% vim:textwidth=70
+% vim:textwidth=70 noai nocin nosi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% LocalWords:  SMR HDDs drive's SMRs
+% LocalWords:  SSTable LevelDB Memtables

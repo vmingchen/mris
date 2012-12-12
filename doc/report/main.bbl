@@ -16,32 +16,21 @@
 % LocalWords:  addtocontents toc vspace addcontentsline numberline LocalWords
 % LocalWords:  bf addtolength parsep baselineskip tlength parskip
 
-\bibitem{speed_up}
-Rob Flickenger.
-\newblock Speeding up linux using hdparm, June 2000.
-\newblock http://linuxdevcenter.com/pub/a/linux/2000-/06/29/hdparm.html.
+\bibitem{chang06osdi}
+F.~Chang, J.~Dean, S.~Ghemawat, W.~C. Hsieh, D.~A. Wallach, M.~Burrows,
+  T.~Chandra, A.~Fikes, and R.~E. Gruber.
+\newblock Bigtable: a distributed storage system for structured data.
+\newblock In {\em OSDI '06: Proceedings of the 7th USENIX Symposium on
+  Operating Systems Design and Implementation}, pages 15--15, Berkeley, CA,
+  USA, 2006. USENIX Association.
 
-\bibitem{hdparm}
-ideguy.
-\newblock hdparm - get/set ata/sata drive parameters under linux.
-\newblock http://sourceforge.net/projects/hdparm/.
+\bibitem{leveldb-web}
+{LevelDB}, January 2012.
+\newblock \url{http://code.google.com/p/leveldb}.
 
-\bibitem{hddcache}
-Gokul Soundararajan, Vijayan Prabhakaran, Mahesh Balakrishnan, and Ted Wobber.
-\newblock Extending ssd lifetimes with disk-based write caches.
-\newblock In {\em Proceedings of the 8th USENIX conference on File and storage
-  technologies}, FAST'10, pages 8--8, Berkeley, CA, USA, 2010. USENIX
-  Association.
-
-\bibitem{wiki_dm}
-Wikipedia.
-\newblock Device mapper, May 2012.
-
-\bibitem{Wildani_grouping}
-Avani Wildani, Ethan~L. Miller, and Lee Ward.
-\newblock Efficiently identifying working sets in block i/o streams.
-\newblock In {\em Proceedings of the 4th Annual International Conference on
-  Systems and Storage}, SYSTOR '11, pages 5:1--5:12, New York, NY, USA, 2011.
-  ACM.
+\bibitem{lsm}
+P.~O'Neil, E.~Cheng, D.~Gawlick, and E.~O'Neil.
+\newblock The log-structured merge-tree ({LSM}-tree).
+\newblock {\em Acta Inf.}, 33(4):351--385, 1996.
 
 \end{thebibliography}

@@ -258,6 +258,12 @@ of the 4K I/O size does not stand out because writes are slower than
 reads. It is the I/O latency, not the command executions, that
 dominates the cost. 
 
+Our system presents up to 5.3$\times$ speedup over the single-tier
+store using HDD, or 62\% of the single-tier store using only Flash .
+Particularly, for a workload emulating Facebook's photo requests, we
+improve the throughput by XXX using only a small Flash of 5.9\% of the
+total storage capacity.
+
 \begin{figure}[t]
 \begin{centering}
 \epsfig{file=figures/worst.eps,width=1.00\linewidth}
