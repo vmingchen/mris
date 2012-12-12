@@ -95,7 +95,15 @@ http://dumps.wikimedia.org/other/pagecounts-raw/2012/2012-01/. We
 extract requests of objects with a suffix of jpg, png, or gif, then
 round up their sizes into power of 2. The frequency of images of
 different sizes is counted and plotted in Figure~\ref{fig:wikiimage}.
-All images larger than 256M is counted in the 256M bin. 
+All images larger than 256M is counted in the 256M bin. The first
+observation from Figure~\ref{fig:wikiimage} is that the request image
+of different sizes vary widely.  Particularly, images of sizes between
+$(4, 64]$ KB are most popular. They sum to 81.58\% of the total number
+of image requests. Moreover, 94.57\% of the requests are for images
+smaller than or equal to 128KB.
+
+This salient size-tiered property.
+
 
 The first observation from Figure~\ref{fig:wikiimage} is that images of very
 small sizes (512B, 1K, 2K, and 4K) are rarely accessed. This is
