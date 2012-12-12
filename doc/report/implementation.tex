@@ -3,7 +3,7 @@
 
 \begin{figure}[t]
 \begin{centering}
-\epsfig{file=sstable.eps,width=1.00\linewidth}
+\epsfig{file=figures/sstable.eps,width=1.00\linewidth}
 \caption{SSTable}
 \label{fig:sstable}
 \end{centering}
@@ -11,7 +11,7 @@
 
 \begin{figure}[t]
 \begin{centering}
-\epsfig{file=leveldb-compact.eps,width=1.00\linewidth}
+\epsfig{file=figures/leveldb-compact.eps,width=1.00\linewidth}
 \caption{LevelDB Compaction}
 \label{fig:compact}
 \end{centering}
@@ -36,11 +36,11 @@ pairs are first added, they are inserted into Memtable.  Once the size
 of the Memtable growes beyond a certain threshold, the whole Memtable
 is flushed out into a SSTable, and a new Memtable is created for
 insertion. When key/value pairs get changed, the new pairs are
-inserted without modifying the old pairs. When key/value pairs get
-deleted, a mark of the deletion is inserted. This way key/value can
-provide large insertion throughput because data is written out using
-sequential I/Os, which have good performance on Hard Disk Drives
-(HDD). 
+inserted without modifying the old pairs. When a key/value pair is
+deleted, a marker of the deletion is inserted by setting a flag inside
+the key called \texttt{KeyType}. This way key/value can provide large
+insertion throughput because data is written out using sequential
+I/Os, which have good performance on Hard Disk Drives (HDD). 
 
 To serve a key lookup, Memtable is queried firstly. If not found in
 Memtable, the SSTables are queried in reverse chronological order. A
@@ -90,7 +90,7 @@ alternative solution, which can be cheaper and safer.
 
 \begin{figure}[t]
 \begin{centering}
-\epsfig{file=large-space.eps,width=1.00\linewidth}
+\epsfig{file=figures/large-space.eps,width=1.00\linewidth}
 \caption{Large Space}
 \label{fig:space}
 \end{centering}
@@ -98,17 +98,18 @@ alternative solution, which can be cheaper and safer.
 
 Based on the idea of saving different data on different media, we
 modify LevelDB to save large values separately into a space called
-LargeSpace. LargeSpace is essentially a log. Upon a request of
-insertion, the value is appended into LargeSpace and an address is
-returned. The address is used for later retrieve of the value. To ease
-management, LargeSpace is splited into files called LargeBlocks. The
-threshold of split is a configurable parameter with a default value of
-64MB. Although LargeSpace is splited, we enforce that no value will be
-splited among LargeBlocks. Therefore, it is possible that a LargeBlock
-is much larger than the split threshold if there is a huge value in
-that LargeBlock. LargeBlocks are recorded in a metadata file called
-LargeMeta. The formats of LargeMeta and LargeBlock and their
-relationship is illustruated in Figure~\ref{fig:space}.
+LargeSpace. LargeSpace is essentially a log and can be saved in media
+different from the SSTables. Upon a request of insertion, the value is
+appended into LargeSpace and an address is returned. The address is
+used for later retrieve of the value. To ease management, LargeSpace
+is splited into files called LargeBlocks. The threshold of split,
+called SplitThreshold, is a configurable parameter with a default
+value of 64MB. Although LargeSpace is splited, we enforce that no
+value will be splited among LargeBlocks. Therefore, it is possible
+that a LargeBlock is larger than the split threshold if there is a
+huge value in that LargeBlock.  LargeBlocks are recorded in a metadata
+file called LargeMeta. The formats of LargeMeta and LargeBlock and
+their relationship is illustruated in Figure~\ref{fig:space}.
 
 It is worth notice that LargeMeta is an immutable file. A new one is
 created every time it is updated. LargeMeta can be readily rebuilt
@@ -117,6 +118,32 @@ kept which provides a natural support for versioning. This makes the
 metadata resistent to harzardous situations such as system crash and
 file corruption.
 
+\begin{figure}[t]
+\begin{centering}
+\epsfig{file=figures/mris-store.eps,width=1.00\linewidth}
+\caption{MRIS Insertion.}
+\label{fig:mrisinsert}
+\end{centering}
+\end{figure}
+
+A key/value is considered to be large and will be saved in LargeSpace
+when its value size is larger than a configurable threshold, named
+SizeThreshold. SizeThreshold provides a simple but effective knob to
+tradeoff between cost and performance when LargeSpace and SSTable are
+stored in different places. We plan to use more sophisticated
+algorithm to determine where to place a certain pair considering not
+only size but also hotness and access pattern.
+
+Insertion of MRIS is illustruated in Figure~\ref{fig:mrisinsert}.
+When key/value pairs are firstly inserted into Memtable, they are
+treated equally. Large pairs in a Memtable are checked when the
+Memtable becomes full and is dumped into SSTable. Whereas small pairs
+go to SSTable without touch, the value of large pairs are firstly
+inserted into LargeSpace. For each large pair, a new pair is formed
+and inserted into SSTable. The key of the new pair is the same as the
+old key except its \texttt{KeyType} is changed to indicate that it
+represents a large pair.  The value of the new pair contains the size
+of the original value, and its addresses in LargeSpace.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% For Emacs:
