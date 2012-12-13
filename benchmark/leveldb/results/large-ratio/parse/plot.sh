@@ -70,7 +70,8 @@ set style histogram errorbars gap 1 lw 2
 set xtics offset 0,0.5
 set ytics offset 1,0
 #set yrange [0:16]
-set key left height 3
+#set key left height 3
+set key left center
 
 plot "${name}.dat" using 3:4:xticlabels(1) w histogram lw 2 title "SSD-SSD", \
 	"" using 8:9:xticlabels(1) w histogram lw 2 title "Hybrid-SSD", \
