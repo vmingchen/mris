@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  12 DEC 2012 22:30
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  13 DEC 2012 01:21
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -592,7 +592,7 @@ If that doesn't work, type  X <return>  to quit.
 Here is how much of TeX's memory you used:
  11028 strings out of 495062
  200394 string characters out of 1182644
- 247444 words of memory out of 3000000
+ 247443 words of memory out of 3000000
  13934 multiletter control sequences out of 15000+50000
  14881 words of font info for 50 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191

@@ -161,8 +161,18 @@ when it is for sequential write of 4K I/O size. Therefore, a slow
 speedup of insertion is reasonable.
 
 For sequential insertion, SSD is 26\% faster than SATA and Hybrid is
-just 3\% faster than SATA. However, sequential insertion is 41\%
-faster than random insertion for SSD.
+just 3\% faster than SATA. This is because sequential insertion causes
+less compactions than random insertion, which reduce the overall
+number of I/Os.  Compations merge multiple sorted SSTable into one
+larger sorted SSTable. When key/value pairs are inserted sequentially,
+no merge is necessary because all SSTable have no overlapping keys.
+This also explains why sequential insertion is significantly faster
+than random insertion for all the three setups (41\%, 38\%, and 45\%
+faster for SSD, Hybrid, and SATA). 
+
+\NOTE{Ming}{I really should have recorded the number of compactions
+happened during the Benchmarking. I will probably do it in several
+days}
 
 % How fdatasync determines which I/O size to use? We will have to
 % double check the I/O size. LevelDB has an internal block size
