@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  13 DEC 2012 02:00
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  13 DEC 2012 02:07
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -512,50 +512,30 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
 )
-(./intro.tex
-
-LaTeX Warning: Reference `sec:trace' on page 1 undefined on input line 55.
-
-
-LaTeX Warning: Reference `sec:eval' on page 1 undefined on input line 57.
-
-
-LaTeX Warning: Reference `sec:related' on page 1 undefined on input line 58.
-
-
-LaTeX Warning: Reference `sec:conc' on page 1 undefined on input line 59.
-
-) (./implementation.tex
+(./intro.tex) (./implementation.tex
 File: figures/sstable.eps Graphic file (type eps)
  <figures/sstable.eps>
 File: figures/leveldb-compact.eps Graphic file (type eps)
- <figures/leveldb-compact.eps>
 
-LaTeX Warning: Citation `leveldb-web' on page 1 undefined on input line 20.
-
-
-LaTeX Warning: Citation `chang06osdi' on page 1 undefined on input line 23.
-
-
+<figures/leveldb-compact.eps>
 Underfull \hbox (badness 3068) in paragraph at lines 20--32
 \OT1/ptm/m/n/10 Lev-elDB is log-structured and or-ga-nizes data into
  []
 
-[1
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [1
 
 
 ]
-
-LaTeX Warning: Citation `lsm' on page 2 undefined on input line 34.
-
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 41.
+
 (/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-
-LaTeX Warning: Citation `level_lifetime' on page 2 undefined on input line 87.
-
 File: figures/large-space.eps Graphic file (type eps)
+
 <figures/large-space.eps> [2]
 File: figures/mris-store.eps Graphic file (type eps)
  <figures/mris-store.eps>
@@ -563,38 +543,85 @@ Underfull \hbox (badness 7221) in paragraph at lines 138--147
 []\OT1/ptm/m/n/10 When key/value pairs are firstly in-serted into
  []
 
-) (./trace.tex
+) (./eval.tex
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
+File: figures/ssd_vs_sata_read.eps Graphic file (type eps)
+
+<figures/ssd_vs_sata_read.eps> [3]
+File: figures/ssd_vs_sata_write.eps Graphic file (type eps)
+ <figures/ssd_vs_sata_write.eps>
+File: figures/wiki-image.eps Graphic file (type eps)
+
+<figures/wiki-image.eps>
+Underfull \hbox (badness 10000) in paragraph at lines 92--111
+[]\OT1/ptm/m/n/10 Figure 7[] presents the re-quests of im-ages
+ []
 
 
-LaTeX Warning: File `figures/rw.eps' not found on input line 38.
+Underfull \hbox (badness 10000) in paragraph at lines 92--111
+\OT1/ptm/m/n/10 made in Jan-uary 2012. They are ex-traced
+ []
 
 
-! LaTeX Error: File `figures/rw.eps' not found.
+Underfull \hbox (badness 10000) in paragraph at lines 92--111
+\OT1/ptm/m/n/10 from re-quest log files, which are avail-able at
+ []
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.38 ...{file=figures/rw.eps,width=1.00\linewidth}
-                                                  
-? 
-! Emergency stop.
- ...                                              
-                                                  
-l.38 ...{file=figures/rw.eps,width=1.00\linewidth}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
 
- 
+Underfull \hbox (badness 10000) in paragraph at lines 92--111
+\OT1/ptm/m/n/10 http://dumps.wikimedia.org/other/pagecounts-
+ []
+
+
+Underfull \hbox (badness 1394) in paragraph at lines 92--111
+\OT1/ptm/m/n/10 raw/2012/2012-01/. We ex-tract re-quests of ob-jects
+ []
+
+
+Underfull \hbox (badness 1565) in paragraph at lines 92--111
+\OT1/ptm/m/n/10 im-age of dif-fer-ent sizes vary widely. Par-tic-u-larly,
+ []
+
+[4]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 178.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 178.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 178.
+File: figures/mris-write-ops.eps Graphic file (type eps)
+ <figures/mris-write-ops.eps>
+File: figures/mris-write-thput.eps Graphic file (type eps)
+ <figures/mris-write-thput.eps>
+Underfull \hbox (badness 1062) in paragraph at lines 209--219
+\OT1/ptm/m/n/10 While log-structured key/value stores gen-er-ally have
+ []
+
+File: figures/mris_ratio_ops.eps Graphic file (type eps)
+<figures/mris_ratio_ops.eps>
+File: figures/mris_ratio_ops.eps Graphic file (type eps)
+ <figures/mris_ratio_ops.eps>) (./related.tex)
+(./conclusion.tex [5]) (./main.bbl
+Underfull \hbox (badness 10000) in paragraph at lines 50--55
+\OT1/ptm/m/n/10 life-time.  $\OT1/ptm/m/sl/8 https : / / groups . google . com 
+/ d / topic / leveldb /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--64
+[]\OT1/ptm/m/n/10 Wikipedia.  $\OT1/ptm/m/sl/8 http : / / wikimediafoundation .
+ org / wiki /
+ []
+
+) [6] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 11028 strings out of 495062
- 200394 string characters out of 1182644
- 247443 words of memory out of 3000000
- 13934 multiletter control sequences out of 15000+50000
- 14881 words of font info for 50 fonts, out of 3000000 for 9000
+ 11078 strings out of 495062
+ 201022 string characters out of 1182644
+ 247563 words of memory out of 3000000
+ 13967 multiletter control sequences out of 15000+50000
+ 19086 words of font info for 58 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191
- 63i,9n,57p,435b,305s stack positions out of 5000i,500n,10000p,200000b,50000s
-Output written on main.dvi (2 pages, 18112 bytes).
+ 63i,9n,57p,435b,345s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+Output written on main.dvi (6 pages, 40520 bytes).

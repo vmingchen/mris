@@ -9,7 +9,6 @@ SRCS=	$(NAME).tex		\
 	eval.tex		\
 	related.tex		\
 	conclusion.tex		\
-	trace.tex \
 	ack.tex
 
 # extre dependencies
