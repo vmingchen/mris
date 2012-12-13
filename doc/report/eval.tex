@@ -140,10 +140,10 @@ is 128KB large representing a large image. The SizeThreshold is set to
   Hybrid & SSD & HDD \\
   SATA & HDD & HDD \\ \hline 
 \end{tabular}
-}
  \caption{Setups For Benchmarking. The three setups differ in the
  places objects are stored.}
 \label{tbl:setups}
+}
 \end{table}
 
 Figure~\ref{fig:mriswrite} presents the results of the workload of
@@ -222,12 +222,27 @@ every other read of small images when ratio is 2. This emulates the
 common scenario that customers request large images once become
 interested from the small ones.
 
+\begin{figure}[t]
+\begin{centering}
+\epsfig{file=figures/mris_ratio_ops.eps,width=1.00\linewidth}
+\caption{MRIS Read Performance. Each operation represents a read of an
+image.}
+\label{fig:mrisread}
+\end{centering}
+\end{figure}
+
 Figure~\ref{fig:mrisread} presents the read throughput in term of
 ops/sec. For all ratios, SSD shows the highest throughput among the
-three setups, followed by Hybrid and then SATA.
+three setups, followed by Hybrid and then SATA. The ops/sec of SSD is
+3.9$\times$ to 8.0$\times$ faster than SATA. The speedup of SSD over
+SATA also grows as ratio gets larger (except one point). This is
+because as the ratio increases, the I/Os contain more small random
+reads, which exploits more of SSD's superior random performance to
+SATA. Another interesting observation is that the speedup of Hybrid
+over SATA grows rapidly from to as ratio increases.
 
-\NOTE{Ming}{TODO: consitify terms, such as images and objects}
-
+\NOTE{Ming}{TODO: consitify terms, such as images and objects, HDD and
+SATA}
 
 Notice that the average size of an operation depends on the ratio.
 $$
@@ -235,13 +250,19 @@ $$
     \mbox{large}}{ratio + 1}
 $$
 
-\begin{figure}[t]
-\begin{centering}
-\epsfig{file=figures/mris_ratio_ops.eps,width=1.00\linewidth}
-\caption{MRIS Read Performance}
-\label{fig:mrisread}
-\end{centering}
-\end{figure}
+\begin{table}[tc]
+{\centering \footnotesize
+\begin{tabular}{c|c|c|c|c|c|c|c}
+\hline 
+  Speedup & \multicolumn{7}{c}{Placement of Objects} \\ \cline{2-8}
+  over SATA & 1 & 2 & 4 & 8 & 16 & 32 & 64 \\ \hline
+  SSD & 3.89 & 4.68 & 5.79 & 7.52 & 8.04 & 7.60 & 7.64  \\
+  Hybrid & 0.44 & 0.86 & 1.39 & 2.69 & 3.56 & 4.46 & 5.78 \\ \hline
+\end{tabular}
+ \caption{Speedup of SSD and Hybrid over SATA.}
+\label{tbl:speedup}
+}
+\end{table}
 
 The results are shown in Figure~\ref{fig:mrisread}.  Specifically, the
 speedup for Facebook and Wikipedia workload is XXX and YYY. 
