@@ -11,7 +11,7 @@
 
 set -o nounset                          # treat unset variables as an error
 set -o errexit                          # stop script if command fail
-export PATH="/bin:/usr/bin:/sbin"             
+export PATH="/bin:/usr/bin:/sbin:/usr/sbin"             
 IFS=$' \t\n'                            # reset IFS
 unset -f unalias                        # make sure unalias is not a function
 \unalias -a                             # unset all aliases
@@ -27,28 +27,27 @@ RES=$LEVELDB_HOME/results
 DIR=/mnt/ssd
 
 function remount() {
-	rm -f /mnt/largespace
 	if mount -l | grep -q '^/dev/sdb1 '; then
 		while ! umount /dev/sdb1; do
 			sleep 1
 		done
 	fi
-	mount /dev/sdb1 /mnt/ssd
+	[ -b /dev/sdb1 ] && mount /dev/sdb1 /mnt/ssd
 	if mount -l | grep -q '^/dev/sdc1 '; then
 		while ! umount /dev/sdc1; do
 			sleep 1
 		done
 	fi
-	mount /dev/sdc1 /mnt/sata
+	[ -b /dev/sdc1 ] && mount /dev/sdc1 /mnt/sata
 }
 
 function use_ssd() {
-	[ -L /mnt/largespace ] && rm /mnt/largespace
+	rm -f /mnt/largespace
 	ln -s /mnt/ssd /mnt/largespace
 }
 
 function use_sata() {
-	[ -L /mnt/largespace ] && rm /mnt/largespace
+	rm -f /mnt/largespace
 	ln -s /mnt/sata /mnt/largespace
 }
 
@@ -59,7 +58,7 @@ function setup() {
 	elif [ "x$name" = "xsata" ]; then
 		use_sata && DIR=/mnt/sata
 	elif [ "x$name" = "xhybrid" ]; then
-		use_ssd && DIR=/mnt/sata
+		use_sata && DIR=/mnt/ssd
 	else
 		echo "unknown setup $name" > /dev/stderr
 		exit 1;
@@ -84,10 +83,10 @@ function run_bench() {
 	# clear cash
 	remount
 
-	vmstat -n 5 >${result}.vmstat &
+	vmstat -n 1 >${result}.vmstat &
 	PID_VMSTAT=$!
 
-	iostat -t -x /dev/sdb1 /dev/sdc1 5 >${result}.iostat &
+	iostat -t -x /dev/sdb1 /dev/sdc1 1 >${result}.iostat &
 	PID_IOSTAT=$!
 
 	./db_bench --histogram=1 --num=$NUM --benchmarks=$benchmark \
@@ -101,7 +100,8 @@ for setup_name in ssd sata hybrid; do
 	setup $setup_name
 	for benchmark_name in mris_seq_wt mris_ran_wt; do
 		echo "--- [begin] setup: $setup_name; benchmark: $benchmark_name"
-		for epoch in 1 2 3; do
+		#for epoch in 1 2 3; do
+		for epoch in 2 3; do
 			echo "-- epoch: $epoch"
 			run_bench $benchmark_name $setup_name $epoch
 		done
