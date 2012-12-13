@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2011.6.28)  13 DEC 2012 17:19
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2011.6.28)  13 DEC 2012 18:27
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -541,10 +541,10 @@ File: figures/mris-write-thput.eps Graphic file (type eps)
 
 <figures/mris-write-thput.eps>
 File: figures/mris_ratio_ops.eps Graphic file (type eps)
- <figures/mris_ratio_ops.eps>
+ <figures/mris_ratio_ops.eps> [5]
 File: figures/mris_ratio_iostat_ops.eps Graphic file (type eps)
 
-<figures/mris_ratio_iostat_ops.eps>) (./related.tex [5]) (./conclusion.tex)
+<figures/mris_ratio_iostat_ops.eps>) (./related.tex) (./conclusion.tex)
 (./main.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 50--55
 \OT1/ptm/m/n/10 life-time.  $\OT1/ptm/m/sl/8 https : / / groups . google . com 
@@ -559,12 +559,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 62--64
 
 ) [6] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 9152 strings out of 495062
- 153254 string characters out of 1182644
- 209031 words of memory out of 3000000
- 12069 multiletter control sequences out of 15000+50000
- 19086 words of font info for 58 fonts, out of 3000000 for 9000
+ 9166 strings out of 495062
+ 153404 string characters out of 1182644
+ 212063 words of memory out of 3000000
+ 12079 multiletter control sequences out of 15000+50000
+ 20631 words of font info for 64 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191
- 54i,9n,51p,376b,345s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 54i,11n,51p,376b,345s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (6 pages, 43220 bytes).
+Output written on main.dvi (6 pages, 45044 bytes).

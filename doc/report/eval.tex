@@ -233,13 +233,81 @@ image.}
 
 Figure~\ref{fig:mrisread} presents the read throughput in term of
 ops/sec. For all ratios, SSD shows the highest throughput among the
-three setups, followed by Hybrid and then SATA. The ops/sec of SSD is
-3.9$\times$ to 8.0$\times$ faster than SATA. The speedup of SSD over
-SATA also grows as ratio gets larger (except one point). This is
-because as the ratio increases, the I/Os contain more small random
-reads, which exploits more of SSD's superior random performance to
-SATA. Another interesting observation is that the speedup of Hybrid
-over SATA grows rapidly from to as ratio increases.
+three setups, followed by Hybrid and then SATA. As shown in
+Table~\ref{tbl:speedup}, the ops/sec of SSD is 3.89$\times$ to
+7.64$\times$ faster than SATA. The speedup of SSD over SATA also grows
+as ratio gets larger (except one point). This is because as the ratio
+increases, the I/Os contain more small random reads, which exploits
+more of SSD's superior random performance to SATA. Another interesting
+observation is that the speedup of Hybrid over SATA grows rapidly from
+0.44 to 5.78 as ratio increases.
+
+\begin{table}[tc]
+{\centering \footnotesize
+\begin{tabular}{c|c|c|c|c|c|c|c}
+\hline 
+  Speedup & \multicolumn{7}{c}{Ratio} \\ \cline{2-8}
+  over SATA & 1 & 2 & 4 & 8 & 16 & 32 & 64 \\ \hline
+  SSD & 3.89 & 4.68 & 5.79 & 7.52 & 8.04 & 7.60 & 7.64  \\
+  Hybrid & 0.44 & 0.86 & 1.39 & 2.69 & 3.56 & 4.46 & 5.78 \\ \hline
+\end{tabular}
+ \caption{Speedup of SSD and Hybrid over SATA in term of ops/sec.}
+\label{tbl:speedup}
+}
+\end{table}
+
+To help analyze the results, we use variables in
+Table~\ref{tbl:variable} to represent the costs of involved read
+operations in term of time. Then, ops/sec of SSD and SATA can be
+expressed in (\ref{eqn:ssdops}) and (\ref{eqn:sataops}). 
+
+\begin{equation}
+\label{eqn:ssdops}
+    1000000 \frac{ratio + 1}{t_{SF} * ratio + t_{LF}}
+\end{equation}
+
+\begin{equation}
+\label{eqn:sataops}
+    1000000 \frac{ratio + 1}{t_{SH} * ratio + t_{LH}}
+\end{equation}
+
+By linear regression, we obtained the estimation of the variables
+(shown in Table~\ref{tbl:variable}) from our benchmark data.
+Approxmiately, the ops/sec of Hybrid can be expressed in
+(\ref{eqn:hybridops}).
+
+\begin{equation}
+\label{eqn:hybridops}
+    1000000 \frac{ratio + 1}{t_{SF} * ratio + t_{LH}}
+\end{equation}
+
+\begin{table}[tc]
+{\centering \footnotesize
+\begin{tabular}{c|c|c}
+\hline 
+  Read Type & Flash SSD & SATA HDD \\ \hline
+  Small Image & $t_{SF} = 1482$ & $t_{SH} = 6542$ \\ 
+  Large Image & $t_{LF} = 13238$ & $t_{LH} = 37599$ \\ \hline
+\end{tabular}
+ \caption{Costs of read operations in time ($\mu$s). For instance,
+$t_{SF}$ means the time taken to read Small image from the Flash SSD.}
+\label{tbl:variable}
+}
+\end{table}
+
+Use (\ref{eqn:hybridops}) and the values in Table~\ref{tbl:variable},
+we can expect the ops/sec of Hybrid. The results, together with
+measured ops/sec in benchmarks, are presented in
+Figure~\ref{fig:readesti}.
+
+\begin{figure}[t]
+\begin{centering}
+\epsfig{file=figures/read_estimate.eps,width=1.00\linewidth}
+\caption{Read performance of Hybrid}
+\label{fig:readesti}
+\end{centering}
+\end{figure}
+
 
 \NOTE{Ming}{TODO: consitify terms, such as images and objects, HDD and
 SATA}
@@ -249,20 +317,6 @@ $$
 \mbox{avg\_op\_size} = \frac{ratio \times \mbox{small} +
     \mbox{large}}{ratio + 1}
 $$
-
-\begin{table}[tc]
-{\centering \footnotesize
-\begin{tabular}{c|c|c|c|c|c|c|c}
-\hline 
-  Speedup & \multicolumn{7}{c}{Placement of Objects} \\ \cline{2-8}
-  over SATA & 1 & 2 & 4 & 8 & 16 & 32 & 64 \\ \hline
-  SSD & 3.89 & 4.68 & 5.79 & 7.52 & 8.04 & 7.60 & 7.64  \\
-  Hybrid & 0.44 & 0.86 & 1.39 & 2.69 & 3.56 & 4.46 & 5.78 \\ \hline
-\end{tabular}
- \caption{Speedup of SSD and Hybrid over SATA.}
-\label{tbl:speedup}
-}
-\end{table}
 
 The results are shown in Figure~\ref{fig:mrisread}.  Specifically, the
 speedup for Facebook and Wikipedia workload is XXX and YYY. 
