@@ -1,10 +1,11 @@
 \section{Evaluation} \label{sec:eval}
 
 We have evaluated our system on a 64-bit Dell server running Ubuntu
-server 8.04 with kernel version 3.2.9. We used one Flash based SSD and
-one SATA HDD. The SSD is an Intel SSDSA2CW300G3 2.5-inch with 300G
-capacity. The SATA disk is a Maxtor 7L250S0 3.5-inch SATA HDD. Its
-capacity is 250GB and its rotational speed is 7200 rpm. The code and
+server 8.04 with kernel version 3.2.9. The OS runs on a Maxtor 7L250S0
+3.5-inch SATA HDD. We used the same but another SATA HDD and one Flash
+based SSD for MRIS store. The HDD is also a Maxtor 7L250S0 with a
+capacity of 250GB and a rotational speed of 7200 rpm.  The SSD is an
+Intel SSDSA2CW300G3 2.5-inch with 300G capacity.  The code and
 benchmark results are publicly available at
 https://github.com/brianchenming/mris.
 
@@ -114,6 +115,8 @@ storage a close match for multi-resolution image workloads.
 %using ext4. This should not have happened. We need to redo one of the
 %two sets of benchmarks in the future.
 
+%TODO: specify that keys are not counted.
+
 We now show micro benchmark results on simple workloads of sequential
 and random write of multi-resolution images. Multi-resolution images
 of the same content are often created from a common source. Therefore,
@@ -155,7 +158,8 @@ order of the key of objects. For ops/sec of random insertion, SSD is
 only SSD and SATA, the speedup of SSD is much lower than that shown in
 Figure~\ref{fig:drivewrite}. This is because of the Memtable and the
 log-structured feature of MRIS, which turns many random writes into
-fewer large sequential write. As we can see in
+fewer large sequential write. It also explains how random writes
+achieved a throughput of 23.9mb/sec even for SATA. As we can see in
 Figure~\ref{fig:drivewrite}, SSD is only slightly faster than SATA
 when it is for sequential write of 4K I/O size. Therefore, a slow
 speedup of insertion is reasonable.
@@ -171,7 +175,7 @@ than random insertion for all the three setups (41\%, 38\%, and 45\%
 faster for SSD, Hybrid, and SATA). 
 
 \NOTE{Ming}{I really should have recorded the number of compactions
-happened during the Benchmarking. I will probably do it in several
+happened during the benchmarking. I will probably do it in several
 days}
 
 % How fdatasync determines which I/O size to use? We will have to
@@ -185,7 +189,7 @@ Figure~\ref{fig:mriswrite} (b) also shows throughput in term of
 mb/sec.  However, the speed-up ratio of mb/sec is almost identical to
 that of ops/sec (differ in less than 0.1\%). This is what we are
 expecting because the average size of an operation is the same among
-all setups. We will only show ops/sec in folloing throughput figures.
+all setups. We will only show mb/sec in following throughput figures.
 
 \begin{figure}[t]
   \centering
@@ -201,11 +205,40 @@ all setups. We will only show ops/sec in folloing throughput figures.
   \label{fig:mriswrite}
 \end{figure}
 
-\subsection{Facebook Workloads}
+\subsection{MRIS Read}
 
-1. 17 of Ran R on three setups
+While log-structured key/value stores generally have high insertion
+throughput, they also have to provide satisfactory lookup performance.
+We have developed workloads to evaluate the read performance of MRIS.
+One of the most intersting parameter in read benchmarking is the ratio
+of reading small and large images. In Facebook's
+workload~\cite{beaver2010finding}, the ratio of requests of small and
+large images is around 17 (not considering thumbnails and medium). In
+Wikipedia's workload, the ratio of requests of 8K-image and 128K-image
+is around 9.5. In our benchmarks, we uses different ratios and
+performed workloads in the three setups in Table~\ref{tbl:setups}.
 
-2. RR workload of different ratios on hybrid.
+\begin{figure}[t]
+\begin{centering}
+\epsfig{file=figures/mris_ratio_ops.eps,width=1.00\linewidth}
+\caption{MRIS Read Performance}
+\label{fig:mrisread}
+\end{centering}
+\end{figure}
+
+The results are shown in Figure~\ref{fig:mrisread}.  Specifically, the
+speedup for Facebook and Wikipedia workload is XXX and YYY. 
+
+\begin{figure}[t]
+\begin{centering}
+\epsfig{file=figures/mris_ratio_ops.eps,width=1.00\linewidth}
+\caption{MRIS Read Performance by iostat}
+\label{fig:mrisiostat}
+\end{centering}
+\end{figure}
+
+The throughput reported by iostat is much larger than that of
+Figure~\ref{fig:mrisread}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% For Emacs:
