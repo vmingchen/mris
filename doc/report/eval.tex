@@ -31,7 +31,7 @@ Filebench built-in workloads \texttt{singalstreamread} and
 
 The performance of read operations are presented in
 Figure~\ref{fig:driveread}. All benchmarks are performed for 3 times,
-and the standard deviation of the 3 runs are shown as error bar in
+and the standard deviation of the 3 runs are shown as error bar in the
 figures. The results are stable and most error bars are imperceptible
 or negligible. As we can see in Figure~\ref{fig:driveread}, SSD is
 much better than that of HDD for random read for small I/O sizes. SSD
@@ -108,56 +108,65 @@ layer because of memory cache (such as Memcached~\cite{memcached}).
 This salient size-tiered property of requests still makes size-tiered
 storage a close match for multi-resolution image workloads.
 
-\subsection{Micro Benchmarks}
+\subsection{MRIS Write}
 
-We first show micro benchmark results on simple workloads of
-sequential and random read and write of MRIS. To demonstrate the
-benefits of multi-tier system, we experimented every workload on three
-different setups. 
+We now show micro benchmark results on simple workloads of sequential
+and random write of multi-resolution images. Multi-resolution images
+of the same content are often created from a common source. Therefore,
+they are inserted into the image store at the same time. For example,
+In Facebook's Haystack~\cite{beaver2010finding}, four resolutions,
+thumbnail, small, medium, and large, are created from each image
+uploaded by customers. As most images are in compressed format, we
+emulate the workload of writing MRI by inserting groups of random
+objects into MRIS with compression disabled. To be simple, each group
+consists of two objects, both of which are random strings. One of the
+two objects is 8KB large representing a small image, whereas the other
+is 128KB large representing a large image. The SizeThreshold is set to
+128KB, so that the large one will be stored in LargeSpace.
+
+\begin{table}[t]
+{\footnotesize
+\centering
+\begin{tabular}{c|c|c|}
+\cline{2-5}
+\cline{2-5}
+  Setup & \multicolumn{2}{c} Placement of Objects \\ 
+   Name & Small (in SSTable) & Large (in LargeSpace) \\ \cline{1-3}
+  SSD & SSD & SSD \\
+  Hybrid & SSD & HDD \\
+  SATA & HDD & HDD \\ \cline{1-3}
+  \end{tabular}
+}
+ \caption{Setups For Benchmarking. The three setups differ in the
+ places objects are stored.}
+\label{tbl:setups}
+\end{table}
+
+Figure~\ref{fig:mriswrite} presents the results of the workload of
+inserting 10,000 groups of objects into MRIS. We experimented the
+workload on three different setups in Table~\ref{tbl:setups}. The
+groups were inserted in random and sequential ways considering the
+order of the key of objects. For random insertion, 
+
+\begin{figure}[t]
+  \centering
+  \begin{minipage}[c]{\linewidth}
+    \epsfig{file=figures/mris-write-ops.eps,width=1.00\linewidth}
+    \centerline{(a) Objects written per second}\medskip
+  \end{minipage}
+  \begin{minipage}[c]{\linewidth}
+    \epsfig{file=figures/mris-write-thput.eps,width=1.00\linewidth}
+    \centerline{(b) MB written per second}\medskip
+  \end{minipage}
+  \caption{Write performance of MRIS.}
+  \label{fig:mriswrite}
+\end{figure}
 
 \subsection{Facebook Workloads}
 
 1. 17 of Ran R on three setups
 
 2. RR workload of different ratios on hybrid.
-
-To evaluate the green target, we created virtual devices using our
-target, performed I/Os on the devices using \texttt{dd}, and compared
-them with devices created by the linear target.  Both types of virtual
-devices have the same configuration. They are 1G large, with the first
-256M comes from the SSD and the rest comes from the SATA. The extent
-size of the green device is 4K by default. The mapping table of the
-linear and green virtual devices are presented in Figure
-\ref{fig:dmtable} (a) and (b), wherein \texttt{/dev/sdd} is the SSD
-and \texttt{/dev/sdc} is the SATA disk. 
-
-To start with, we considered the best scenario first. It happens when
-linear devices are accessing the SATA disk whereas green devices map
-all I/Os onto the SSD.  In this experiment, we still measured the time
-elapsed to read/write 1G of data from the green and linear device
-using the Linux \texttt{dd} command.  We also confined the address
-space covered by the I/Os to be within 256M so that the green disk can
-map all of them on the SSD without migration.  We also make sure
-offsets of all the I/Os are larger than 256M so that all I/Os are
-served by the SATA for the linear device. However, in the case of the
-green device, all I/Os are served by SSD thanks to the flexible
-mapping mechanism.  
-
-\subsection{Wikipedia Workloads}
-
-We present the results in Figure \ref{fig:best}.  For read, the green
-device is more than 3 times faster for all 7 different I/O sizes.
-Particularly, when the I/O size is 64K and 256K, the speedup is more
-than 7 and 5 times respectively. This suggests the green device can be
-a good fit for workloads containing most I/Os of these sizes. However,
-for write, the green device does not exhibit any advantage over the
-linear device. This is the same as the comparison between writes of
-the SSD and SATA disk. In fact, the whole Figure \ref{fig:best} and
-Figure \ref{fig:ssd_vs_sata} are very close to each other. This is
-exactly what we are expecting because, in the best scenario, the
-linear device works using only the SATA disk, whereas the green device
-works using only the SSD.
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% For Emacs:
