@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  1 DEC 2012 16:18
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  12 DEC 2012 01:57
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -512,146 +512,114 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
 )
-(./intro.tex
-Underfull \hbox (badness 1297) in paragraph at lines 33--42
-[]\OT1/ptm/m/n/10 We im-ple-mented a size-tiered ob-ject stor-age sys-
+(./intro.tex) (./implementation.tex
+File: sstable.eps Graphic file (type eps)
+ <sstable.eps>
+File: leveldb-compact.eps Graphic file (type eps)
+ <leveldb-compact.eps>
+
+LaTeX Warning: Citation `leveldb-web' on page 1 undefined on input line 20.
+
+
+LaTeX Warning: Citation `chang06osdi' on page 1 undefined on input line 23.
+
+
+Underfull \hbox (badness 3068) in paragraph at lines 20--32
+\OT1/ptm/m/n/10 Lev-elDB is log-structured and or-ga-nizes data into
  []
 
-) (./design.tex
-File: figures/dm.eps Graphic file (type eps)
- <figures/dm.eps>
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 11.
-
-(/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
-(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 11.
- [1
+[1
 
 
 ]
-Overfull \hbox (11.26346pt too wide) in paragraph at lines 35--45
-[][]
- []
+
+LaTeX Warning: Citation `lsm' on page 2 undefined on input line 34.
 
 
-Overfull \hbox (11.26346pt too wide) in paragraph at lines 48--57
-[][]
- []
+LaTeX Warning: Citation `level_lifetime' on page 2 undefined on input line 87.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--61
-[][]
- []
-
-
-Underfull \hbox (badness 1067) in paragraph at lines 100--106
-[]\OT1/ptm/b/n/10 Save en-ergy by al-low-ing disks to spin/power
- []
-
-[2]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 169.
-
- (/usr/share/texmf-texlive/tex/latex/psnfss/omsptm.fd
-File: omsptm.fd 
-)
-LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 169.
- [3])
-(./implementation.tex
-File: figures/metadata.eps Graphic file (type eps)
- <figures/metadata.eps> [4]
-Overfull \hbox (3.41827pt too wide) in paragraph at lines 48--48
-[]  \OT1/pcr/m/n/8 map_bio_to_physical_device(bio, physical_ext);[] 
- []
-
-) (./trace.tex [5]
+File: large-space.eps Graphic file (type eps)
+<large-space.eps> [2]) (./trace.tex
 File: figures/rw.eps Graphic file (type eps)
  <figures/rw.eps>
 File: figures/trace_iosize.eps Graphic file (type eps)
- <figures/trace_iosize.eps>
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
-)
-(./eval.tex
+<figures/trace_iosize.eps>
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 68.
+ (/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)) (./eval.tex [3]
 File: figures/raw_rand_speed.eps Graphic file (type eps)
- <figures/raw_rand_speed.eps> [6]
-File: figures/raw_power.eps Graphic file (type eps)
- <figures/raw_power.eps>
-File: figures/raw_energy.eps Graphic file (type eps)
+ <figures/raw_rand_speed.eps>
 
-<figures/raw_energy.eps>
+LaTeX Warning: Reference `sec:migrate' on page 4 undefined on input line 73.
+
+File: figures/raw_power.eps Graphic file (type eps)
+<figures/raw_power.eps>
+File: figures/raw_energy.eps Graphic file (type eps)
+ <figures/raw_energy.eps> [4]
+
+LaTeX Warning: Reference `fig:dmtable' on page 5 undefined on input line 116.
+
 File: figures/best_speed.eps Graphic file (type eps)
- <figures/best_speed.eps>
+<figures/best_speed.eps>
 File: figures/even_read.eps Graphic file (type eps)
  <figures/even_read.eps>
 File: figures/even_write.eps Graphic file (type eps)
+ <figures/even_write.eps>
+[5]
 
-<figures/even_write.eps> [7] [8]
+LaTeX Warning: Reference `sec:migrate' on page 6 undefined on input line 230.
+
 File: figures/worst.eps Graphic file (type eps)
- <figures/worst.eps>) (./related.tex
+<figures/worst.eps>) (./related.tex
 
-LaTeX Warning: Reference `eurosys_hfs' on page 9 undefined on input line 4.
+LaTeX Warning: Reference `eurosys_hfs' on page 6 undefined on input line 4.
 
 
-LaTeX Warning: Reference `fast_12_deindirection' on page 9 undefined on input l
+LaTeX Warning: Reference `fast_12_deindirection' on page 6 undefined on input l
 ine 12.
 
+[6]
 
-LaTeX Warning: Reference `tablefs' on page 9 undefined on input line 15.
-
-
-LaTeX Warning: Reference `Seltzer09hfad' on page 9 undefined on input line 22.
+LaTeX Warning: Reference `tablefs' on page 7 undefined on input line 15.
 
 
-LaTeX Warning: Reference `evans2002study' on page 9 undefined on input line 31.
+LaTeX Warning: Reference `Seltzer09hfad' on page 7 undefined on input line 22.
+
+
+LaTeX Warning: Reference `evans2002study' on page 7 undefined on input line 31.
 
 
 
-LaTeX Warning: Reference `kvworkload_sigmetrics' on page 9 undefined on input l
+LaTeX Warning: Reference `kvworkload_sigmetrics' on page 7 undefined on input l
 ine 33.
 
 Missing character: There is no â in font ptmr7t!
 Missing character: There is no € in font ptmr7t!
 Missing character: There is no ™ in font ptmr7t!
 
-LaTeX Warning: Reference `kvworkload_sigmetrics' on page 9 undefined on input l
+LaTeX Warning: Reference `kvworkload_sigmetrics' on page 7 undefined on input l
 ine 43.
 
 
-LaTeX Warning: Reference `Forney2002fast' on page 9 undefined on input line 45.
+LaTeX Warning: Reference `Forney2002fast' on page 7 undefined on input line 45.
 
 
-) (./conclusion.tex [9]) (./main.bbl
-Underfull \hbox (badness 10000) in paragraph at lines 20--23
-[]\OT1/ptm/m/n/10 Rob Flick-enger.  Speed-ing up
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 20--23
-\OT1/ptm/m/n/10 linux us-ing hd-parm, June 2000.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 20--23
-\OT1/ptm/m/n/10 http://linuxdevcenter.com/pub/a/linux/2000-
- []
-
-) [10
-
-] (./main.aux)
+) (./conclusion.tex)
+No file main.bbl.
+[7] (./main.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 11116 strings out of 495062
- 201422 string characters out of 1182644
- 251601 words of memory out of 3000000
- 13992 multiletter control sequences out of 15000+50000
- 17952 words of font info for 60 fonts, out of 3000000 for 9000
+ 11075 strings out of 495062
+ 200902 string characters out of 1182644
+ 247550 words of memory out of 3000000
+ 13963 multiletter control sequences out of 15000+50000
+ 15429 words of font info for 51 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191
- 63i,13n,57p,435b,319s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 63i,9n,57p,435b,305s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (10 pages, 69424 bytes).
+Output written on main.dvi (7 pages, 47240 bytes).

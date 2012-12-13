@@ -26,15 +26,14 @@ hash -r                                 # clear the command path hash
 		#awk '{printf("%.2f\t%.2f\n", 1000000/$3, $5);}'
 #}
 
-echo "#workload setup epoch op/s stddev MB/s stddev"
+echo "#workload setup epoch op/s MB/s"
 for workload in mris_ran_wt mris_seq_wt; do
 	for setup in ssd sata hybrid; do
 		for epoch in 1 2 3; do
-			echo -ne "$workload\t$setup\t$epoch\t\n"
+			echo -ne "$workload\t$setup\t$epoch\t"
 			filename=../${workload}_${setup}.${epoch}.log 
-			grep -w "${workload}" $filename 
-			grep -w "${workload}" $filename | 
-				awk '{printf("%s\t%s\n", $3, $5);}'
+			cat $filename | tr '\r' '\n' | 
+				awk -v wl="$workload" '($1 == wl) {printf("%s\t%s\n", $3, $5);}'
 		done
 	done
 done

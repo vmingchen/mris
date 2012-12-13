@@ -4,5 +4,6 @@
 *.cmd
 *.swp
 *.pyc
+*.bak
 tags
 cscope.out

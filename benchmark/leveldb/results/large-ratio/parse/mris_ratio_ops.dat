@@ -1,0 +1,8 @@
+#ratio	setup	ops	stddev
+1	ssd	242.30	0.58	hybrid	71.56	0.11	sata	49.59	0.11	
+2	ssd	290.82	0.65	hybrid	95.45	0.24	sata	51.20	0.18	
+4	ssd	384.31	0.55	hybrid	135.49	0.33	sata	56.61	0.21	
+8	ssd	480.91	0.51	hybrid	208.54	5.79	sata	56.45	14.32	
+16	ssd	593.79	0.41	hybrid	299.31	0.71	sata	65.67	8.72	
+32	ssd	624.37	0.13	hybrid	396.31	17.17	sata	72.59	0.25	
+64	ssd	635.44	5.18	hybrid	498.50	17.13	sata	73.51	0.49	

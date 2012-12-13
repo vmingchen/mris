@@ -1,7 +1,7 @@
 # Benchmark operations:
 
 ## Basic 
-	Write: 
+	Write:
 		Sequential	-> seq_wt
 		Batch		-> bat_wt
 		Random		-> ran_wt
