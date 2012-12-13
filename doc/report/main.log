@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2011.6.28)  13 DEC 2012 12:37
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2011.6.28)  13 DEC 2012 13:24
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -528,56 +528,24 @@ File: figures/ssd_vs_sata_write.eps Graphic file (type eps)
  <figures/ssd_vs_sata_write.eps>
 [3]
 File: figures/wiki-image.eps Graphic file (type eps)
- <figures/wiki-image.eps>
-Underfull \hbox (badness 10000) in paragraph at lines 92--111
-[]\OT1/ptm/m/n/10 Figure 7[] presents the re-quests of im-ages
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 92--111
-\OT1/ptm/m/n/10 made in Jan-uary 2012. They are ex-traced
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 92--111
-\OT1/ptm/m/n/10 from re-quest log files, which are avail-able at
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 92--111
-\OT1/ptm/m/n/10 http://dumps.wikimedia.org/other/pagecounts-
- []
-
-
-Underfull \hbox (badness 1394) in paragraph at lines 92--111
-\OT1/ptm/m/n/10 raw/2012/2012-01/. We ex-tract re-quests of ob-jects
- []
-
-
-Underfull \hbox (badness 1565) in paragraph at lines 92--111
-\OT1/ptm/m/n/10 im-age of dif-fer-ent sizes vary widely. Par-tic-u-larly,
- []
-
-[4]
+ <figures/wiki-image.eps> [4]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 177.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 176.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 177.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 176.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 177.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 176.
 File: figures/mris-write-ops.eps Graphic file (type eps)
  <figures/mris-write-ops.eps>
 File: figures/mris-write-thput.eps Graphic file (type eps)
- <figures/mris-write-thput.eps>
-Underfull \hbox (badness 1062) in paragraph at lines 208--218
-\OT1/ptm/m/n/10 While log-structured key/value stores gen-er-ally have
- []
 
+<figures/mris-write-thput.eps>
 File: figures/mris_ratio_ops.eps Graphic file (type eps)
-<figures/mris_ratio_ops.eps>
+ <figures/mris_ratio_ops.eps>
 File: figures/mris_ratio_iostat_ops.eps Graphic file (type eps)
- <figures/mris_ratio_iostat_ops.eps>)
-(./related.tex) (./conclusion.tex [5]) (./main.bbl
+
+<figures/mris_ratio_iostat_ops.eps>) (./related.tex) (./conclusion.tex [5])
+(./main.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 50--55
 \OT1/ptm/m/n/10 life-time.  $\OT1/ptm/m/sl/8 https : / / groups . google . com 
 / d / topic / leveldb /
@@ -589,16 +557,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 62--64
  org / wiki /
  []
 
-) [6
-
-] (./main.aux) ) 
+) [6] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 9150 strings out of 495062
- 153223 string characters out of 1182644
- 209023 words of memory out of 3000000
- 12067 multiletter control sequences out of 15000+50000
+ 9151 strings out of 495062
+ 153241 string characters out of 1182644
+ 210023 words of memory out of 3000000
+ 12068 multiletter control sequences out of 15000+50000
  19086 words of font info for 58 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191
  54i,9n,51p,376b,345s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (6 pages, 40448 bytes).
+Output written on main.dvi (6 pages, 41284 bytes).

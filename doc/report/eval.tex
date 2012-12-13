@@ -38,7 +38,7 @@ or negligible. As we can see in Figure~\ref{fig:driveread}, SSD is
 much better than that of HDD for random read for small I/O sizes. SSD
 is 23.1$\times$ faster than HDD when I/O size is 4K, and 18.4$\times$
 faster when I/O size is 8K. However, the speed advantage drops to
-8.4$times$ and 4.8$times$ when the I/O size grows to 64K and 256K.
+8.4$\times$ and 4.8$\times$ when the I/O size grows to 64K and 256K.
 This is because disk head seek happens less frequently as I/O size
 increases. Specifically, the HDD read throughput is 0.4mb/s with an
 I/O size of 4K. This agrees with the 9ms average read time shown in
@@ -90,8 +90,7 @@ every month~\cite{wikimedia-foundation}. It can reflect workloads of
 many large websites.
 
 Figure~\ref{fig:wikiimage} presents the requests of images made in
-January 2012. They are extraced from request log files, which are
-available at
+January 2012. They are extraced from request log files from
 http://dumps.wikimedia.org/other/pagecounts-raw/2012/2012-01/. We
 extract requests of objects with a suffix of jpg, png, or gif, then
 round up their sizes into power of 2. The frequency of images of
@@ -174,7 +173,7 @@ faster for SSD, Hybrid, and SATA).
 
 \NOTE{Ming}{I really should have recorded the number of compactions
 happened during the benchmarking. I will probably do it in several
-days}
+days.}
 
 % How fdatasync determines which I/O size to use? We will have to
 % double check the I/O size. LevelDB has an internal block size
@@ -187,17 +186,17 @@ Figure~\ref{fig:mriswrite} (b) also shows throughput in term of
 mb/sec.  However, the speed-up ratio of mb/sec is almost identical to
 that of ops/sec (differ in less than 0.1\%). This is what we are
 expecting because the average size of an operation is the same among
-all setups. We will only show mb/sec in following throughput figures.
+all setups.
 
 \begin{figure}[t]
   \centering
   \begin{minipage}[c]{\linewidth}
     \epsfig{file=figures/mris-write-ops.eps,width=1.00\linewidth}
-    \centerline{(a) Objects written per second}\medskip
+    \centerline{\footnotesize(a) Objects written per second}\medskip
   \end{minipage}
   \begin{minipage}[c]{\linewidth}
     \epsfig{file=figures/mris-write-thput.eps,width=1.00\linewidth}
-    \centerline{(b) MB written per second}\medskip
+    \centerline{\footnotesize(b) MB written per second}\medskip
   \end{minipage}
   \caption{Write performance of MRIS.}
   \label{fig:mriswrite}
@@ -205,16 +204,36 @@ all setups. We will only show mb/sec in following throughput figures.
 
 \subsection{MRIS Read}
 
-While log-structured key/value stores generally have high insertion
-throughput, they also have to provide satisfactory lookup performance.
-We have developed workloads to evaluate the read performance of MRIS.
-One of the most intersting parameter in read benchmarking is the ratio
-of reading small and large images. In Facebook's
-workload~\cite{beaver2010finding}, the ratio of requests of small and
-large images is around 17 (not considering thumbnails and medium). In
-Wikipedia's workload, the ratio of requests of 8K-image and 128K-image
-is around 9.5. In our benchmarks, we uses different ratios and
-performed workloads in the three setups in Table~\ref{tbl:setups}.
+Log-structured key/value stores generally have high insertion
+throughput, however, they also have to provide satisfactory lookup
+performance.  We have developed workloads to evaluate the read
+performance of MRIS.  One of the most intersting parameters in read
+benchmarking is the ratio of reading small and large images. In
+Facebook's workload~\cite{beaver2010finding}, the ratio of requests of
+small and large images is around 17 (not considering thumbnails and
+medium). In Wikipedia's workload, the ratio of requests of 8K-image
+and 128K-image is around 9.5. In our benchmarks, we used different
+ratios and performed workloads in all the three setups in
+Table~\ref{tbl:setups}. Each benchmark randomly read 10,000 small
+images from a database of 100,000 groups of images, and following
+every $ratio$ reads of small images, one large version of the small
+image is also read. For instance, one large image will be read after
+every other read of small images when ratio is 2. This emulates the
+common scenario that customers request large images once become
+interested from the small ones.
+
+Figure~\ref{fig:mrisread} presents the read throughput in term of
+ops/sec. For all ratios, SSD shows the highest throughput among the
+three setups, followed by Hybrid and then SATA.
+
+\NOTE{Ming}{TODO: consitify terms, such as images and objects}
+
+
+Notice that the average size of an operation depends on the ratio.
+$$
+\mbox{avg\_op\_size} = \frac{ratio \times \mbox{small} +
+    \mbox{large}}{ratio + 1}
+$$
 
 \begin{figure}[t]
 \begin{centering}
