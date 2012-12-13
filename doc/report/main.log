@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  12 DEC 2012 01:57
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  12 DEC 2012 21:38
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -512,11 +512,24 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
 )
-(./intro.tex) (./implementation.tex
-File: sstable.eps Graphic file (type eps)
- <sstable.eps>
-File: leveldb-compact.eps Graphic file (type eps)
- <leveldb-compact.eps>
+(./intro.tex
+
+LaTeX Warning: Reference `sec:trace' on page 1 undefined on input line 55.
+
+
+LaTeX Warning: Reference `sec:eval' on page 1 undefined on input line 57.
+
+
+LaTeX Warning: Reference `sec:related' on page 1 undefined on input line 58.
+
+
+LaTeX Warning: Reference `sec:conc' on page 1 undefined on input line 59.
+
+) (./implementation.tex
+File: figures/sstable.eps Graphic file (type eps)
+ <figures/sstable.eps>
+File: figures/leveldb-compact.eps Graphic file (type eps)
+ <figures/leveldb-compact.eps>
 
 LaTeX Warning: Citation `leveldb-web' on page 1 undefined on input line 20.
 
@@ -535,91 +548,53 @@ Underfull \hbox (badness 3068) in paragraph at lines 20--32
 
 LaTeX Warning: Citation `lsm' on page 2 undefined on input line 34.
 
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 41.
+(/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
 
 LaTeX Warning: Citation `level_lifetime' on page 2 undefined on input line 87.
 
-File: large-space.eps Graphic file (type eps)
-<large-space.eps> [2]) (./trace.tex
-File: figures/rw.eps Graphic file (type eps)
- <figures/rw.eps>
-File: figures/trace_iosize.eps Graphic file (type eps)
+File: figures/large-space.eps Graphic file (type eps)
+<figures/large-space.eps> [2]
+File: figures/mris-store.eps Graphic file (type eps)
+ <figures/mris-store.eps>
+Underfull \hbox (badness 7221) in paragraph at lines 138--147
+[]\OT1/ptm/m/n/10 When key/value pairs are firstly in-serted into
+ []
 
-<figures/trace_iosize.eps>
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 68.
- (/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)) (./eval.tex [3]
-File: figures/raw_rand_speed.eps Graphic file (type eps)
- <figures/raw_rand_speed.eps>
-
-LaTeX Warning: Reference `sec:migrate' on page 4 undefined on input line 73.
-
-File: figures/raw_power.eps Graphic file (type eps)
-<figures/raw_power.eps>
-File: figures/raw_energy.eps Graphic file (type eps)
- <figures/raw_energy.eps> [4]
-
-LaTeX Warning: Reference `fig:dmtable' on page 5 undefined on input line 116.
-
-File: figures/best_speed.eps Graphic file (type eps)
-<figures/best_speed.eps>
-File: figures/even_read.eps Graphic file (type eps)
- <figures/even_read.eps>
-File: figures/even_write.eps Graphic file (type eps)
- <figures/even_write.eps>
-[5]
-
-LaTeX Warning: Reference `sec:migrate' on page 6 undefined on input line 230.
-
-File: figures/worst.eps Graphic file (type eps)
-<figures/worst.eps>) (./related.tex
-
-LaTeX Warning: Reference `eurosys_hfs' on page 6 undefined on input line 4.
-
-
-LaTeX Warning: Reference `fast_12_deindirection' on page 6 undefined on input l
-ine 12.
-
-[6]
-
-LaTeX Warning: Reference `tablefs' on page 7 undefined on input line 15.
-
-
-LaTeX Warning: Reference `Seltzer09hfad' on page 7 undefined on input line 22.
-
-
-LaTeX Warning: Reference `evans2002study' on page 7 undefined on input line 31.
+) (./trace.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-LaTeX Warning: Reference `kvworkload_sigmetrics' on page 7 undefined on input l
-ine 33.
-
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
-
-LaTeX Warning: Reference `kvworkload_sigmetrics' on page 7 undefined on input l
-ine 43.
+LaTeX Warning: File `figures/rw.eps' not found on input line 38.
 
 
-LaTeX Warning: Reference `Forney2002fast' on page 7 undefined on input line 45.
+! LaTeX Error: File `figures/rw.eps' not found.
 
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.38 ...{file=figures/rw.eps,width=1.00\linewidth}
+                                                  
+? 
+! Emergency stop.
+ ...                                              
+                                                  
+l.38 ...{file=figures/rw.eps,width=1.00\linewidth}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
-) (./conclusion.tex)
-No file main.bbl.
-[7] (./main.aux)
-
-LaTeX Warning: There were undefined references.
-
- ) 
+ 
 Here is how much of TeX's memory you used:
- 11075 strings out of 495062
- 200902 string characters out of 1182644
- 247550 words of memory out of 3000000
- 13963 multiletter control sequences out of 15000+50000
- 15429 words of font info for 51 fonts, out of 3000000 for 9000
+ 11028 strings out of 495062
+ 200394 string characters out of 1182644
+ 247444 words of memory out of 3000000
+ 13934 multiletter control sequences out of 15000+50000
+ 14881 words of font info for 50 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191
  63i,9n,57p,435b,305s stack positions out of 5000i,500n,10000p,200000b,50000s
-
-Output written on main.dvi (7 pages, 47240 bytes).
+Output written on main.dvi (2 pages, 18112 bytes).
