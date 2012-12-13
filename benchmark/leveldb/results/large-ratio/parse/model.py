@@ -21,23 +21,33 @@ def get_ratio():
 	return array([float(ln.split()[0]) for ln in fdata if ln[0] != '#'])
 
 def plot_model(x, y, w):
-	# plot regression
+	'''plot regression'''
 	line = w[0]*x+w[1] # regression line
 	plot(x, line, 'r-', x, y, 'o')
 	show()
+
+def get_time(ratios, setup):
+	'''get time of reading @ratio small images and one large image'''
+	n = len(ratios)
+	ops = get_ops(setup)
+	# t_s * ratio + t_l = 1000000*(ratio + 1)/ops
+	tm = repeat(1000000, n) * (ratios + repeat(1, n)) / ops
+	return tm
 
 def model(setup):
 	x = get_ratio()			# ratio
 	n = len(x)
 	A = array([x, ones(n)])
-	ops = get_ops(setup)
-	# t_s * ratio + t_l = 1000000*(ratio + 1)/ops
-	y = repeat(1000000, n) * (x + repeat(1, n)) / ops
+	y = get_time(x, setup)
 	w = linalg.lstsq(A.T, y)[0]
 	# plot_model(x, y, w)
 	return w
 
 if __name__ == '__main__':
-	print model('ssd')
-	print model('sata')
-	print model('hybrid')
+	[t_ss, t_ls] = model('ssd')
+	[t_sh, t_lh] = model('sata')
+	# verify hybrid
+	w = [t_ss, t_lh]
+	x = get_ratio()
+	y = get_time(x, 'hybrid')
+	plot_model(x, y, w)
