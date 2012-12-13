@@ -131,17 +131,16 @@ two objects is 8KB large representing a small image, whereas the other
 is 128KB large representing a large image. The SizeThreshold is set to
 128KB, so that the large one will be stored in LargeSpace.
 
-\begin{table}[t]
-{\footnotesize
-\centering
-\begin{tabular}{c|c|c|}
-\cline{1-3}
-  Setup & \multicolumn{2}{c} Placement of Objects \\ 
-   Name & Small (in SSTable) & Large (in LargeSpace) \\ \cline{1-3}
+\begin{table}[tc]
+{\centering \footnotesize
+\begin{tabular}{c|c|c}
+\hline 
+  Setup & \multicolumn{2}{c}{Placement of Objects} \\ \cline{2-3}
+   Name & Small (in SSTable) & Large (in LargeSpace) \\ \hline
   SSD & SSD & SSD \\
   Hybrid & SSD & HDD \\
-  SATA & HDD & HDD \\ \cline{1-3}
-  \end{tabular}
+  SATA & HDD & HDD \\ \hline 
+\end{tabular}
 }
  \caption{Setups For Benchmarking. The three setups differ in the
  places objects are stored.}
@@ -230,7 +229,7 @@ speedup for Facebook and Wikipedia workload is XXX and YYY.
 
 \begin{figure}[t]
 \begin{centering}
-\epsfig{file=figures/mris_ratio_ops.eps,width=1.00\linewidth}
+\epsfig{file=figures/mris_ratio_iostat_ops.eps,width=1.00\linewidth}
 \caption{MRIS Read Performance by iostat}
 \label{fig:mrisiostat}
 \end{centering}

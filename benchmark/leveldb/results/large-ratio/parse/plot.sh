@@ -21,10 +21,11 @@ hash -r                                 # clear the command path hash
 function plot() {
 	ylabel="$1"
 	name="$2"
+	keypos="$3"
 
 	cat > plot.p <<-EOF
 set size 2, 1.30
-set grid
+set grid ytics
 set terminal postscript eps noenhanced color "Times-Roman,40"
 set output "${name}.eps"
 
@@ -38,7 +39,7 @@ set style histogram errorbars gap 1 lw 2
 set xtics offset 0,0.5
 set ytics offset 1,0
 #set yrange [0:16]
-set key height 4
+set key $keypos
 
 plot "${name}.dat" using 3:4:xticlabels(1) w histogram lw 2 title "SSD", \
 	"" using 6:7:xticlabels(1) w histogram lw 2 title "Hybrid", \
@@ -55,7 +56,7 @@ function plot_iostat() {
 
 	cat > plot.p <<-EOF
 set size 2, 1.30
-set grid
+set grid ytics
 set terminal postscript eps noenhanced color "Times-Roman,40"
 set output "${name}.eps"
 
@@ -69,7 +70,7 @@ set style histogram errorbars gap 1 lw 2
 set xtics offset 0,0.5
 set ytics offset 1,0
 #set yrange [0:16]
-set key height 4
+set key left height 3
 
 plot "${name}.dat" using 3:4:xticlabels(1) w histogram lw 2 title "SSD-SSD", \
 	"" using 8:9:xticlabels(1) w histogram lw 2 title "Hybrid-SSD", \
@@ -85,8 +86,8 @@ EOF
 	gnuplot plot.p
 }
 
-plot ops/sec mris_ratio_ops
-plot mb/sec mris_ratio_thput
+plot ops/sec mris_ratio_ops left
+plot mb/sec mris_ratio_thput right
 
 plot_iostat mb/sec mris_ratio_iostat_thput
 plot_iostat ops/sec mris_ratio_iostat_ops

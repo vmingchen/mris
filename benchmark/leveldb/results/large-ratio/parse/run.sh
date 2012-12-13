@@ -43,7 +43,7 @@ function get_iostat_col_avg() {
 	awk -v n="$n" -v FS=',' '(NR > 2) {
 		sum += $n;
 	} END {
-		printf("%.2f", (sum * 0.5) / (1024 * (NR - 2)));
+		printf("%.2f", sum / (NR - 2));
 	}' ${filename}
 }
 
@@ -123,9 +123,9 @@ function parse_iostat_rqsz() {
 	parse_column "6 7" mris_ratio_iostat.dat 
 }
 
-parse > mris_ratio.dat
-parse_ops
-parse_thput
+#parse > mris_ratio.dat
+#parse_ops
+#parse_thput
 
 parse_iostat > mris_ratio_iostat.dat
 parse_iostat_thput > mris_ratio_iostat_thput.dat
