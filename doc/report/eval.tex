@@ -65,7 +65,7 @@ difference for sequential write. When I/O size becomes large,
 throughput of both drives are capped by their maximum bandwidth.
 However, we noticed that HDD performs better for write than for read.
 This is because the HDD has a 16MB internal cache, which is more
-helpful for write than for read.
+helpful for write than for read. 
 
 Above-mentioned results will serve as baselines of throughput for our
 further benchmarking. They also validate our design premise that SSD
@@ -110,6 +110,10 @@ storage a close match for multi-resolution image workloads.
 
 \subsection{MRIS Write}
 
+%The drives were formatted using ext2, whereas fig:drivewrite was
+%using ext4. This should not have happened. We need to redo one of the
+%two sets of benchmarks in the future.
+
 We now show micro benchmark results on simple workloads of sequential
 and random write of multi-resolution images. Multi-resolution images
 of the same content are often created from a common source. Therefore,
@@ -146,7 +150,32 @@ Figure~\ref{fig:mriswrite} presents the results of the workload of
 inserting 10,000 groups of objects into MRIS. We experimented the
 workload on three different setups in Table~\ref{tbl:setups}. The
 groups were inserted in random and sequential ways considering the
-order of the key of objects. For random insertion, 
+order of the key of objects. For ops/sec of random insertion, SSD is
+28\% faster than SATA and Hybrid is 8\% faster than SATA. Considering
+only SSD and SATA, the speedup of SSD is much lower than that shown in
+Figure~\ref{fig:drivewrite}. This is because of the Memtable and the
+log-structured feature of MRIS, which turns many random writes into
+fewer large sequential write. As we can see in
+Figure~\ref{fig:drivewrite}, SSD is only slightly faster than SATA
+when it is for sequential write of 4K I/O size. Therefore, a slow
+speedup of insertion is reasonable.
+
+For sequential insertion, SSD is 26\% faster than SATA and Hybrid is
+just 3\% faster than SATA. However, sequential insertion is 41\%
+faster than random insertion for SSD.
+
+% How fdatasync determines which I/O size to use? We will have to
+% double check the I/O size. LevelDB has an internal block size
+% defaults to 4KB, but that is not necessarily the I/O size.
+
+% LevelDB writes SSTable using mmap and fdatasync. It is better if we
+% can get some basic drive benchmarks using mmap in the future.
+
+Figure~\ref{fig:mriswrite} (b) also shows throughput in term of
+mb/sec.  However, the speed-up ratio of mb/sec is almost identical to
+that of ops/sec (differ in less than 0.1\%). This is what we are
+expecting because the average size of an operation is the same among
+all setups. We will only show ops/sec in folloing throughput figures.
 
 \begin{figure}[t]
   \centering
