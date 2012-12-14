@@ -11,12 +11,13 @@
 
 set -o nounset                          # treat unset variables as an error
 set -o errexit                          # stop script if command fail
-#export PATH="/bin:/usr/bin:/sbin"             
+export PATH="/bin:/usr/bin:/sbin:../../../../../software"             
 IFS=$' \t\n'                            # reset IFS
 unset -f unalias                        # make sure unalias is not a function
 \unalias -a                             # unset all aliases
 ulimit -H -c 0 --                       # disable core dump
 hash -r                                 # clear the command path hash
+
 
 function plot_iostat_rps() {
 	ylabel="$1"
@@ -54,7 +55,36 @@ EOF
 	gnuplot plot.p
 }
 
-plot_iostat_rps mb/sec mris_ratio_iostat_thput
+function plot_iostat() {
+	ylabel="$1"
+	name="$2"
+
+	cat > plot.bargraph <<-EOF
+=stackcluster;SSD;SATA
+=noupperright
+#title=Throughput (${ylabel}) by iostat
+legendx=right
+legendy=center
+yformat=%g
+xlabel=Ratio
+ylabel=Throughput (${ylabel})
+
+=table
+EOF
+
+	awk '(substr($1, 1, 1) != "#"){
+		printf("multimulti=%s\n", $1);
+		printf("%s\t%s\t%s\n", $2, $3, $5);
+		printf("%s\t%s\t%s\n", $7, $8, $10);
+		printf("%s\t%s\t%s\n", $12, $13, $15);
+	}' $name.dat >> plot.bargraph
+
+	bargraph.pl plot.bargraph > ${name}.eps
+}
+
+#plot_iostat_rps mb/sec mris_ratio_iostat_thput
+
+plot_iostat mb/sec mris_ratio_iostat_thput
 
 if uname -a | grep -q Linux; then
 	evince *.eps
