@@ -251,7 +251,7 @@ observation is that the speedup of Hybrid over SATA grows rapidly from
   SSD & 3.89 & 4.68 & 5.79 & 7.52 & 8.04 & 7.60 & 7.64  \\
   Hybrid & 0.44 & 0.86 & 1.39 & 2.69 & 3.56 & 4.46 & 5.78 \\ \hline
 \end{tabular}
- \caption{Speedup of SSD and Hybrid over SATA in term of ops/sec.}
+ \caption{Speedup of SSD and Hybrid over SATA (ops/sec).}
 \label{tbl:speedup}
 }
 \end{table}
@@ -350,9 +350,11 @@ Similarly, we can predict the mb/sec of SSD and SATA. The predicted
 mb/sec results, along with the benchmarked mb/sec results, are
 presented in Figure~\ref{fig:thputpred}. We observed that there exists
 significant discrepancy in Hybrid's mb/sec results when ratio is
-small.
-
-% TODO: This is something we need to further investigate.
+small. This is because the average operation size is large when ratio
+is small, as we can see from (\ref{eqn:opsize}). The distances between
+predicted ops/sec and benchmarked ops/sec of small ratios, in
+Figure~\ref{fig:mrisopssec}, are magnfied when turned to mb/sec by
+multiplying the average operation size.
 
 \begin{figure}[t]
 \begin{centering}
@@ -362,13 +364,38 @@ small.
 \end{centering}
 \end{figure}
 
+As presented in Table~\ref{tbl:spdupmb}, Hybrid improves SATA's mb/sec
+throughput by at least 45\%. The improvement grows to as high as
+5.86$\times$ when ratio is 64.  Specifically, the speedup is
+2.61$\times$ and 3.73$\times$ when ratio is 8 and 16, which
+approximate to the ratios in the workloads of Wikipedia and Facebook.
+
+\begin{table}[tc]
+{\centering \footnotesize
+\begin{tabular}{c|c|c|c|c|c|c|c}
+\hline 
+  Speedup & \multicolumn{7}{c}{Ratio} \\ \cline{2-8}
+  over SATA & 1 & 2 & 4 & 8 & 16 & 32 & 64 \\ \hline
+  SSD & 3.88 & 4.68 & 5.67 & 7.33 & 8.35 & 7.87 & 7.76 \\
+  Hybrid & 0.45 & 0.88 & 1.33 & 2.61 & 3.73 & 4.62 & 5.86 \\ \hline
+\end{tabular}
+ \caption{Speedup of SSD and Hybrid over SATA (mb/sec).}
+\label{tbl:spdupmb}
+}
+\end{table}
+
 \NOTE{Ming}{TODO: consitify terms, such as images and objects, HDD and
 SATA}
 
 We have also measured the throughput (mb/sec) went to each drive using
 iostat. The results are shown in Figure~\ref{fig:mrisiostat}. We
 observed that the throughput reported by iostat is much larger than
-that in Figure~\ref{fig:mrisopssec}. 
+that in Figure~\ref{fig:mrisopssec}. Three factors contribute to the
+extra throughput: 1) the read-ahead in the file system, 2) extra read
+of file system metadata, and 3) extra read of database metadata.
+However, it is interesting to notice that the data read from SSD for
+the SSD setup is quite stable even when ratio varies dramatically.
+This is something we need to further investigate.
 
 \begin{figure}[t]
 \begin{centering}
@@ -377,9 +404,6 @@ that in Figure~\ref{fig:mrisopssec}.
 \label{fig:mrisiostat}
 \end{centering}
 \end{figure}
-
-The results are shown in Figure~\ref{fig:mrisopssec}.  Specifically,
-the speedup for Facebook and Wikipedia workload is XXX and YYY. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% For Emacs:
