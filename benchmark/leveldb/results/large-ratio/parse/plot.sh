@@ -88,7 +88,7 @@ EOF
 }
 
 plot ops/sec mris_ratio_ops left
-plot mb/sec mris_ratio_thput right
+plot mb/sec mris_ratio_mb right
 
 plot_iostat mb/sec mris_ratio_iostat_thput
 plot_iostat ops/sec mris_ratio_iostat_ops

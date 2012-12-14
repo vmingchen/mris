@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2011.6.28)  14 DEC 2012 11:30
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2011.6.28)  14 DEC 2012 12:43
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -568,7 +568,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 94--96
  org / wiki /
  []
 
-) [7] (./main.aux) ) 
+[7]) [8
+
+] (./main.aux) ) 
 Here is how much of TeX's memory you used:
  9182 strings out of 495062
  153713 string characters out of 1182644
@@ -578,4 +580,4 @@ Here is how much of TeX's memory you used:
  29 hyphenation exceptions out of 8191
  54i,11n,51p,376b,345s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (7 pages, 50964 bytes).
+Output written on main.dvi (8 pages, 51224 bytes).

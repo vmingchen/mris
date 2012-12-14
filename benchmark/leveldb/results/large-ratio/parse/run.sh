@@ -104,8 +104,8 @@ function parse_ops() {
 }
 
 function parse_thput() {
-	echo -e "#ratio\tsetup\tmb/s\tstddev" > mris_ratio_thput.dat
-	parse_column 5 mris_ratio.dat >> mris_ratio_thput.dat
+	echo -e "#ratio\tsetup\tmb/s\tstddev" > mris_ratio_mb.dat
+	parse_column 5 mris_ratio.dat >> mris_ratio_mb.dat
 }
 
 function parse_iostat_thput() {
