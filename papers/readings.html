@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>CSE602 - Advanced Computer Architecture</title>
+
+  <link rel="stylesheet" href="readings_files/screen_002.css" type="text/css" media="screen, projection">
+  <link rel="stylesheet" href="readings_files/print.css" type="text/css" media="print"> 
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="../css/blueprint/ie.css" type="text/css" media="screen, projection">
+  <![endif]-->
+  <script src="readings_files/piwik.js" async="" defer="defer" type="text/javascript"></script><script type="text/javascript" src="readings_files/jquery.js"></script>
+  <link rel="stylesheet" href="readings_files/all.css" type="text/css">
+  <link rel="stylesheet" href="readings_files/screen.css" type="text/css" media="screen, projection">
+  <link rel="stylesheet" href="readings_files/print_002.css" type="text/css" media="print">
+  <!--
+  <link rel="stylesheet" href="css/tabs/screen.css" type="text/css" media="screen, projection">
+  <script type="text/javascript" src="js/jquery.ba-hashchange.min.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
+  -->
+
+<script type="text/javascript">
+var _paq = _paq || [];
+(function(){
+    var u=(("https:" == document.location.protocol) ? "https://www.ferdman.net/~mike/piwik/" : "http://www.ferdman.net/~mike/piwik/");
+    _paq.push(['setSiteId', 2]);
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    var d=document,
+        g=d.createElement('script'),
+        s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript';
+        g.defer=true;
+        g.async=true;
+        g.src=u+'piwik.js';
+        s.parentNode.insertBefore(g,s);
+})();
+</script>
+
+</head>
+<body>
+  <div class="container xshowgrid">
+
+        <div style="padding-top:2em; background-image:url(datacenter.jpg); background-position-y:-100px;" class="span-22 prepend-1 append-1 last">
+          <h1 style="color:#FDF6E3">CSE602: Advanced Computer Architecture (Fall '12)</h1>
+          <h4 style="color:#FDF6E3; font-weight:bold">Tuesdays &amp; Thursdays, 11:30AM-12:50PM <!--, PSYCHOLOGY A 144 --></h4>
+				</div>
+
+        <div style="padding-top:2em; text-align:justify" class="span-16 prepend-1">
+
+          <p style="color:#d33682"><i>If you are pursuing a systems-related degree, you are strongly encouraged to take this course.</i></p>
+
+          <h2>Course Overview</h2>
+
+						<p>This is a new course that examines the state of the art of 
+modern datacenters, looking into the software and hardware that powers 
+the world's largest and most popular online services, such as Google, 
+Bing, Facebook, Twitter, and Amazon.  The key goal of the course is to 
+offer an understanding of how today's systems are built, why they are 
+built this way, and what promising directions are on the horizon.</p>
+						<p>Course readings and discussion will be geared to provide an 
+overview of the subject, while projects will target in-depth knowledge 
+of a specific area.  The course will include advanced material spanning a
+ wide range of topics, including multiprocessing, compilers, operating 
+systems, virtualization, storage and database systems, and datacenter 
+organization.  Students will select the topic of their own project and 
+will have a choice of working individually or in groups of any size.  
+Projects that touch upon a student's outside interests or other 
+computer-science disciplines (e.g., computer vision, security, 
+databases, etc...) will be highly encouraged.</p>
+						<p>Students will be expected to attend lectures, read papers and 
+discuss them in class, and work on a major project.  As part of this 
+course, students must produce either (1) a conference-quality paper or 
+(2) public-release-quality working software and documentation.  Students
+ will be expected to spend at least 8 hours per week on course work in 
+addition to attending lectures.</p>
+
+						<h3>What this course <em>is</em>:</h3>
+						<p>A user-centric overview of datacenters.  This course is about using and optimizing very-large-scale online systems.</p>
+
+						<h3>What this course <em>is not</em>:</h3>
+						<p>A builder-centric advanced micro-architecture course.  This course is not about building processors.</p>
+
+					<h2>Policies</h2>
+
+						<p>The collaboration and academic integrity policy in this class is likely to be <em>significantly different</em>
+ from other courses you've taken in the past.  Absolutely all forms of 
+collaboration are permitted, including collaboration with other students
+ in and outside of class, as well as outside of the university.  There 
+are only three explicit requirements for <em>all</em> submitted work:</p>
+<dl>
+	<dd>All submitted work must have an explicit Copyright label containing your name.</dd>
+	<dd>All submitted work must have an explicit license.</dd>
+	<dd>All Copyright laws of the United States must be respected.</dd>
+</dl>
+						<p>For example, for all submitted materials, you <em>must</em> include a label similar to <em>one</em> of the following:</p>
+<dl>
+	<dd>Copyright © 2012 by (Your Name). All rights reserved.</dd>
+	<dd>Copyright © 2012 by (Your Name). Permission to copy and distribute verbatim copies permitted.</dd>
+	<dd>Copyright © 2012 by (Your Name). This work is licensed under GPLv3, details in accompanying COPYING file.</dd>
+</dl>
+						<p>Applying open-source licenses to your work (<a target="_new" href="http://opensource.org/licenses/bsd-license.php">BSD</a>, <a target="_new" href="http://www.gnu.org/licenses/gpl-howto.html">GPL</a>,
+ or others) is encouraged, but not required.  Any willful violations of 
+this policy will result in a failing grade being assigned for the 
+course.</p>
+
+					<h2>Evaluation</h2>
+
+						<p>The final grade will be roughly-evenly split between class 
+participation and project.  Outstanding performance in either class 
+participation or project work (above and beyond the expected) will 
+positively bias the other.  There will be no exams.</p>
+
+					<h2>Prerequisites</h2>
+
+						<p>There are no formal prerequisite for this course, although 
+prior advanced course work in related fields (computer architecture, 
+compilers, operating systems, databases) will likely be of help.  If you
+ are unsure whether or not you have the necessary background or if you 
+are unable to sign up via the web, please contact <a target="_new" href="http://www.cs.stonybrook.edu/%7Emferdman/#contact">the instructor</a>.</p>
+
+					<hr>
+
+					<h2>Readings (to be read by specified date)</h2>
+
+						<ul>
+							<li style="font-weight:bold">August 30</li>
+							<li>Perspectives - Cost of Power in Large-Scale Data Centers <a target="_new" href="http://perspectives.mvdirona.com/2008/11/28/CostOfPowerInLargeScaleDataCenters.aspx">(link)</a></li>
+							<li>Perspectives - Overall Data Center Costs <a target="_new" href="http://perspectives.mvdirona.com/2010/09/18/OverallDataCenterCosts.aspx">(link)</a></li>
+							<li>Scale-up x Scale-out: A Case Study using Nutch/Lucene (IBM T. J. Watson)</li>
+							<li>Base Operating System Provisioning and Bringup for a Commercial Supercomputer (IBM T. J. Watson)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">September 6</li>
+							<li>Power Provisioning for a Warehouse-sized Computer (Google)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">September 11</li>
+							<li>Cutting the electric bill for internet-scale systems (MIT, Akamai, CMU)</li>
+							<li>Impact of Hot and Cold Aisle Containment on Data Center Temperature and Efficiency (APC) <a target="_new" href="http://www.apcmedia.com/salestools/DBOY-7EDLE8_R2_EN.pdf">(link)</a></li>
+							<li>Cool job allocation: measuring the power savings of placing jobs at cooling-efficient locations... (HP)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">September 13</li>
+							<li>The Datacenter as a Computer, chapters 5 and 6 (Google) <a target="_new" href="http://www.morganclaypool.com/doi/pdf/10.2200/s00193ed1v01y200905cac006">(link)</a></li>
+							<li>Understanding the Performance-Temperature Interactions in Disk I/O of Server Workloads (Penn State, UVA)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">September 26</li>
+							<li>Bigtable: A Distributed Storage System for Structured Data (Google)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">October 2</li>
+							<li>Dynamo: Amazon's Highly Available Key-value Store (Amazon)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">October 4</li>
+							<li>Finding a needle in Haystack: Facebook's photo storage (Facebook)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">October 9</li>
+							<li>The Hadoop Distributed File System (Yahoo!)</li>
+							<li>A Cost-Effective, High-Bandwidth Storage Architecture (CMU)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">October 11</li>
+							<li>UpRight Cluster Services (UT Austin)</li>
+							<li>Spanner: Google's Globally-Distributed Database (Google)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">October 16</li>
+							<li>Commercial Fault Tolerance: A Tale of Two Systems (HP, IBM)</li>
+							<li>Understanding Failures in Petascale Computers (CMU)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">October 18</li>
+							<li>Apologies (<a href="http://blogs.msdn.com/b/windowsazure/archive/2012/03/01/windows-azure-service-disruption-update.aspx" target="_new">Microsoft</a>, <a href="http://blogs.msdn.com/b/windowsazure/archive/2012/03/10/summary-of-windows-azure-service-disruption-on-feb-29th-2012.aspx" target="_new">Microsoft</a>, <a href="http://aws.amazon.com/message/65648/" target="_new">Amazon</a>, <a href="http://aws.amazon.com/message/67457/" target="_new">Amazon</a>, <a href="http://aws.amazon.com/message/2329B7/" target="_new">Amazon</a>, <a href="http://www.rackspace.com/blog/data-center-update-as-of-530-cst/" target="_new">Rackspace</a>)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">October 23</li>
+							<li>On Designing and Deploying Internet-Scale Services (Microsoft)</li>
+							<li>Perspectives - Observations on Errors, Corrections, &amp; Trust of Dependent Systems <a target="_new" href="http://perspectives.mvdirona.com/2012/02/26/ObservationsOnErrorsCorrectionsTrustOfDependentSystems.aspx">(link)</a></li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">October 25</li>
+							<li>The Datacenter as a Computer, chapter 7 (Google) <a target="_new" href="http://www.morganclaypool.com/doi/pdf/10.2200/s00193ed1v01y200905cac006">(link)</a></li>
+							<li>Explosion at The Planet <a target="_new" href="http://web.archive.org/web/20080703161740/http://forums.theplanet.com/index.php?showtopic=90185">(link)</a></li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">October 30</li>
+							<li>(Class cancelled)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">November 1</li>
+							<li>(Class cancelled)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">November 6</li>
+							<li>Understanding Full Virtualization, Paravirtualization, and Hardware Assist (VMware)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">November 8</li>
+							<li>Xen and the Art of Virtualization (Cambridge)</li>
+							<li>Solaris Zones: Operating System Support for Consolidating Commercial Workloads (Sun)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">November 13</li>
+							<li>A Comparison of Software and Hardware Techniques for x86 Virtualization (VMware)</li>
+							<li>Memory Resource Management in VMware ESX Server (VMware)</li>
+							<li>Software techniques for avoiding hardware virtualization exits (VMware)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">November 15</li>
+							<li>Utilizing IOMMUs for Virtualization in Linux and Xen (IBM, Intel, AMD)</li>
+							<li>QEMU, a fast and portable dynamic translator (Bellard)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">November 20</li>
+							<li><b><i>NOTE: Papers are on IEEE Xplore, access is FREE from the campus network!</i></b></li>
+							<li>Performance Studies of Commercial Workloads on a Multi-core System (IBM)</li>
+							<li>Workload Characterization for the Design of Future Servers</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">November 22</li>
+							<li>(Thanksgiving holiday)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">November 27</li>
+							<li>Intel Embraces Multithreading (MPR by Kevin Krewell)</li>
+							<li>The Future of Microprocessors (Stanford)</li>
+						</ul>
+
+						<ul>
+							<li style="font-weight:bold">November 29</li>
+							<li>System Overview for the SM10000 Family (SeaMicro)</li>
+							<li>Many-Core Key-Value Store (Facebook, Tilera)</li>
+							<li>HP Project Moonshot and the Redstone Development Server Platform (HP)</li>
+						</ul>
+
+<!--
+						<ul>
+							<li style="font-weight:bold">November 22</li>
+							<li>Calxeda</li>
+							<li>SeaMicro</li>
+							<li>FAWN</li>
+						</ul>
+-->
+
+<!--
+							<li>Software Techniques to Improve Virtualized I/O Performance on Multi-Core Systems (UCR, Intel)</li>
+							<li>Intel� Virtualization Technology for Directed I/O (Intel)</li>
+							<li>Advanced Virtualization I/O Queuing Technologies (Intel, Microsoft)</li>
+-->
+
+        </div>
+
+        <div style="padding-top:2em" class="span-4 prepend-1 last">
+					<h2>News</h2>
+					<p>Nov 1: Class cancelled due to hurricane Sandy</p>
+					<p>Oct 30: Class cancelled due to hurricane Sandy</p>
+					<p>Aug 28: Class starts</p>
+        </div>
+
+        <div class="span-24 prepend-top clear quiet small footer">
+                Copyright © 2012 by Mike Ferdman.  All rights reserved.
+        </div>
+
+  </div>
+<noscript><p><img src="http://www.ferdman.net/~mike/piwik/piwik.php?idsite=2" style="border:0" alt=""></p></noscript>
+
+
+</body></html>

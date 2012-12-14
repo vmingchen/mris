@@ -1,0 +1,92 @@
+/* solarized colors by Ethan Schoonover
+
+$base03:    #002b36;
+$base02:    #073642;
+$base01:    #586e75;
+$base00:    #657b83;
+$base0:     #839496;
+$base1:     #93a1a1;
+$base2:     #eee8d5;
+$base3:     #fdf6e3;
+$yellow:    #b58900;
+$orange:    #cb4b16;
+$red:       #dc322f;
+$magenta:   #d33682;
+$violet:    #6c71c4;
+$blue:      #268bd2;
+$cyan:      #2aa198;
+$green:     #859900;
+*/
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  background:#839496;
+}
+
+body, h1, h2, h3 {
+  color:#073642;
+}
+
+a {
+  color:#268bd2;
+  text-decoration:none;
+}
+
+.container {
+  background:#fdf6e3;
+}
+
+#top {
+  background:url(../img/header.png) no-repeat 40px 0;
+}
+
+#publist .note {
+	color:#dc322f;
+}
+
+#publist .purebibtex {
+  font-size:9px;
+  background:#eee8d5;
+  color:#586e75;
+  padding:1em;
+}
+
+#tabs li {
+  border:none;
+}
+
+#tabs li a {
+  background:none;
+  background:#eee8d5;
+  border:1px solid #073642;
+  border-bottom:none;
+  color:#000000;
+  opacity:0.55;
+}
+
+#tabs li a:hover {
+  background:#93a1a1;
+  color:#fdf6e3;
+}
+
+#tabs li a.selected {
+  background:#fdf6e3;
+  border:1px solid #073642;
+  border-bottom:none;
+  color:#073642;
+  opacity:1;
+}
+
+#publist .header, #pubmenu .header {
+  background:#eee8d5;
+}
+#publist_cv .header {
+  background:none;
+}
+
+#cv_tab h3 { /* Assistant Professor / Director */
+  display:none;
+}

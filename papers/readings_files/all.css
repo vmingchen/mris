@@ -1,0 +1,135 @@
+#top {
+  height:109px;
+  position:relative;
+}
+
+#top h1 {
+  padding-top:0.60em;
+  font-family:"Trebuchet MS", sans-serif;
+}
+
+#tabs {
+  bottom:0;
+  position:absolute;
+  border:none;
+  margin-bottom:0;
+}
+
+ul.tabs a {
+  width:6.3em;
+  text-align:center;
+}
+
+.tab {
+  clear:both;
+}
+
+.tab, #latest, #pubmenu {
+  display:none;
+}
+
+#latest {
+  min-height:350px;
+}
+* html .latest { /* IE6 */
+  height:350px;
+}
+
+#latest ul {
+  padding:0;
+}
+
+.footer {
+  text-align:center;
+}
+
+#pubmenu {
+  display:none;
+}
+
+.bibtitle { font-weight:bold; }
+.bibbooktitle { font-style:italic; }
+.bibauthor { }
+.bibpublisher { }
+
+#pubmenu table {
+  margin-bottom:0;
+  width:10em;
+}
+
+.container table tr td {
+  background:none;
+  padding:2px;
+}
+.container table tr td.bibitem {
+  padding:2px 0 2px 5px;
+}
+
+#publist td.bibref, #publist_cv td.bibref {
+  vertical-align:top;
+}
+
+.pdf {
+  background:url(../img/pdf-icon.gif) no-repeat;
+  width:21px;
+  display:inline-block;
+}
+
+h1, h2 {
+  margin-bottom:0;
+}
+
+h3, h4 {
+  margin-bottom:0.3em;
+}
+
+div.tab, div.standalone {
+  text-align:justify;
+}
+
+.bold {
+  font-weight:bold;
+}
+
+.half {
+  width:300px;
+  float:left;
+}
+
+.heavy {
+	font-weight:bold;
+}
+
+ul {
+  list-style-type:none;
+  padding:0;
+}
+
+li.withdot {
+  list-style-type:disc;
+  margin-left:1.5em;
+}
+
+.tab li, .standalone li {
+  padding-left:1.5em;
+  text-indent:-1.5em;
+}
+
+#latest li {
+  margin-bottom:6px;
+}
+
+#publist .comment {
+	font-style:italic;
+}
+#publist .note {
+	font-style:italic;
+	font-weight:bold;
+}
+
+.poweredby {
+  display:none;
+}
+#pubmenu .poweredby {
+	display:block;
+}
