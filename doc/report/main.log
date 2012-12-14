@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2011.6.28)  14 DEC 2012 14:15
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2011.6.28)  14 DEC 2012 17:30
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -500,16 +500,12 @@ Underfull \hbox (badness 3068) in paragraph at lines 20--32
 \OT1/ptm/m/n/10 Lev-elDB is log-structured and or-ga-nizes data into
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [1
+[1
 
 
 ]
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 41.
-
-(/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
+ (/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 File: figures/large-space.eps Graphic file (type eps)
@@ -523,10 +519,10 @@ Underfull \hbox (badness 7221) in paragraph at lines 138--147
 
 ) (./eval.tex
 File: figures/ssd_vs_sata_read.eps Graphic file (type eps)
- <figures/ssd_vs_sata_read.eps>
+ <figures/ssd_vs_sata_read.eps> [3]
 File: figures/ssd_vs_sata_write.eps Graphic file (type eps)
- <figures/ssd_vs_sata_write.eps>
-[3]
+
+<figures/ssd_vs_sata_write.eps>
 File: figures/wiki-image.eps Graphic file (type eps)
  <figures/wiki-image.eps> [4]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
@@ -536,12 +532,16 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <9> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 176.
 File: figures/mris-write-ops.eps Graphic file (type eps)
- <figures/mris-write-ops.eps>
-File: figures/mris-write-thput.eps Graphic file (type eps)
 
-<figures/mris-write-thput.eps>
+<figures/mris-write-ops.eps>
+File: figures/mris-write-thput.eps Graphic file (type eps)
+ <figures/mris-write-thput.eps>
 File: figures/mris_ratio_ops.eps Graphic file (type eps)
- <figures/mris_ratio_ops.eps> [5]
+
+<figures/mris_ratio_ops.eps>
+Underfull \vbox (badness 1558) has occurred while \output is active []
+
+ [5]
 File: figures/ratio_ops_predict.eps Graphic file (type eps)
 
 <figures/ratio_ops_predict.eps>
@@ -549,39 +549,29 @@ File: figures/mris_ratio_thput.eps Graphic file (type eps)
  <figures/mris_ratio_thput.eps>
 File: figures/ratio_thput_predict.eps Graphic file (type eps)
 
-<figures/ratio_thput_predict.eps>
+<figures/ratio_thput_predict.eps> [6]
 File: figures/mris_ratio_iostat_thput.eps Graphic file (type eps)
  <figures/mris_ratio_iostat_thput.eps>)
-(./related.tex
-Underfull \vbox (badness 2197) has occurred while \output is active []
-
- [6]
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
-)
-(./conclusion.tex) (./main.bbl [7]
-Underfull \hbox (badness 10000) in paragraph at lines 82--87
+(./related.tex) (./conclusion.tex) (./main.bbl [7]
+Underfull \hbox (badness 10000) in paragraph at lines 114--119
 \OT1/ptm/m/n/10 life-time.  $\OT1/ptm/m/sl/8 https : / / groups . google . com 
 / d / topic / leveldb /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 94--96
+Underfull \hbox (badness 10000) in paragraph at lines 138--140
 []\OT1/ptm/m/n/10 Wikipedia.  $\OT1/ptm/m/sl/8 http : / / wikimediafoundation .
  org / wiki /
  []
 
-) [8
-
-] (./main.aux) ) 
+) [8] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 9183 strings out of 495062
- 153726 string characters out of 1182644
- 211134 words of memory out of 3000000
- 12093 multiletter control sequences out of 15000+50000
+ 9192 strings out of 495062
+ 153847 string characters out of 1182644
+ 211170 words of memory out of 3000000
+ 12102 multiletter control sequences out of 15000+50000
  20631 words of font info for 64 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191
  54i,11n,51p,376b,345s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (8 pages, 53236 bytes).
+Output written on main.dvi (8 pages, 56532 bytes).

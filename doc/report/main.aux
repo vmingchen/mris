@@ -1,16 +1,19 @@
 \relax 
+\citation{evans2002study}
+\citation{kvworkload_sigmetrics}
+\citation{kvworkload_sigmetrics}
 \citation{leveldb-web}
 \citation{chang06osdi}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}}
 \newlabel{intro}{{1}{1}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces SSTable}}{1}}
 \newlabel{fig:sstable}{{1}{1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces LevelDB Compaction}}{1}}
-\newlabel{fig:compact}{{2}{1}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Implementation}{1}}
+\newlabel{sec:implementation}{{2}{1}}
 \citation{lsm}
 \citation{level_lifetime}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Implementation}{2}}
-\newlabel{sec:implementation}{{2}{2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces LevelDB Compaction}}{2}}
+\newlabel{fig:compact}{{2}{2}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Large Space}}{2}}
 \newlabel{fig:space}{{3}{2}}
 \citation{filebench-web}
@@ -42,48 +45,66 @@
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Speedup of SSD and Hybrid over SATA (ops/sec).}}{5}}
 \newlabel{tbl:speedup}{{2}{5}}
 \newlabel{eqn:ssdops}{{1}{5}}
-\newlabel{eqn:sataops}{{2}{5}}
-\newlabel{eqn:hybridops}{{3}{5}}
-\citation{eurosys_hfs}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Costs of read operations in time ($\mu $s). For instance, $t_{SF}$ is the time of reading a Small image from the Flash SSD.}}{6}}
 \newlabel{tbl:variable}{{3}{6}}
 \@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Modeled and benchmarked performance (ops/sec).}}{6}}
 \newlabel{fig:opspred}{{10}{6}}
+\newlabel{eqn:sataops}{{2}{6}}
+\newlabel{eqn:hybridops}{{3}{6}}
+\newlabel{eqn:opsize}{{4}{6}}
+\newlabel{eqn:hybridthput}{{5}{6}}
 \@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces MRIS Read Performance (mb/sec).}}{6}}
 \newlabel{fig:mrismbsec}{{11}{6}}
-\newlabel{eqn:opsize}{{4}{6}}
 \@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Predicted and benchmarked read performance (mb/sec).}}{6}}
 \newlabel{fig:thputpred}{{12}{6}}
 \@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Speedup of SSD and Hybrid over SATA (mb/sec).}}{6}}
 \newlabel{tbl:spdupmb}{{4}{6}}
-\newlabel{eqn:hybridthput}{{5}{6}}
+\citation{eurosys_hfs}
+\citation{conquest_tos}
+\citation{umbrellafs_gos}
 \citation{tablefs}
-\citation{Seltzer09hfad}
-\citation{evans2002study}
-\citation{kvworkload_sigmetrics}
-\citation{kvworkload_sigmetrics}
+\citation{socc11chisl}
+\citation{vldb_flashup}
+\citation{sosp09fawn}
+\citation{zhang2012multi}
+\citation{flashvm}
+\citation{eurosys_12_flashtier}
+\citation{flashcache}
+\citation{bcache}
 \citation{Forney2002fast}
 \bibstyle{plain}
 \bibdata{../references}
-\bibcite{kvworkload_sigmetrics}{1}
-\bibcite{beaver2010finding}{2}
-\bibcite{chang06osdi}{3}
-\bibcite{evans2002study}{4}
-\bibcite{filebench-web}{5}
-\bibcite{Forney2002fast}{6}
-\bibcite{leveldb-web}{7}
-\bibcite{memcached}{8}
-\bibcite{lsm}{9}
-\bibcite{tablefs}{10}
+\bibcite{sosp09fawn}{1}
+\bibcite{kvworkload_sigmetrics}{2}
+\bibcite{bcache}{3}
+\bibcite{beaver2010finding}{4}
+\bibcite{chang06osdi}{5}
+\bibcite{evans2002study}{6}
 \@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces MRIS Read Performance (mb/sec) by iostat}}{7}}
 \newlabel{fig:mrisiostat}{{13}{7}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Related Work}{7}}
 \newlabel{sec:related}{{4}{7}}
+\@writefile{toc}{\contentsline {paragraph}{(1) Hybrid Filesystems.}{7}}
+\@writefile{toc}{\contentsline {paragraph}{(2) Multi-tier Storage.}{7}}
+\@writefile{toc}{\contentsline {paragraph}{(3) Multi-level Caching.}{7}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{7}}
 \newlabel{sec:conc}{{5}{7}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Future work}{7}}
-\bibcite{Seltzer09hfad}{11}
-\bibcite{level_lifetime}{12}
-\bibcite{wikimedia-foundation}{13}
-\bibcite{wikipedia-web}{14}
-\bibcite{eurosys_hfs}{15}
+\bibcite{filebench-web}{7}
+\bibcite{flashcache}{8}
+\bibcite{Forney2002fast}{9}
+\bibcite{umbrellafs_gos}{10}
+\bibcite{vldb_flashup}{11}
+\bibcite{leveldb-web}{12}
+\bibcite{memcached}{13}
+\bibcite{lsm}{14}
+\bibcite{tablefs}{15}
+\bibcite{flashvm}{16}
+\bibcite{eurosys_12_flashtier}{17}
+\bibcite{level_lifetime}{18}
+\bibcite{socc11chisl}{19}
+\bibcite{conquest_tos}{20}
+\bibcite{wikimedia-foundation}{21}
+\bibcite{wikipedia-web}{22}
+\bibcite{zhang2012multi}{23}
+\bibcite{eurosys_hfs}{24}

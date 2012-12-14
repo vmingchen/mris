@@ -391,8 +391,8 @@ We have also measured the throughput (mb/sec) went to each drive using
 iostat. The results are shown in Figure~\ref{fig:mrisiostat}. We
 observed that the throughput reported by iostat is much larger than
 that in Figure~\ref{fig:mrisopssec}. Three factors contribute to the
-extra throughput: 1) the read-ahead in the file system, 2) extra read
-of file system metadata, and 3) extra read of database metadata.
+extra throughput: 1) the read-ahead in the filesystem, 2) extra read
+of filesystem metadata, and 3) extra read of database metadata.
 However, it is interesting to notice that the data read from SSD for
 the SSD setup is quite stable even when ratio varies dramatically.
 This is something we need to further investigate.

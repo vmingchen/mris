@@ -255,6 +255,50 @@
     workload modeling},
 } 
 
+@MISC{flashcache,
+  TITLE =	 "{A Write Back Block Cache for Linux}",
+  NOTE =	 "\url{https://github.com/facebook/flashcache/}",
+  KEY =		 "Flashcache"
+}
+
+@MISC{bcache,
+  TITLE =	 "{A Linux kernel block layer cache}",
+  NOTE =	 "\url{http://bcache.evilpiepirate.org/}",
+  KEY =		 "bcache"
+}
+
+@inproceedings{eurosys_12_flashtier,
+  author =	 "M. Saxena and M. M. Swift and Y. Zhang",
+  title =	 "{FlashTier: a Lightweight, Consistent and Durable Storage
+                  Cache}",
+  booktitle =	 "Proceedings of the 7th ACM European Conference on Computer
+                  Systems",
+  series =	 {EuroSys '12},
+  year =	 2012,
+  location =	 {Bern, Switzerland},
+  pages =	 {267--280}
+}
+
+@inproceedings{flashvm,
+  author =	 "M. Saxena and M. M. Swift",
+  title =	 {FlashVM: Revisiting the Virtual Memory Hierarchy},
+  BOOKTITLE =	 "Proceedings of the 12th Workshop on Hot Topics in
+                  Operating Systems",
+  year =	 2009,
+}
+
+@INPROCEEDINGS{socc11chisl,
+  AUTHOR =       "R. P. Spillane and P. J. Shetty and E. Zadok and S. Archak
+    and S. Dixit",
+  TITLE =        "An Efficient Multi-Tier Tablet Server Storage
+    Architecture",
+  BOOKTITLE =    "Proceedings of the 2nd ACM Symposium on Cloud Computing
+    (SOCC'11)",
+  YEAR =         "2011",
+  MONTH =        "October",
+  ADDRESS =      "Cascais, Portugal",
+}
+
 @article{umbrellafs_gos,
 	author = {Garrison, John A. and Reddy, A. L. Narasimha},
 	title = {Umbrella file system: Storage management across heterogeneous
@@ -280,7 +324,8 @@
 
 @techreport{zhang2012multi, 
 	title={Multi-level Hybrid Cache: Impact and Feasibility}, 
-	author={Zhang, Z. and Kim, Y. and Ma, X. and Shipman, G. and Zhou, Y.}, year={2012}, 
+	author={Zhang, Z. and Kim, Y. and Ma, X. and Shipman, G. and Zhou, Y.}, 
+  year={2012}, 
 	institution={Oak Ridge National Laboratory (ORNL)}
 }
 
@@ -419,3 +464,34 @@
   NOTE =	 "\url{http://memcached.org}",
   KEY =		 "Memcached"
 }
+
+@INPROCEEDINGS{sosp09fawn,
+  AUTHOR =	 "D. G. Andersen and J. Franklin and M. Kaminsky and
+                  A. Phanishayee and L. Tan and V. Vasudevan",
+  TITLE =	 "{FAWN: A Fast Array of Wimpy Nodes}",
+  BOOKTITLE =	 "Proceedings of the 22nd ACM Symposium on Operating Systems
+                  Principles (SOSP '2009)",
+  PUBLISHER =	 "ACM SIGOPS",
+  MONTH =	 "October",
+  YEAR =	 2009,
+  PAGES =	 "1--14",
+}
+
+@article{vldb_flashup,
+    author = {Koltsidas, Ioannis and Viglas, Stratis D.},
+    title = {Flashing up the storage layer},
+    journal = {Proc. VLDB Endow.},
+    issue_date = {August 2008},
+    volume = {1},
+    number = {1},
+    month = aug,
+    year = {2008},
+    issn = {2150-8097},
+    pages = {514--525},
+    numpages = {12},
+    url = {http://dx.doi.org/10.1145/1453856.1453913},
+    doi = {10.1145/1453856.1453913},
+    acmid = {1453913},
+    publisher = {VLDB Endowment},
+}
+
