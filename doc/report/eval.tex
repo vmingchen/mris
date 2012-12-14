@@ -339,22 +339,23 @@ large and small images respectively.
 
 However, for Hybrid, the throughputs in Figure~\ref{fig:mrismbsec} are
 relatively stable. Derived from (\ref{eqn:hybridops}), the mb/sec of
-Hybrid is 
+Hybrid can be expressed in
 
 \begin{equation}
 \label{eqn:hybridthput}
     1000000 \frac{ratio * small + large}{t_{SF} * ratio + t_{LH}} .
 \end{equation}
 
-The predicted mb/sec results, along with the benchmarked mb/sec
-results, are presented in Figure~\ref{fig:thputpred}. We observed that
-there exist significant discrepancy when ratio is small. This is
-something we need to further investigate.
+Similarly, we can predict the mb/sec of SSD and SATA. The predicted
+mb/sec results, along with the benchmarked mb/sec results, are
+presented in Figure~\ref{fig:thputpred}. We observed that there exists
+significant discrepancy when ratio is small. This is something we need
+to further investigate.
 
 \begin{figure}[t]
 \begin{centering}
 \epsfig{file=figures/ratio_thput_predict.eps,width=\linewidth}
-\caption{Read performance of Hybrid.}
+\caption{Predicted and benchmarked read performance (mb/sec).}
 \label{fig:thputpred}
 \end{centering}
 \end{figure}

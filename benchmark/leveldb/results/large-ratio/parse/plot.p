@@ -1,19 +1,12 @@
 set size 2, 1.8
 set grid ytics
+
 set terminal postscript eps noenhanced color "Times-Roman,40"
-set output "mris_ratio_iostat_rqsz.eps"
+set output "ratio_thput_predict.eps"
 
-set style data linespoints
+set yrange [0:18]
+set key
+set xlabel "Ratio"
+set ylabel "Throughput (mb/sec)"
 
-set title "avg-rqsz of mris_ratio by iostat"
-set xlabel "Ratio" offset 0,1.2
-set ylabel "avg-rqsz" offset 3.0,0
-set style histogram errorbars gap 1 lw 2
-
-set xtics offset 0,0.5
-set ytics offset 1,0
-#set yrange [0:16]
-#set key left height 3
-set key left center
-
-plot "mris_ratio_iostat_rqsz.dat" using 3:4:xticlabels(1) w histogram lw 2 title "SSD-SSD", 	"" using 8:9:xticlabels(1) w histogram lw 2 title "Hybrid-SSD", 	"" using 10:11:xticlabels(1) w histogram lw 2 title "Hybrid-SATA", 	"" using 15:16:xticlabels(1) w histogram lw 2 title "SATA-SATA"
+plot 'mris_ratio_thput.dat' using 1:6 w points pt 20 title "benchmarked Hybrid",     1000000.0*(x*8 + 128)/(1024*(1482 * x + 37599)) lw 3 title "predicted Hybrid", 	'' using 1:3 w points pt 4 title "benchmarked SSD",     1000000.0*(x*8 + 128)/(1024*(1482 * x + 13238)) lw 3 title "predicted SSD", 	'' using 1:9 w points pt 13 title "benchmarked SATA",     1000000.0*(x*8 + 128)/(1024*(13238 * x + 37599)) lw 3 lc rgb "black" title "predicted SATA"

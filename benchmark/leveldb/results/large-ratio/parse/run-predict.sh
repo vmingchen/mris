@@ -35,12 +35,12 @@ set key
 set xlabel "Ratio"
 set ylabel "Throughput (mb/sec)"
 
-plot 'mris_ratio_thput.dat' using 1:3 w points pt 20 title "benchmarked SSD", \
+plot 'mris_ratio_thput.dat' using 1:6 w points pt 20 title "benchmarked Hybrid", \
+    1000000.0*(x*8 + 128)/(1024*($tsf * x + $tlh)) lw 3 title "predicted Hybrid", \
+	'' using 1:3 w points pt 4 title "benchmarked SSD", \
     1000000.0*(x*8 + 128)/(1024*($tsf * x + $tlf)) lw 3 title "predicted SSD", \
-	'' using 1:9 w points pt 20 title "benchmarked SATA", \
-    1000000.0*(x*8 + 128)/(1024*($tlf * x + $tlh)) lw 3 title "predicted SATA", \
-	'' using 1:6 w points pt 20 title "benchmarked Hybrid", \
-    1000000.0*(x*8 + 128)/(1024*($tsf * x + $tlh)) lw 3 title "predicted Hybrid"
+	'' using 1:9 w points pt 13 title "benchmarked SATA", \
+    1000000.0*(x*8 + 128)/(1024*($tlf * x + $tlh)) lw 3 lc rgb "black" title "predicted SATA"
 EOF
 
 gnuplot plot.p
