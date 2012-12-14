@@ -298,7 +298,7 @@ $t_{SF}$ is the time of reading a Small image from the Flash SSD.}
 Use (\ref{eqn:hybridops}) and the values in Table~\ref{tbl:variable},
 we can predict the ops/sec of Hybrid. The results, together with
 measured ops/sec in our benchmarks, are presented in
-Figure~\ref{fig:readesti}. We can see that the measured ops/sec
+Figure~\ref{fig:opspred}. We can see that the measured ops/sec
 matches the shape of the predicted ops/sec. Moreover, the measured
 ops/sec are all slightly higher than the predicted counterparts.
 
@@ -308,7 +308,7 @@ ops/sec are all slightly higher than the predicted counterparts.
 \begin{centering}
 \epsfig{file=figures/ratio_ops_predict.eps,width=\linewidth}
 \caption{Read performance of Hybrid.}
-\label{fig:readesti}
+\label{fig:opspred}
 \end{centering}
 \end{figure}
 
@@ -329,14 +329,6 @@ large and small images respectively.
 \end{array}
 \end{equation}
 
-However, for Hybrid, the throughputs are relatively stable. Derived
-from (\ref{eqn:hybridops}), the mb/sec of Hybrid is 
-
-\begin{equation}
-\label{eqn:hybridthput}
-    1000000 \frac{ratio * small + large}{t_{SF} * ratio + t_{LH}} .
-\end{equation}
-
 \begin{figure}[t]
 \begin{centering}
 \epsfig{file=figures/mris_ratio_thput.eps,width=1.00\linewidth}
@@ -345,22 +337,46 @@ from (\ref{eqn:hybridops}), the mb/sec of Hybrid is
 \end{centering}
 \end{figure}
 
-\NOTE{Ming}{TODO: consitify terms, such as images and objects, HDD and
-SATA}
+However, for Hybrid, the throughputs in Figure~\ref{fig:mrismbsec} are
+relatively stable. Derived from (\ref{eqn:hybridops}), the mb/sec of
+Hybrid is 
 
-The results are shown in Figure~\ref{fig:mrisopssec}.  Specifically,
-the speedup for Facebook and Wikipedia workload is XXX and YYY. 
+\begin{equation}
+\label{eqn:hybridthput}
+    1000000 \frac{ratio * small + large}{t_{SF} * ratio + t_{LH}} .
+\end{equation}
+
+The predicted mb/sec results, along with the benchmarked mb/sec
+results, are presented in Figure~\ref{fig:thputpred}. We observed that
+there exist significant discrepancy when ratio is small. This is
+something we need to further investigate.
 
 \begin{figure}[t]
 \begin{centering}
-\epsfig{file=figures/mris_ratio_iostat_ops.eps,width=1.00\linewidth}
-\caption{MRIS Read Performance by iostat}
+\epsfig{file=figures/ratio_ops_predict.eps,width=\linewidth}
+\caption{Read performance of Hybrid.}
+\label{fig:thputpred}
+\end{centering}
+\end{figure}
+
+\NOTE{Ming}{TODO: consitify terms, such as images and objects, HDD and
+SATA}
+
+We have also measured the throughput (mb/sec) went to each drive using
+iostat. The results are shown in Figure~\ref{fig:mrisiostat}. We
+observed that the throughput reported by iostat is much larger than
+that in Figure~\ref{fig:mrisopssec}. 
+
+\begin{figure}[t]
+\begin{centering}
+\epsfig{file=figures/mris_ratio_iostat_thput.eps,width=1.00\linewidth}
+\caption{MRIS Read Performance (mb/sec) by iostat}
 \label{fig:mrisiostat}
 \end{centering}
 \end{figure}
 
-The throughput reported by iostat is much larger than that of
-Figure~\ref{fig:mrisopssec}.
+The results are shown in Figure~\ref{fig:mrisopssec}.  Specifically,
+the speedup for Facebook and Wikipedia workload is XXX and YYY. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% For Emacs:
