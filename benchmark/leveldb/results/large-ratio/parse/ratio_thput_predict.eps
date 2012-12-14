@@ -1,16 +1,16 @@
 %!PS-Adobe-2.0 EPSF-2.0
 %%Title: ratio_thput_predict.eps
-%%Creator: gnuplot 4.2 patchlevel 6 
-%%CreationDate: Thu Dec 13 23:23:39 2012
+%%Creator: gnuplot 4.4 patchlevel 3
+%%CreationDate: Fri Dec 14 01:31:25 2012
 %%DocumentFonts: (atend)
-%%BoundingBox: 50 50 770 377
+%%BoundingBox: 50 50 770 503
 %%EndComments
 %%BeginProlog
 /gnudict 256 dict def
 gnudict begin
 %
-% The following 6 true/false flags may be edited by hand if required
-% The unit line width may also be changed
+% The following true/false flags may be edited by hand if desired.
+% The unit line width and grayscale image gamma correction may also be changed.
 %
 /Color true def
 /Blacktext false def
@@ -19,9 +19,11 @@ gnudict begin
 /Landscape false def
 /Level1 false def
 /Rounded false def
+/ClipToBoundingBox false def
 /TransparentPatterns false def
 /gnulinewidth 5.000 def
 /userlinewidth gnulinewidth def
+/Gamma 1.0 def
 %
 /vshift -133 def
 /dl1 {
@@ -44,16 +46,24 @@ systemdict /pdfmark known not {
 SDict begin [
   /Title (ratio_thput_predict.eps)
   /Subject (gnuplot plot)
-  /Creator (gnuplot 4.2 patchlevel 6 )
-  /Author (Ming,,,)
+  /Creator (gnuplot 4.4 patchlevel 3)
+  /Author (ming)
 %  /Producer (gnuplot)
 %  /Keywords ()
-  /CreationDate (Thu Dec 13 23:23:39 2012)
+  /CreationDate (Fri Dec 14 01:31:25 2012)
   /DOCINFO pdfmark
 end
 } ifelse
+/doclip {
+  ClipToBoundingBox {
+    newpath 50 50 moveto 770 50 lineto 770 503 lineto 50 503 lineto closepath
+    clip
+  } if
+} def
 %
-% Gnuplot Prolog Version 4.2 (August 2006)
+% Gnuplot Prolog Version 4.4 (August 2010)
+%
+%/SuppressPDFMark true def
 %
 /M {moveto} bind def
 /L {lineto} bind def
@@ -63,6 +73,8 @@ end
 /Z {closepath} bind def
 /C {setrgbcolor} bind def
 /f {rlineto fill} bind def
+/g {setgray} bind def
+/Gshow {show} def   % May be redefined later in the file to support UTF-8
 /vpt2 vpt 2 mul def
 /hpt2 hpt 2 mul def
 /Lshow {currentpoint stroke M 0 vshift R 
@@ -83,6 +95,7 @@ end
 	dup 1 lt {pop 1} if 10 mul /udl exch def} def
 /PL {stroke userlinewidth setlinewidth
 	Rounded {1 setlinejoin 1 setlinecap} if} def
+3.8 setmiterlimit
 % Default Line colors
 /LCw {1 1 1} def
 /LCb {0 0 0} def
@@ -424,6 +437,7 @@ end
 %%EndProlog
 gnudict begin
 gsave
+doclip
 50 50 translate
 0.050 0.050 scale
 0 setgray
@@ -433,319 +447,626 @@ newpath
 LTb
 1.000 UL
 LTa
-1960 1280 M
-11840 0 V
+1720 1280 M
+11958 0 V
 stroke
 LTb
-1960 1280 M
+1720 1280 M
 63 0 V
-11777 0 R
+11895 0 R
 -63 0 V
--12017 0 R
+-12135 0 R
 ( 0) Rshow
 1.000 UL
 LTb
 1.000 UL
 LTa
-1960 2079 M
-11840 0 V
+1720 2092 M
+11958 0 V
 stroke
 LTb
-1960 2079 M
+1720 2092 M
 63 0 V
-11777 0 R
+11895 0 R
 -63 0 V
--12017 0 R
-( 1) Rshow
-1.000 UL
-LTb
-1.000 UL
-LTa
-1960 2877 M
-11840 0 V
-stroke
-LTb
-1960 2877 M
-63 0 V
-11777 0 R
--63 0 V
--12017 0 R
+-12135 0 R
 ( 2) Rshow
 1.000 UL
 LTb
 1.000 UL
 LTa
-1960 3676 M
-11840 0 V
+1720 2904 M
+11958 0 V
 stroke
 LTb
-1960 3676 M
+1720 2904 M
 63 0 V
-11777 0 R
+11895 0 R
 -63 0 V
--12017 0 R
-( 3) Rshow
-1.000 UL
-LTb
-1.000 UL
-LTa
-1960 4475 M
-11840 0 V
-stroke
-LTb
-1960 4475 M
-63 0 V
-11777 0 R
--63 0 V
--12017 0 R
+-12135 0 R
 ( 4) Rshow
 1.000 UL
 LTb
 1.000 UL
 LTa
-1960 5273 M
-240 0 V
-5823 0 R
-5777 0 V
+1720 3717 M
+11958 0 V
 stroke
 LTb
-1960 5273 M
+1720 3717 M
 63 0 V
-11777 0 R
+11895 0 R
 -63 0 V
--12017 0 R
-( 5) Rshow
+-12135 0 R
+( 6) Rshow
 1.000 UL
 LTb
 1.000 UL
 LTa
-1960 6072 M
-11840 0 V
+1720 4529 M
+11958 0 V
 stroke
 LTb
-1960 6072 M
+1720 4529 M
 63 0 V
-11777 0 R
+11895 0 R
 -63 0 V
--12017 0 R
-( 6) Rshow
+-12135 0 R
+( 8) Rshow
 1.000 UL
 LTb
-1960 1280 M
+1.000 UL
+LTa
+1720 5341 M
+11958 0 V
+stroke
+LTb
+1720 5341 M
+63 0 V
+11895 0 R
+-63 0 V
+-12135 0 R
+( 10) Rshow
+1.000 UL
+LTb
+1.000 UL
+LTa
+1720 6153 M
+5895 0 V
+5823 0 R
+240 0 V
+stroke
+LTb
+1720 6153 M
+63 0 V
+11895 0 R
+-63 0 V
+-12135 0 R
+( 12) Rshow
+1.000 UL
+LTb
+1.000 UL
+LTa
+1720 6966 M
+5895 0 V
+5823 0 R
+240 0 V
+stroke
+LTb
+1720 6966 M
+63 0 V
+11895 0 R
+-63 0 V
+-12135 0 R
+( 14) Rshow
+1.000 UL
+LTb
+1.000 UL
+LTa
+1720 7778 M
+5895 0 V
+5823 0 R
+240 0 V
+stroke
+LTb
+1720 7778 M
+63 0 V
+11895 0 R
+-63 0 V
+-12135 0 R
+( 16) Rshow
+1.000 UL
+LTb
+1.000 UL
+LTa
+1720 8590 M
+11958 0 V
+stroke
+LTb
+1720 8590 M
+63 0 V
+11895 0 R
+-63 0 V
+-12135 0 R
+( 18) Rshow
+1.000 UL
+LTb
+1720 1280 M
 0 63 V
-0 4729 R
+0 7247 R
 0 -63 V
-0 -5129 R
+0 -7647 R
 ( 0) Cshow
 1.000 UL
 LTb
-3651 1280 M
+3428 1280 M
 0 63 V
-0 4729 R
+0 7247 R
 0 -63 V
-0 -5129 R
+0 -7647 R
 ( 10) Cshow
 1.000 UL
 LTb
-5343 1280 M
+5137 1280 M
 0 63 V
-0 4729 R
+0 7247 R
 0 -63 V
-0 -5129 R
+0 -7647 R
 ( 20) Cshow
 1.000 UL
 LTb
-7034 1280 M
+6845 1280 M
 0 63 V
-0 4729 R
+0 7247 R
 0 -63 V
-0 -5129 R
+0 -7647 R
 ( 30) Cshow
 1.000 UL
 LTb
-8726 1280 M
+8553 1280 M
 0 63 V
-0 4729 R
+0 7247 R
 0 -63 V
-0 -5129 R
+0 -7647 R
 ( 40) Cshow
 1.000 UL
 LTb
-10417 1280 M
+10261 1280 M
 0 63 V
-0 4729 R
+0 7247 R
 0 -63 V
-0 -5129 R
+0 -7647 R
 ( 50) Cshow
 1.000 UL
 LTb
-12109 1280 M
+11970 1280 M
 0 63 V
-0 4729 R
+0 7247 R
 0 -63 V
-0 -5129 R
+0 -7647 R
 ( 60) Cshow
 1.000 UL
 LTb
-13800 1280 M
+13678 1280 M
 0 63 V
-0 4729 R
+0 7247 R
 0 -63 V
-0 -5129 R
+0 -7647 R
 ( 70) Cshow
 1.000 UL
 LTb
 1.000 UL
 LTb
-1960 6072 N
-0 -4792 V
-11840 0 V
-0 4792 V
--11840 0 V
+1720 8590 N
+0 -7310 V
+11958 0 V
+0 7310 V
+-11958 0 V
 Z stroke
 LCb setrgbcolor
-800 3676 M
-currentpoint gsave translate 90 rotate 0 0 M
+320 4935 M
+currentpoint gsave translate -270 rotate 0 0 M
 (Throughput \(mb/sec\)) Cshow
 grestore
 LTb
 LCb setrgbcolor
-7880 280 M
+7699 280 M
 (Ratio) Cshow
 LTb
 1.000 UP
 1.000 UL
 LTb
+% Begin plot #1
 1.000 UP
 1.000 UL
 LT0
-LTb
-6520 5809 M
-(benchmarked mb/sec) Rshow
+LCb setrgbcolor
+11935 8327 M
+(benchmarked SSD) Rshow
 LT0
-2129 5090 C4
-2298 4874 C4
-2637 4634 C4
-3313 4738 C4
-4666 4794 C4
-7373 4874 C4
-12785 5114 C4
-7271 5809 C4
-1.000 UL
+1891 7818 C4
+2062 6815 C4
+2403 6153 C4
+3087 5341 C4
+4453 4813 C4
+7187 4163 C4
+12653 3769 C4
+12686 8327 C4
+% End plot #1
+% Begin plot #2
+3.000 UL
 LT1
-LTb
-6520 5409 M
-(predicted mb/sec) Rshow
+LCb setrgbcolor
+11935 7927 M
+(predicted SSD) Rshow
 LT1
-6760 5409 M
+12175 7927 M
 1023 0 V
-2129 3994 M
-108 35 V
-107 34 V
-108 32 V
-108 31 V
-107 29 V
-108 28 V
-108 27 V
-107 26 V
-108 25 V
-108 24 V
-107 23 V
-108 22 V
-107 21 V
-108 21 V
-108 20 V
-107 19 V
-108 18 V
-108 18 V
-107 17 V
-108 17 V
-108 16 V
-107 16 V
-108 15 V
-107 15 V
-108 14 V
-108 14 V
-107 13 V
-108 13 V
-108 13 V
-107 12 V
-108 12 V
-108 12 V
-107 11 V
-108 11 V
-107 11 V
-108 11 V
-108 10 V
-107 10 V
-108 10 V
-108 9 V
-107 9 V
-108 9 V
-108 9 V
-107 9 V
-108 8 V
-107 8 V
-108 8 V
-108 8 V
-107 8 V
-108 7 V
-108 8 V
-107 7 V
-108 7 V
-108 7 V
-107 6 V
-108 7 V
-107 6 V
-108 7 V
-108 6 V
-107 6 V
-108 6 V
-108 6 V
-107 6 V
-108 5 V
-108 6 V
-107 5 V
-108 6 V
-107 5 V
-108 5 V
-108 5 V
-107 5 V
-108 5 V
-108 5 V
-107 4 V
-108 5 V
-108 4 V
-107 5 V
-108 4 V
-107 4 V
-108 5 V
-108 4 V
-107 4 V
-108 4 V
-108 4 V
-107 4 V
-108 4 V
-108 4 V
-107 3 V
-108 4 V
-107 4 V
-108 3 V
-108 4 V
-107 3 V
-108 4 V
-108 3 V
-107 3 V
-108 3 V
-108 4 V
-107 3 V
+1891 4944 M
+109 -92 V
+108 -81 V
+109 -72 V
+109 -66 V
+108 -58 V
+109 -54 V
+109 -48 V
+109 -45 V
+108 -41 V
+109 -38 V
+109 -35 V
+108 -32 V
+109 -30 V
+109 -28 V
+108 -26 V
+109 -25 V
+109 -23 V
+109 -22 V
+108 -20 V
+109 -19 V
+109 -19 V
+108 -17 V
+109 -16 V
+109 -16 V
+109 -15 V
+108 -14 V
+109 -13 V
+109 -13 V
+108 -12 V
+109 -12 V
+109 -11 V
+109 -11 V
+108 -10 V
+109 -10 V
+109 -9 V
+108 -9 V
+109 -9 V
+109 -9 V
+108 -8 V
+109 -8 V
+109 -7 V
+109 -7 V
+108 -7 V
+109 -7 V
+109 -7 V
+108 -6 V
+109 -6 V
+109 -6 V
+109 -6 V
+108 -6 V
+109 -5 V
+109 -5 V
+108 -6 V
+109 -5 V
+109 -4 V
+109 -5 V
+108 -5 V
+109 -4 V
+109 -4 V
+108 -5 V
+109 -4 V
+109 -4 V
+109 -4 V
+108 -3 V
+109 -4 V
+109 -4 V
+108 -3 V
+109 -4 V
+109 -3 V
+108 -3 V
+109 -4 V
+109 -3 V
+109 -3 V
+108 -3 V
+109 -3 V
+109 -3 V
+108 -2 V
+109 -3 V
+109 -3 V
+109 -2 V
+108 -3 V
+109 -3 V
+109 -2 V
+108 -2 V
+109 -3 V
+109 -2 V
+109 -2 V
+108 -3 V
+109 -2 V
+109 -2 V
+108 -2 V
+109 -2 V
+109 -2 V
+108 -2 V
+109 -2 V
+109 -2 V
+109 -2 V
+108 -2 V
+109 -2 V
+% End plot #2
+% Begin plot #3
+1.000 UP
 stroke
+1.000 UL
+LT2
+LCb setrgbcolor
+11935 7527 M
+(benchmarked SATA) Rshow
+LT2
+1891 2620 C4
+2062 2255 C4
+2403 2011 C4
+3087 1767 C4
+4453 1658 C4
+7187 1605 C4
+12653 1564 C4
+12686 7527 C4
+% End plot #3
+% Begin plot #4
+3.000 UL
+LT3
+LCb setrgbcolor
+11935 7127 M
+(predicted SATA) Rshow
+LT3
+12175 7127 M
+1023 0 V
+1891 2341 M
+109 -117 V
+108 -87 V
+109 -69 V
+109 -54 V
+108 -45 V
+109 -37 V
+109 -32 V
+109 -27 V
+108 -24 V
+109 -20 V
+109 -18 V
+108 -17 V
+109 -14 V
+109 -13 V
+108 -12 V
+109 -10 V
+109 -10 V
+109 -9 V
+108 -8 V
+109 -8 V
+109 -7 V
+108 -7 V
+109 -6 V
+109 -5 V
+109 -6 V
+108 -5 V
+109 -4 V
+109 -5 V
+108 -4 V
+109 -4 V
+109 -4 V
+109 -3 V
+108 -3 V
+109 -4 V
+109 -3 V
+108 -2 V
+109 -3 V
+109 -3 V
+108 -2 V
+109 -3 V
+109 -2 V
+109 -2 V
+108 -2 V
+109 -2 V
+109 -2 V
+108 -2 V
+109 -2 V
+109 -2 V
+109 -1 V
+108 -2 V
+109 -1 V
+109 -2 V
+108 -1 V
+109 -2 V
+109 -1 V
+109 -1 V
+108 -2 V
+109 -1 V
+109 -1 V
+108 -1 V
+109 -1 V
+109 -1 V
+109 -2 V
+108 -1 V
+109 -1 V
+109 -1 V
+108 0 V
+109 -1 V
+109 -1 V
+108 -1 V
+109 -1 V
+109 -1 V
+109 -1 V
+108 0 V
+109 -1 V
+109 -1 V
+108 -1 V
+109 0 V
+109 -1 V
+109 -1 V
+108 0 V
+109 -1 V
+109 -1 V
+108 0 V
+109 -1 V
+109 0 V
+109 -1 V
+108 -1 V
+109 0 V
+109 -1 V
+108 0 V
+109 -1 V
+109 0 V
+108 -1 V
+109 0 V
+109 -1 V
+109 0 V
+108 -1 V
+109 0 V
+% End plot #4
+% Begin plot #5
+1.000 UP
+stroke
+1.000 UL
+LT4
+LCb setrgbcolor
+11935 6727 M
+(benchmarked Hybrid) Rshow
+LT4
+1891 3217 C4
+2062 3108 C4
+2403 2986 C4
+3087 3038 C4
+4453 3067 C4
+7187 3108 C4
+12653 3229 C4
+12686 6727 C4
+% End plot #5
+% Begin plot #6
+3.000 UL
+LT5
+LCb setrgbcolor
+11935 6327 M
+(predicted Hybrid) Rshow
+LT5
+12175 6327 M
+1023 0 V
+1891 2660 M
+109 18 V
+108 17 V
+109 16 V
+109 16 V
+108 15 V
+109 14 V
+109 14 V
+109 13 V
+108 13 V
+109 12 V
+109 12 V
+108 11 V
+109 11 V
+109 10 V
+108 10 V
+109 10 V
+109 9 V
+109 9 V
+108 9 V
+109 9 V
+109 8 V
+108 8 V
+109 8 V
+109 7 V
+109 7 V
+108 7 V
+109 7 V
+109 7 V
+108 6 V
+109 7 V
+109 6 V
+109 6 V
+108 5 V
+109 6 V
+109 5 V
+108 6 V
+109 5 V
+109 5 V
+108 5 V
+109 5 V
+109 4 V
+109 5 V
+108 5 V
+109 4 V
+109 4 V
+108 4 V
+109 4 V
+109 4 V
+109 4 V
+108 4 V
+109 4 V
+109 3 V
+108 4 V
+109 4 V
+109 3 V
+109 3 V
+108 4 V
+109 3 V
+109 3 V
+108 3 V
+109 3 V
+109 3 V
+109 3 V
+108 3 V
+109 3 V
+109 2 V
+108 3 V
+109 3 V
+109 2 V
+108 3 V
+109 2 V
+109 3 V
+109 2 V
+108 3 V
+109 2 V
+109 2 V
+108 3 V
+109 2 V
+109 2 V
+109 2 V
+108 2 V
+109 2 V
+109 3 V
+108 2 V
+109 2 V
+109 1 V
+109 2 V
+108 2 V
+109 2 V
+109 2 V
+108 2 V
+109 2 V
+109 1 V
+108 2 V
+109 2 V
+109 1 V
+109 2 V
+108 2 V
+109 1 V
+% End plot #6
+stroke
+1.000 UL
 LTb
-1960 6072 N
-0 -4792 V
-11840 0 V
-0 4792 V
--11840 0 V
+1720 8590 N
+0 -7310 V
+11958 0 V
+0 7310 V
+-11958 0 V
 Z stroke
 1.000 UP
 1.000 UL

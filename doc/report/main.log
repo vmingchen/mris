@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  14 DEC 2012 01:01
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  14 DEC 2012 01:38
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -569,9 +569,9 @@ File: figures/ratio_ops_predict.eps Graphic file (type eps)
 <figures/ratio_ops_predict.eps>
 File: figures/mris_ratio_thput.eps Graphic file (type eps)
  <figures/mris_ratio_thput.eps>
-File: figures/ratio_ops_predict.eps Graphic file (type eps)
+File: figures/ratio_thput_predict.eps Graphic file (type eps)
 
-<figures/ratio_ops_predict.eps>
+<figures/ratio_thput_predict.eps>
 File: figures/mris_ratio_iostat_thput.eps Graphic file (type eps)
  <figures/mris_ratio_iostat_thput.eps>)
 (./related.tex [6]
@@ -592,12 +592,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 94--96
 
 ) [7] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 11110 strings out of 495062
- 201516 string characters out of 1182644
+ 11112 strings out of 495062
+ 201570 string characters out of 1182644
  249666 words of memory out of 3000000
- 13992 multiletter control sequences out of 15000+50000
+ 13993 multiletter control sequences out of 15000+50000
  20631 words of font info for 64 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191
  63i,11n,57p,435b,345s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (7 pages, 50868 bytes).
+Output written on main.dvi (7 pages, 50880 bytes).

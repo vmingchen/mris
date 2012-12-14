@@ -1,4 +1,4 @@
-set size 2, 1.30
+set size 2, 1.8
 set grid ytics
 set terminal postscript eps noenhanced color "Times-Roman,40"
 set output "mris_ratio_iostat_rqsz.eps"

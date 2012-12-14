@@ -24,7 +24,7 @@ function plot() {
 	keypos="$3"
 
 	cat > plot.p <<-EOF
-set size 2, 1.30
+set size 2, 1.8
 set grid ytics
 set terminal postscript eps noenhanced color "Times-Roman,40"
 set output "${name}.eps"
@@ -55,7 +55,7 @@ function plot_iostat() {
 	name="$2"
 
 	cat > plot.p <<-EOF
-set size 2, 1.30
+set size 2, 1.8
 set grid ytics
 set terminal postscript eps noenhanced color "Times-Roman,40"
 set output "${name}.eps"
