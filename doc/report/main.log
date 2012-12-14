@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2011.6.28)  13 DEC 2012 19:07
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2011.7.7)  13 DEC 2012 20:55
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -564,7 +564,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 62--64
 ] (./main.aux) ) 
 Here is how much of TeX's memory you used:
  9169 strings out of 495062
- 153470 string characters out of 1182644
+ 153470 string characters out of 1182645
  212072 words of memory out of 3000000
  12081 multiletter control sequences out of 15000+50000
  20631 words of font info for 64 fonts, out of 3000000 for 9000
