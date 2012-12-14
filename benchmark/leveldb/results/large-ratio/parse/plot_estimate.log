@@ -1,0 +1,47 @@
+$python
+Python 2.6.5 (r265:79063, Apr 16 2010, 13:57:41) 
+[GCC 4.4.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from model import *
+>>> [t_ss, t_ls] = model('ssd')
+>>> [t_sh, t_lh] = model('sata')
+>>> w = [t_ss, t_lh]
+>>> x = get_ratio()
+>>> y = get_time(x, 'hybrid')
+>>> x
+array([  1.,   2.,   4.,   8.,  16.,  32.,  64.])
+>>> xi = x + ones(len(x))
+>>> xi
+array([  2.,   3.,   5.,   9.,  17.,  33.,  65.])
+>>> y
+array([  27948.57462269,   31430.06809848,   36903.09247915,
+         43157.18806944,   56797.30045772,   83268.14867149,
+        130391.17352056])
+>>> yh = xi * repeat(1000000, len(x)) / (x * t_ss + t_lh)
+>>> yh
+array([  51.17462129,   73.95655629,  114.86510487,  181.96797441,
+        277.23817811,  388.05796126,  490.64640489])
+>>> ops = get_ops('hybrid')
+>>> ops
+array([  71.56,   95.45,  135.49,  208.54,  299.31,  396.31,  498.5 ])
+>>> pylab.ylim([0, 500])
+(0, 500)
+>>> plot(x, yh, 'r-', x, ops, 'o')
+[<matplotlib.lines.Line2D object at 0x2059fd0>, <matplotlib.lines.Line2D object at 0x1c6fdd0>]
+>>> pylab.ylim([0, 500])
+(0, 500)
+>>> pylab.plot(x, yh, 'r-', x, ops, 'o')
+[<matplotlib.lines.Line2D object at 0x1cdea10>, <matplotlib.lines.Line2D object at 0x1cde9d0>]
+>>> pylab.ylim([0, 500])
+(0, 500)
+>>> pylab.xlabel('ratio')
+<matplotlib.text.Text object at 0x1cd8250>
+>>> pylab.ylabel('ops/sec')
+<matplotlib.text.Text object at 0x1cd4f90>
+>>> pylab.ylabel('Throughput (ops/sec)')
+<matplotlib.text.Text object at 0x1cd4f90>
+>>> pylab.xlabel('Ratio')
+<matplotlib.text.Text object at 0x1cd8250>
+>>> pylab.plot(x, yh, 'r-', label='estimated')
+[<matplotlib.lines.Line2D object at 0x2054450>]
+>>> pylab.ylim([0, 500])
