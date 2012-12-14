@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2011.7.7)  13 DEC 2012 23:03
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2011.7.7)  13 DEC 2012 23:25
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -542,9 +542,9 @@ File: figures/mris-write-thput.eps Graphic file (type eps)
 <figures/mris-write-thput.eps>
 File: figures/mris_ratio_ops.eps Graphic file (type eps)
  <figures/mris_ratio_ops.eps> [5]
-File: figures/ratio_ops_estimate.eps Graphic file (type eps)
+File: figures/ratio_ops_predict.eps Graphic file (type eps)
 
-<figures/ratio_ops_estimate.eps>
+<figures/ratio_ops_predict.eps>
 File: figures/mris_ratio_thput.eps Graphic file (type eps)
  <figures/mris_ratio_thput.eps>
 File: figures/mris_ratio_iostat_ops.eps Graphic file (type eps)
@@ -569,7 +569,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 94--96
 ) [7] (./main.aux) ) 
 Here is how much of TeX's memory you used:
  9179 strings out of 495062
- 153643 string characters out of 1182645
+ 153641 string characters out of 1182645
  211117 words of memory out of 3000000
  12090 multiletter control sequences out of 15000+50000
  20631 words of font info for 64 fonts, out of 3000000 for 9000

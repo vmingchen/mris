@@ -296,17 +296,17 @@ $t_{SF}$ is the time of reading a Small image from the Flash SSD.}
 \end{table}
 
 Use (\ref{eqn:hybridops}) and the values in Table~\ref{tbl:variable},
-we can estimate the ops/sec of Hybrid. The results, together with
+we can predict the ops/sec of Hybrid. The results, together with
 measured ops/sec in our benchmarks, are presented in
 Figure~\ref{fig:readesti}. We can see that the measured ops/sec
-matches the shape of the estimated ops/sec. Moreover, the measured
-ops/sec are all slightly higher than the estimated counterparts.
+matches the shape of the predicted ops/sec. Moreover, the measured
+ops/sec are all slightly higher than the predicted counterparts.
 
-% TODO: measure the estimate accuracy with quantative metrics
+% TODO: measure the prediction accuracy with quantative metrics
 
 \begin{figure}[t]
 \begin{centering}
-\epsfig{file=figures/ratio_ops_estimate.eps,width=\linewidth}
+\epsfig{file=figures/ratio_ops_predict.eps,width=\linewidth}
 \caption{Read performance of Hybrid.}
 \label{fig:readesti}
 \end{centering}
@@ -347,7 +347,6 @@ from (\ref{eqn:hybridops}), the mb/sec of Hybrid is
 
 \NOTE{Ming}{TODO: consitify terms, such as images and objects, HDD and
 SATA}
-
 
 The results are shown in Figure~\ref{fig:mrisopssec}.  Specifically,
 the speedup for Facebook and Wikipedia workload is XXX and YYY. 
