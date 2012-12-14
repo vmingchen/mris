@@ -225,13 +225,13 @@ interested from the small ones.
 \begin{figure}[t]
 \begin{centering}
 \epsfig{file=figures/mris_ratio_ops.eps,width=1.00\linewidth}
-\caption{MRIS Read Performance. Each operation represents a read of an
-image.}
-\label{fig:mrisread}
+\caption{MRIS Read Performance (ops/sec). Each operation represents a
+read of an image.}
+\label{fig:mrisopssec}
 \end{centering}
 \end{figure}
 
-Figure~\ref{fig:mrisread} presents the read throughput in term of
+Figure~\ref{fig:mrisopssec} presents the read throughput in term of
 ops/sec. For all ratios, SSD shows the highest throughput among the
 three setups, followed by Hybrid and then SATA. As shown in
 Table~\ref{tbl:speedup}, the ops/sec of SSD is 3.89$\times$ to
@@ -290,37 +290,67 @@ Approxmiately, the ops/sec of Hybrid can be expressed in
   Large Image & $t_{LF} = 13238$ & $t_{LH} = 37599$ \\ \hline
 \end{tabular}
  \caption{Costs of read operations in time ($\mu$s). For instance,
-$t_{SF}$ means the time taken to read Small image from the Flash SSD.}
+$t_{SF}$ is the time of reading a Small image from the Flash SSD.}
 \label{tbl:variable}
 }
 \end{table}
 
 Use (\ref{eqn:hybridops}) and the values in Table~\ref{tbl:variable},
-we can expect the ops/sec of Hybrid. The results, together with
-measured ops/sec in benchmarks, are presented in
-Figure~\ref{fig:readesti}.
+we can estimate the ops/sec of Hybrid. The results, together with
+measured ops/sec in our benchmarks, are presented in
+Figure~\ref{fig:readesti}. We can see that the measured ops/sec
+matches the shape of the estimated ops/sec. Moreover, the measured
+ops/sec are all slightly higher than the estimated counterparts.
+
+% TODO: measure the estimate accuracy with quantative metrics
 
 \begin{figure}[t]
 \begin{centering}
-\epsfig{file=figures/ratio_ops_estimate.eps,width=.70\linewidth}
-\caption{Read performance of Hybrid. The dots are real ops/sec. The
-line covers estimated ops/sec.}
+\epsfig{file=figures/ratio_ops_estimate.eps,width=\linewidth}
+\caption{Read performance of Hybrid.}
 \label{fig:readesti}
 \end{centering}
 \end{figure}
 
+For the same workloads, the throughputs in term of mb/sec are
+presented in Figure~\ref{fig:mrismbsec}. Different from the results of
+ops/sec, mb/sec is decreasing as ratio increases for both SSD and
+SATA. This is because more of the operations are reads of small images
+when ratio is large. As we can see in (\ref{eqn:opsize}), the average
+size of an operation is a monotonically decreasing function of ratio
+where $large = 128\mbox{KB}$ and $small = 8\mbox{KB}$ are the sizes of
+large and small images respectively.
+
+\begin{equation}
+\label{eqn:opsize}
+\begin{array}{r@{\quad=\quad}l}
+  \mbox{avg\_op\_size} & \frac{ratio * small + large}{ratio + 1} \\
+   & \mbox{small} + \frac{large - small}{ratio + 1} 
+\end{array}
+\end{equation}
+
+However, for Hybrid, the throughputs are relatively stable. Derived
+from (\ref{eqn:hybridops}), the mb/sec of Hybrid is 
+
+\begin{equation}
+\label{eqn:hybridthput}
+    1000000 \frac{ratio * small + large}{t_{SF} * ratio + t_{LH}} .
+\end{equation}
+
+\begin{figure}[t]
+\begin{centering}
+\epsfig{file=figures/mris_ratio_thput.eps,width=1.00\linewidth}
+\caption{MRIS Read Performance (mb/sec).}
+\label{fig:mrismbsec}
+\end{centering}
+\end{figure}
 
 \NOTE{Ming}{TODO: consitify terms, such as images and objects, HDD and
 SATA}
 
-Notice that the average size of an operation depends on the ratio.
-$$
-\mbox{avg\_op\_size} = \frac{ratio \times \mbox{small} +
-    \mbox{large}}{ratio + 1}
-$$
 
-The results are shown in Figure~\ref{fig:mrisread}.  Specifically, the
-speedup for Facebook and Wikipedia workload is XXX and YYY. 
+The results are shown in Figure~\ref{fig:mrisopssec}.  Specifically,
+the speedup for Facebook and Wikipedia workload is XXX and YYY. 
 
 \begin{figure}[t]
 \begin{centering}
@@ -331,7 +361,7 @@ speedup for Facebook and Wikipedia workload is XXX and YYY.
 \end{figure}
 
 The throughput reported by iostat is much larger than that of
-Figure~\ref{fig:mrisread}.
+Figure~\ref{fig:mrisopssec}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% For Emacs:

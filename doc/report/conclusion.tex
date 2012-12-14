@@ -1,26 +1,6 @@
 \section{Conclusions}
 \label{sec:conc}
 
-We have finished the code as discussed in Section
-\ref{sec:implementation}. We have performed trace study to get
-workload specific characters that help determine the strategies and
-parameters of our green Device Mapper target. We have also benchmarked
-our green device and compared it with the linear device when same
-physical disks are used. We studied read and write performance of the
-green device in three different scenarios. The green device works well
-in the way we expected. In the best scenario, the performance of the
-green device is close to the SSD, whereas the performance of the
-linear device is close to the SATA disk. We obtains the most benefit
-of the SSD in this case. In the middle scenario, the performance of
-the linear device is slightly better than the SATA disk. The
-performance of the green device is still close to the SSD when there
-are free space on the SSD. Otherwise, the green device has to perform
-data migration, which benefits the performance when migrated extents
-are accessed later, but hurts the performance when not. In the worst
-scenario, the green device behaved poorly because migrations are
-performed but wasted. This is the case we are trying to avoid in our
-design. However, the mechnism to spin down disk does not work very
-well on our platform. Our experiments of power saving are limited. 
 
 \subsection{Future work}
 
