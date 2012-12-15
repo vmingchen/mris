@@ -141,7 +141,7 @@ is 128KB large representing a large image. The SizeThreshold is set to
    Name & Small (in SSTable) & Large (in LargeSpace) \\ \hline
   SSD & SSD & SSD \\
   Hybrid & SSD & HDD \\
-  SATA & HDD & HDD \\ \hline 
+  HDD & HDD & HDD \\ \hline 
 \end{tabular}
  \caption{Setups For Benchmarking. The three setups differ in the
  places objects are stored.}
@@ -154,25 +154,25 @@ inserting 10,000 groups of objects into MRIS. We experimented the
 workload on three different setups in Table~\ref{tbl:setups}. The
 groups were inserted in random and sequential ways considering the
 order of the key of objects. For ops/sec of random insertion, SSD is
-28\% faster than SATA and Hybrid is 8\% faster than SATA. Considering
-only SSD and SATA, the speedup of SSD is much lower than that shown in
+28\% faster than HDD and Hybrid is 8\% faster than HDD. Considering
+only SSD and HDD, the speedup of SSD is much lower than that shown in
 Figure~\ref{fig:drivewrite}. This is because of the Memtable and the
 log-structured feature of MRIS, which turns many random writes into
 fewer large sequential write. It also explains how random writes
-achieved a throughput of 23.9mb/sec even for SATA. As we can see in
-Figure~\ref{fig:drivewrite}, SSD is only slightly faster than SATA
+achieved a throughput of 23.9mb/sec even for HDD. As we can see in
+Figure~\ref{fig:drivewrite}, SSD is only slightly faster than HDD
 when it is for sequential write of 4K I/O size. Therefore, a slow
 speedup of insertion is reasonable.
 
-For sequential insertion, SSD is 26\% faster than SATA and Hybrid is
-just 3\% faster than SATA. This is because sequential insertion causes
+For sequential insertion, SSD is 26\% faster than HDD and Hybrid is
+just 3\% faster than HDD. This is because sequential insertion causes
 less compactions than random insertion, which reduce the overall
 number of I/Os.  Compations merge multiple sorted SSTable into one
 larger sorted SSTable. When key/value pairs are inserted sequentially,
 no merge is necessary because all SSTable have no overlapping keys.
 This also explains why sequential insertion is significantly faster
 than random insertion for all the three setups (41\%, 38\%, and 45\%
-faster for SSD, Hybrid, and SATA). 
+faster for SSD, Hybrid, and HDD). 
 
 \NOTE{Ming}{I really should have recorded the number of compactions
 happened during the benchmarking. I will probably do it in several
@@ -236,13 +236,13 @@ read of an image.}
 
 Figure~\ref{fig:mrisopssec} presents the read throughput in term of
 ops/sec. For all ratios, SSD shows the highest throughput among the
-three setups, followed by Hybrid and then SATA. As shown in
+three setups, followed by Hybrid and then HDD. As shown in
 Table~\ref{tbl:speedup}, the ops/sec of SSD is 3.89$\times$ to
-7.64$\times$ faster than SATA. The speedup of SSD over SATA also grows
+7.64$\times$ faster than HDD. The speedup of SSD over HDD also grows
 as ratio gets larger (except one point). This is because as the ratio
 increases, the I/Os contain more small random reads, which exploits
-more of SSD's superior random performance to SATA. Another interesting
-observation is that the speedup of Hybrid over SATA grows rapidly from
+more of SSD's superior random performance to HDD. Another interesting
+observation is that the speedup of Hybrid over HDD grows rapidly from
 0.44 to 5.78 as ratio increases.
 
 \begin{table}[tc]
@@ -250,18 +250,18 @@ observation is that the speedup of Hybrid over SATA grows rapidly from
 \begin{tabular}{c|c|c|c|c|c|c|c}
 \hline 
   Speedup & \multicolumn{7}{c}{Ratio} \\ \cline{2-8}
-  over SATA & 1 & 2 & 4 & 8 & 16 & 32 & 64 \\ \hline
+  over HDD & 1 & 2 & 4 & 8 & 16 & 32 & 64 \\ \hline
   SSD & 3.89 & 4.68 & 5.79 & 7.52 & 8.04 & 7.60 & 7.64  \\
   Hybrid & 0.44 & 0.86 & 1.39 & 2.69 & 3.56 & 4.46 & 5.78 \\ \hline
 \end{tabular}
- \caption{Speedup of SSD and Hybrid over SATA (ops/sec).}
+ \caption{Speedup of SSD and Hybrid over HDD (ops/sec).}
 \label{tbl:speedup}
 }
 \end{table}
 
 To help analyze the results, we use variables in
 Table~\ref{tbl:variable} to represent the costs of involved read
-operations in term of time. Then, ops/sec of SSD and SATA can be
+operations in term of time. Then, ops/sec of SSD and HDD can be
 expressed in (\ref{eqn:ssdops}) and (\ref{eqn:sataops}). 
 
 \begin{equation}
@@ -318,7 +318,7 @@ ops/sec are all slightly higher than the predicted counterparts.
 For the same workloads, the throughputs in term of mb/sec are
 presented in Figure~\ref{fig:mrismbsec}. Different from the results of
 ops/sec, mb/sec is decreasing as ratio increases for both SSD and
-SATA. This is because more of the operations are reads of small images
+HDD. This is because more of the operations are reads of small images
 when ratio is large. As we can see in (\ref{eqn:opsize}), the average
 size of an operation is a monotonically decreasing function of ratio
 where $large = 128\mbox{KB}$ and $small = 8\mbox{KB}$ are the sizes of
@@ -349,7 +349,7 @@ Hybrid can be expressed in
     1000000 \frac{ratio * small + large}{t_{SF} * ratio + t_{LH}} .
 \end{equation}
 
-Similarly, we can predict the mb/sec of SSD and SATA. The predicted
+Similarly, we can predict the mb/sec of SSD and HDD. The predicted
 mb/sec results, along with the benchmarked mb/sec results, are
 presented in Figure~\ref{fig:thputpred}. We observed that there exists
 significant discrepancy in Hybrid's mb/sec results when ratio is
@@ -367,7 +367,7 @@ multiplying the average operation size.
 \end{centering}
 \end{figure}
 
-As presented in Table~\ref{tbl:spdupmb}, Hybrid improves SATA's mb/sec
+As presented in Table~\ref{tbl:spdupmb}, Hybrid improves HDD's mb/sec
 throughput by at least 45\%. The improvement grows to as high as
 5.86$\times$ when ratio is 64.  Specifically, the speedup is
 2.61$\times$ and 3.73$\times$ when ratio is 8 and 16, which
@@ -378,17 +378,17 @@ approximate to the ratios in the workloads of Wikipedia and Facebook.
 \begin{tabular}{c|c|c|c|c|c|c|c}
 \hline 
   Speedup & \multicolumn{7}{c}{Ratio} \\ \cline{2-8}
-  over SATA & 1 & 2 & 4 & 8 & 16 & 32 & 64 \\ \hline
+  over HDD & 1 & 2 & 4 & 8 & 16 & 32 & 64 \\ \hline
   SSD & 3.88 & 4.68 & 5.67 & 7.33 & 8.35 & 7.87 & 7.76 \\
   Hybrid & 0.45 & 0.88 & 1.33 & 2.61 & 3.73 & 4.62 & 5.86 \\ \hline
 \end{tabular}
- \caption{Speedup of SSD and Hybrid over SATA (mb/sec).}
+ \caption{Speedup of SSD and Hybrid over HDD (mb/sec).}
 \label{tbl:spdupmb}
 }
 \end{table}
 
-\NOTE{Ming}{TODO: consitify terms, such as images and objects, HDD and
-SATA}
+%\NOTE{Ming}{TODO: consitify terms, such as images and objects, HDD and
+%SATA}
 
 We have also measured the throughput (mb/sec) went to each drive using
 iostat. The results are shown in Figure~\ref{fig:mrisiostat}. We
