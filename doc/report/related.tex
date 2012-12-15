@@ -29,11 +29,24 @@ optimizating application performance.
 
 \paragraph{(2) Multi-tier Storage}
 %
-GTSSL~\cite{socc11chisl}
-
-Flashup~\cite{vldb_flashup}
-
-FAWN~\cite{sosp09fawn}
+GTSSL~\cite{socc11chisl} presents an efficient multi-tier key/value
+storage architecture, wherein Flash SSD is used for storing top layer
+SSTable above the disk. However, workload specific characters, such as
+size-tiered property are not exploited. As a follow-up research of
+GTSSL, MRIS can integrate nicely with GTSSL. Koltsidas and
+Viglas~\cite{vldb_flashup} improved the performance of database by
+using both Flash and disk drives. They decided either Flash or disk
+should be used in the database buffer manager, which is also unware of
+knowledge such as object size. Moreover, their study was based an old
+model, which considers Flash write to be 10 times slower than disk
+write. This is no longer true, as we see from
+Subsection~\ref{sec:drives}, thanks to the development of hardware and
+software used in Flash SSD. FAWN~\cite{sosp09fawn} is a distributed
+multi-tier key/value store. They used a two-tier architecture of RAM
+and Flash SSD, but not Flash SSD and HDD. Most of their strategies are
+not applicable here because of the large performance disparity
+between RAM and disk. Furthermore, their design for energy saving is
+orthognal to our work.
 
 \paragraph{(3) Multi-level Caching}
 %
@@ -46,6 +59,10 @@ whereas FlashTier~\cite{eurosys_12_flashtier},
 FlashCache~\cite{flashcache} and Bcache~\cite{bcache} use Flash as
 block level cache. Our work resides in neither the virtual memory nor
 the block layer. It is agnostic to all the above-mentioned techniques.
+Moreover, both Zhang et. al.~\cite{zhang2012multi} and Saxena et
+al.~\cite{flashvm} tried to reduce cost by replacing a portion of DRAM
+with SSD without cost penalty. This objective does not conflict with
+design of MRIS, however, it is not in our design concerns.
 
 Forney et al. \cite{Forney2002fast} proposed storage aware caching for
 heterogeneous storage systems. They made memory cache aware of the
