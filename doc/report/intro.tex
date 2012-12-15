@@ -18,7 +18,7 @@ implication that they are likely to be thumbnails, metadata and
 attributes.  Top-tiered devices, e.g., NVRAM, exhibit great IOPS
 performance, and they allow storage to be used in finer granularity
 which causes less inner fragmentation as well. But for large objects,
-throughput is more important in terms of mb/s. Their I/Os tend to be
+throughput is more important in terms of mb/sec. Their I/Os tend to be
 sequential as well. Bottom-tiered devices, e.g., HDD, are large in
 capacity and exhibit satisfactory throughput for sequential I/Os. 
 
@@ -39,7 +39,7 @@ memory at all, to increase overall cache hit rates
 storage system optimized for multi-resolution images, named MRIS
 (Multi-Resolution Image Store).  MRIS aims at storing large amount of
 images, as well as their metadata and smaller versions (such as
-thumbnails), efficiently. However, the strageties emploied in MRIS can
+thumbnails), efficiently. However, the strategies employed in MRIS can
 be applied to other storage and web-serving systems as well because
 there also exist salient size characteristics following power-law
 distributions~\cite{kvworkload_sigmetrics}.
@@ -65,7 +65,7 @@ presents the background of Flash SSD, multi-resolution images, and
 key/value store. Section \ref{sec:implementation} describe our design
 and implementation.
 %Section \ref{sec:trace} presents the study Wikipedia's image requests
-%and showes the size-tiered property in its workloads.  
+%and shows the size-tiered property in its workloads.  
 We evaluate the performance of our system in Section \ref{sec:eval}.
 We analyze related work in Section \ref{sec:related} and conclude our
 work in Section \ref{sec:conc}.

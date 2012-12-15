@@ -40,18 +40,18 @@ appended into LargeSpace and an address is returned. The address is
 used for later retrieve of the value. To ease management, LargeSpace
 is splited into files called LargeBlocks. The threshold of split,
 called SplitThreshold, is a configurable parameter with a default
-value of 64MB. Although LargeSpace is splited, we enforce that no
+value of 64MB. Although LargeSpace is split, we enforce that no
 value will be splited among LargeBlocks. Therefore, it is possible
 that a LargeBlock is larger than the split threshold if there is a
 huge value in that LargeBlock.  LargeBlocks are recorded in a metadata
 file called LargeMeta. The formats of LargeMeta and LargeBlock and
-their relationship is illustruated in Figure~\ref{fig:space}.
+their relationship is illustrated in Figure~\ref{fig:space}.
 
 It is worth notice that LargeMeta is an immutable file. A new one is
 created every time it is updated. LargeMeta can be readily rebuilt
 using information from LargeBlocks. Many versions of LargeMeta are
 kept which provides a natural support for versioning. This makes the
-metadata resistent to harzardous situations such as system crash and
+metadata resistant to hazardous situations such as system crash and
 file corruption.
 
 \begin{figure}[t]
@@ -63,14 +63,14 @@ file corruption.
 \end{figure}
 
 A large key/value pair will be saved in LargeSpace when its value size
-is larger than a configurable threshold, named SizeThreshold.
+is larger than a configurable threshold, named \texttt{SizeThreshold}.
 SizeThreshold provides a simple but effective knob to tradeoff between
 cost and performance when LargeSpace and SSTable are stored in
 different places. We plan to use more sophisticated algorithm to
 determine where to place a certain pair considering not only size but
 also hotness and access pattern.
 
-%Insertion of MRIS is illustruated in Figure~\ref{fig:mrisinsert}.
+%Insertion of MRIS is illustrated in Figure~\ref{fig:mrisinsert}.
 When key/value pairs are firstly inserted into Memtable, they are
 treated equally. Large pairs in a Memtable are checked when the
 Memtable becomes full and is dumped into SSTable. Whereas small pairs

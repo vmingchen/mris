@@ -92,7 +92,7 @@ every month~\cite{wikimedia-foundation}. It can reflect workloads of
 many large websites.
 
 Figure~\ref{fig:wikiimage} presents the requests of images made in
-January 2012. They are extraced from request log files from
+January 2012. They are extracted from request log files from
 http://dumps.wikimedia.org/other/pagecounts-raw/2012/2012-01/. We
 extract requests of objects with a suffix of jpg, png, or gif, then
 round up their sizes into power of 2. The frequency of images of
@@ -167,7 +167,7 @@ speedup of insertion is reasonable.
 For sequential insertion, SSD is 26\% faster than HDD and Hybrid is
 just 3\% faster than HDD. This is because sequential insertion causes
 less compactions than random insertion, which reduce the overall
-number of I/Os.  Compations merge multiple sorted SSTable into one
+number of I/Os.  Compactions merge multiple sorted SSTable into one
 larger sorted SSTable. When key/value pairs are inserted sequentially,
 no merge is necessary because all SSTable have no overlapping keys.
 This also explains why sequential insertion is significantly faster
@@ -210,7 +210,7 @@ all setups.
 Log-structured key/value stores generally have high insertion
 throughput, however, they also have to provide satisfactory lookup
 performance.  We have developed workloads to evaluate the read
-performance of MRIS.  One of the most intersting parameters in read
+performance of MRIS.  One of the most interesting parameters in read
 benchmarking is the ratio of reading small and large images. In
 Facebook's workload~\cite{beaver2010finding}, the ratio of requests of
 small and large images is around 17 (not considering thumbnails and
@@ -276,7 +276,7 @@ expressed in (\ref{eqn:ssdops}) and (\ref{eqn:sataops}).
 
 Using linear regression, we estimated the values of the variables
 (also shown in Table~\ref{tbl:variable}) from our benchmark data.
-Approxmiately, the ops/sec of Hybrid can be expressed in
+Approximately, the ops/sec of Hybrid can be expressed in
 (\ref{eqn:hybridops}).
 
 \begin{equation}
@@ -305,7 +305,7 @@ Figure~\ref{fig:opspred}. We can see that the measured ops/sec
 matches the shape of the predicted ops/sec. Moreover, the measured
 ops/sec are all slightly higher than the predicted counterparts.
 
-% TODO: measure the prediction accuracy with quantative metrics
+% TODO: measure the prediction accuracy with quantitative metrics
 
 \begin{figure}[t]
 \begin{centering}
@@ -356,7 +356,7 @@ significant discrepancy in Hybrid's mb/sec results when ratio is
 small. This is because the average operation size is large when ratio
 is small, as we can see from (\ref{eqn:opsize}). The distances between
 predicted ops/sec and benchmarked ops/sec of small ratios, in
-Figure~\ref{fig:mrisopssec}, are magnfied when turned to mb/sec by
+Figure~\ref{fig:mrisopssec}, are magnified when turned to mb/sec by
 multiplying the average operation size.
 
 \begin{figure}[t]
@@ -391,8 +391,8 @@ approximate to the ratios in the workloads of Wikipedia and Facebook.
 %SATA}
 
 We have also measured the throughput (mb/sec) went to each drive using
-iostat. The results are shown in Figure~\ref{fig:mrisiostat}. We
-observed that the throughput reported by iostat is much larger than
+\texttt{iostat}. The results are shown in Figure~\ref{fig:mrisiostat}.
+We observed that the throughput reported by iostat is much larger than
 that in Figure~\ref{fig:mrisopssec}. Three factors contribute to the
 extra throughput: 1) the read-ahead in the filesystem, 2) extra read
 of filesystem metadata, and 3) extra read of database metadata.

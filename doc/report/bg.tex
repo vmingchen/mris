@@ -16,11 +16,11 @@ divided into SLC and MLC by the number of bits can be represented in a
 cell.
 
 NAND Flash has asymmetric read and write performance. Read is fast and
-takes roughly 50$mu$s for a MLC~\cite{ssdanatomy}. Write is 10-20
+takes roughly 50$\mu$s for a MLC~\cite{ssdanatomy}. Write is 10-20
 times slower than read. However, write is complicated in the sense
 that bits cannot be simply overwritten. Before writes, a block has to
 undergo an erase procedure which is 2-3 order of magnitude slower than
-read. Moveroever, NAND Flash cell can endure only limit cycles of
+read. Moreover, NAND Flash cell can endure only limit cycles of
 erasing. Therefore, Flash chips are often used for storage in the form
 of SSD, which also contains internal controller, processor and RAM.
 Algorithms including log-structured writing, wear-leveling, and
@@ -45,7 +45,7 @@ such as red/black tree and skiplist.
 LevelDB, as well as most other key/value engines, use Log-Structured
 Merge Trees (LSM)~\cite{lsm} for internal storage. When key/value
 pairs are first added, they are inserted into Memtable.  Once the size
-of the Memtable growes beyond a certain threshold, the whole Memtable
+of the Memtable grows beyond a certain threshold, the whole Memtable
 is flushed out into a SSTable, and a new Memtable is created for
 insertion. When key/value pairs get changed, the new pairs are
 inserted without modifying the old pairs. When a key/value pair is
@@ -208,4 +208,4 @@ exploits the strength of different types of storage media.
 %% For Vim:
 % vim:textwidth=70
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% LocalWords:  SMR HDDs drive's SMRs
+% LocalWords:  SMR HDDs drive's SMRs SSTables SSTable

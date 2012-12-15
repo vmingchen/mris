@@ -6,12 +6,12 @@
 The storage subsystem has been the performance bottleneck in many
 server workloads mostly because of slow mechanical HDDs, the primary
 storage device. Faster storage devices such as Flash are emerging as a
-hope of solving the problem. However, a drop-in replacment approach is
-not feasible because of their high price, assymmetric performance
+hope of solving the problem. However, a drop-in replacement approach is
+not feasible because of their high price, asymmetric performance
 characteristics, and short life time.  This project presents a
 multi-tiered object storage system, which integrates good
 characteristics of different kinds of storage devices in speed,
-capacity, and price.  We distribute objects among mutliple devices
+capacity, and price.  We distribute objects among multiple devices
 based on not only their hotness but also their sizes, so that they can
 be stored efficiently in terms of performance and cost.  We
 implemented the system based on LevelDB, and benchmarked the system
