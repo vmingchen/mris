@@ -1,23 +1,24 @@
 \section{Related Work} 
 \label{sec:related} 
-Our work of optimizating performance of a key/value store using hybrid
-storage devices is related to (1) hybrid filesystems, (2) multi-tier
-storage, and (3) multi-level caching. 
+Our work of optimizing the performance of a key/value store using
+hybrid storage devices is related to (1) hybrid filesystems, (2)
+multi-tier storage, and (3) multi-level caching. 
 
 \paragraph{(1) Hybrid Filesystems}
 
 hFS~\cite{eurosys_hfs} is a hybrid filesystem which treats data
 differently based on their size and type. Metadata and small files are
-stored separately in a log partition like log-structured filesystem;
-data blocks of large regular files are stored in a partition in a
-FFS-like fashion. Similar to hFS, Conquest~\cite{conquest_tos} uses
-battery-backed RAM to hold metadata and small files. Only large files
-go to disk. Unlike hFS, UmbrellaFS~\cite{umbrellafs_gos} is a hybrid
-stackable filesystem sit bellow VFS but above general filesystems such
-as Ext2.  UmbrellaFS is able to use different devices including SSD.
-TableFS \cite{tablefs} uses NoSQL store for metadata and small files.
-However, its main objective is to improve the performance of a
-filesystem using NoSQL store.
+stored separately in a log partition in a log-structured filesystem
+manner; data blocks of large regular files are stored in a partition
+in a FFS-like fashion. Similar to hFS, Conquest~\cite{conquest_tos}
+also stores metadata and small files separately, but in battery-backed
+RAM.  Only large files go to disk. Unlike hFS,
+UmbrellaFS~\cite{umbrellafs_gos} is a hybrid stackable
+filesystem~\cite{tos06zen} sitting bellow VFS but above general
+filesystems such as Ext2.  UmbrellaFS is able to use different devices
+including SSD.  TableFS~\cite{tablefs} uses NoSQL store for metadata
+and small files.  However, its main objective is to improve the
+performance of a filesystem using NoSQL store.
 
 Whereas all of them integrate hybrid techniques into the filesystem
 layer, our system lies in the application layer which is above the
@@ -25,46 +26,46 @@ filesystem layer. It optimizes the operations of an object store,
 which provides a different interface from the POSIX filesystem
 interface. This is an important difference because the filesystem
 interface lacks application level knowledge, which is very useful in
-optimizating application performance.
+optimizing application performance.
 
 \paragraph{(2) Multi-tier Storage}
 %
 GTSSL~\cite{socc11chisl} presents an efficient multi-tier key/value
 storage architecture, wherein Flash SSD is used for storing top layer
-SSTable above the disk. However, workload specific characters, such as
+SSTables above the disk. However, workload specific characters, such as
 size-tiered property are not exploited. As a follow-up research of
 GTSSL, MRIS can integrate nicely with GTSSL. Koltsidas and
-Viglas~\cite{vldb_flashup} improved the performance of database by
-using both Flash and disk drives. They decided either Flash or disk
-should be used in the database buffer manager, which is also unware of
-knowledge such as object size. Moreover, their study was based an old
-model, which considers Flash write to be 10 times slower than disk
-write. This is no longer true, as we see from
-Subsection~\ref{sec:drives}, thanks to the development of hardware and
+Viglas~\cite{vldb_flashup} improved the performance of database
+systems by using both Flash and disk drives. They decided either Flash
+or disk should be used in the database buffer manager, which is also
+unaware of knowledge such as object size. Moreover, their study was
+based an old model, which considers Flash write to be 10 times slower
+than disk write. This is no longer true, as we can see from
+Figure~\ref{fig:drivewrite}, thanks to the development of hardware and
 software used in Flash SSD. FAWN~\cite{sosp09fawn} is a distributed
 multi-tier key/value store. They used a two-tier architecture of RAM
-and Flash SSD, but not Flash SSD and HDD. Most of their strategies are
-not applicable here because of the large performance disparity
-between RAM and disk. Furthermore, their design for energy saving is
-orthognal to our work.
+and Flash SSD, but not Flash SSD and HDD. Their architecture is not
+applicable here because of the large performance disparity between RAM
+and disk. Furthermore, their design for energy saving is orthogonal to
+our work.
 
 \paragraph{(3) Multi-level Caching}
 %
-Storage class memory such as Flash fills the gap between DRAM and HDD
-in termns of cost, capacity and performance. It can be considered
-either as backup for DRAM in the virtual memory layer or cache for HDD
+Storage class memory such as Flash fills the gap between RAM and HDD
+in terms of cost, capacity and performance. It can be considered
+either as backup for RAM in the virtual memory layer or cache for HDD
 in the block layer. Zhang et al.~\cite{zhang2012multi} and Saxena et
-al.~\cite{flashvm} consider using Flash as backup of DRAM for paging,
+al.~\cite{flashvm} consider using Flash as backup of RAM for paging,
 whereas FlashTier~\cite{eurosys_12_flashtier},
 FlashCache~\cite{flashcache} and Bcache~\cite{bcache} use Flash as
 block level cache. Our work resides in neither the virtual memory nor
 the block layer. It is agnostic to all the above-mentioned techniques.
 Moreover, both Zhang et. al.~\cite{zhang2012multi} and Saxena et
-al.~\cite{flashvm} tried to reduce cost by replacing a portion of DRAM
+al.~\cite{flashvm} tried to reduce cost by replacing a portion of RAM
 with SSD without cost penalty. This objective does not conflict with
-design of MRIS, however, it is not in our design concerns.
+the design of MRIS, however, it is not in our design concerns.
 
-Forney et al. \cite{Forney2002fast} proposed storage aware caching for
+Forney et al.~\cite{Forney2002fast} proposed storage aware caching for
 heterogeneous storage systems. They made memory cache aware of the
 different replacement costs and partitioned the cache for different
 storage devices.  However, their study is set in a different context
