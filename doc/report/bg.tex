@@ -28,8 +28,9 @@ garbage collection are implemented inside SSD to make Flash writes
 faster and endures longer.
 
 \subsection{Key/Value Store}
-We implemented MRIS using LevelDB~\cite{leveldb-web}, an open source
-key/value database engine developed by Google.  LevelDB is
+As we implemented MRIS using LevelDB~\cite{leveldb-web}, we use it as
+an example to analyze key/value stroe. LevelDB is an open source
+key/value database engine developed by Google. LevelDB is
 log-structured and organizes data into Sorted String Table (SSTable).
 SSTable, introduced in Bigtable~\cite{chang06osdi}, is an immutable
 data structure containing a sequence of key/value pairs sorted by the
@@ -92,6 +93,38 @@ Memtable in background. Its compaction procedure is illustrated in
 Figure~\ref{fig:compact}. One SSTable (a) at layer $n$ is merged with
 the SSTables at layer $n+1$ that have overlapping keys with (a) into
 new SSTables at layer $n+1$.
+
+\subsection{Multi-Resolution Image}
+Multi-Resolution Images are different representations of the same
+image at different resolutions. A common form of multi-resolution
+images are images with different pixel resolutions, for instance,
+thumbnails at $100\times100$, small images at $600\times800$, and
+large images at $2048\times3072$. Multi-Resolution also describes a
+category of techniques used in image processing and
+analysis~\cite{mrisimg}, including image pyramids (e.g., Laplacian
+pyramids), discrete wavelet transform, and wavelet image compression.
+Images are represented and stored with multi-resolution version not
+only because for fast preview but also for extracting different level
+of information from image content.
+
+As we can see from Figure~\ref{fig:mrisidea}, we see a match of the
+multi-resolution image and the storage tiers. The idea of MRIS is to
+matching the storage system for the objects stored in it. It also
+exploits the strength of different types of storage media.
+
+\begin{figure}[t]
+  \centering
+  \begin{minipage}[l]{0.48\linewidth}
+    \epsfig{file=figures/pyramid.eps,width=.75\linewidth}
+    \centerline{\footnotesize(a) Multi-Resolution Image}\medskip
+  \end{minipage}
+  \begin{minipage}[r]{0.48\linewidth}
+    \epsfig{file=figures/storage-tiers.eps,width=0.9\linewidth}
+    \centerline{\footnotesize(b) Storage Tiers}\medskip
+  \end{minipage}
+  \caption{Multi-Resolution Image and Storage Tiers}
+  \label{fig:mrisidea}
+\end{figure}
 
 %Background...
 
