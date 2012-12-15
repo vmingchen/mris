@@ -1,13 +1,23 @@
 \section{Conclusions}
 \label{sec:conc}
+We present a multi-tier key/value store using Flash SSD and HDD. It
+exploits the size-tiered feature in many workloads, especially
+multi-resolution image workload. It achieves good balance of
+performance and cost by leveraging SSD's high random I/O throughput as
+well as HDD's good sequential I/O performance. With a small Flash of
+5.9\% of the total storage capacity, it is able to improve the ops/sec
+of an emulated Facebook image workload by 3.73$\times$.
 
+\paragraph{Future Work}
+We plan to study the model of multi-tier key/value considering cost,
+characteristics of different drives, as well as more workload specific
+features besides the ratio of read small and large objects. More
+threads will be used in benchmark to exploit better parallelism in
+Flash SSD.
 
-\subsection{Future work}
-
-We will test the green device in real world workloads and provide
-mechanism to tune the performance of the green device according to
-workload-specific features. We will also perform data grouping to
-achieve more data locality. 
+\paragraph{Acknowledgement}
+The author would like to thank Vasily Tarasov and Mike Ferdman for
+their valuable comments.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% For Emacs:

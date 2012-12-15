@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  14 DEC 2012 22:00
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  14 DEC 2012 23:25
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -574,7 +574,7 @@ File: figures/ratio_thput_predict.eps Graphic file (type eps)
 <figures/ratio_thput_predict.eps> [6]
 File: figures/mris_ratio_iostat_thput.eps Graphic file (type eps)
  <figures/mris_ratio_iostat_thput.eps>)
-(./related.tex) (./conclusion.tex) (./main.bbl [7]
+(./related.tex) (./conclusion.tex [7]) (./main.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 114--119
 \OT1/ptm/m/n/10 life-time.  $\OT1/ptm/m/sl/8 https : / / groups . google . com 
 / d / topic / leveldb /
@@ -596,4 +596,4 @@ Here is how much of TeX's memory you used:
  29 hyphenation exceptions out of 8191
  63i,11n,57p,435b,345s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (8 pages, 58340 bytes).
+Output written on main.dvi (8 pages, 59220 bytes).
