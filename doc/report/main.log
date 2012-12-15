@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  15 DEC 2012 02:08
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  15 DEC 2012 02:13
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -556,11 +556,11 @@ File: figures/ssd_vs_sata_write.eps Graphic file (type eps)
 File: figures/wiki-image.eps Graphic file (type eps)
  <figures/wiki-image.eps> [4]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 179.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 178.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 179.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 178.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 179.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 178.
 File: figures/mris-write-ops.eps Graphic file (type eps)
 
 <figures/mris-write-ops.eps>
@@ -613,4 +613,4 @@ Here is how much of TeX's memory you used:
  29 hyphenation exceptions out of 8191
  63i,11n,57p,435b,351s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (9 pages, 63440 bytes).
+Output written on main.dvi (9 pages, 63424 bytes).
