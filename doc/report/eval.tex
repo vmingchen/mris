@@ -1,13 +1,14 @@
 \section{Evaluation} \label{sec:eval}
 
 We have evaluated our system on a 64-bit Dell server with 1GB memory
-and a one-core XXX CPU. The OS, a Ubuntu server 8.04 with kernel
-version 3.2.9, is installed on a Maxtor 7L250S0 3.5-inch SATA HDD. We
-used the same but another SATA HDD and one Flash based SSD for MRIS
-store. The HDD is also a Maxtor 7L250S0 with a capacity of 250GB and a
-rotational speed of 7200 rpm.  The SSD is an Intel SSDSA2CW300G3
-2.5-inch with 300G capacity.  The code and benchmark results are
-publicly available at https://github.com/brianchenming/mris.
+and a one-core Intel(R) Xeon(TM) CPU 2.80GH CPU. The OS, a Ubuntu
+server 8.04 with kernel version 3.2.9, is installed on a Maxtor
+7L250S0 3.5-inch SATA HDD. We used the same but another SATA HDD and
+one Flash based SSD for MRIS store. The HDD is also a Maxtor 7L250S0
+with a capacity of 250GB and a rotational speed of 7200 rpm.  The SSD
+is an Intel SSDSA2CW300G3 2.5-inch with 300G capacity.  The code and
+benchmark results are publicly available at
+https://github.com/brianchenming/mris.
 
 \subsection{Measure drives}
 \label{sec:drives}
@@ -102,12 +103,13 @@ of different sizes vary widely.  Particularly, images of sizes between
 $(4, 64]$ KB are most popular. They sum to 81.58\% of the total number
 of image requests. Moreover, 94.57\% of the requests are for images
 smaller than or equal to 128KB. Despite the fact that small images
-(<=128KB) are the absolute majority in term of request numbers, the
-traffic (size$\times$frequency) introduced by them is just 2.96\% of
-the total. Although not all the requests make their way to the storage
-layer because of memory cache (such as Memcached~\cite{memcached}).
-This salient size-tiered property of requests still makes size-tiered
-storage a close match for multi-resolution image workloads.
+(smaller than 128KB) are the absolute majority in term of request
+numbers, the traffic (size$\times$frequency) introduced by them is
+just 2.96\% of the total. Although not all the requests make their way
+to the storage layer because of memory cache (such as
+Memcached~\cite{memcached}).  This salient size-tiered property of
+requests still makes size-tiered storage a close match for
+multi-resolution image workloads.
 
 \subsection{MRIS Write}
 
@@ -272,8 +274,8 @@ expressed in (\ref{eqn:ssdops}) and (\ref{eqn:sataops}).
     1000000 \frac{ratio + 1}{t_{SH} * ratio + t_{LH}}
 \end{equation}
 
-By linear regression, we obtained the estimation of the variables
-(shown in Table~\ref{tbl:variable}) from our benchmark data.
+Using linear regression, we estimated the values of the variables
+(also shown in Table~\ref{tbl:variable}) from our benchmark data.
 Approxmiately, the ops/sec of Hybrid can be expressed in
 (\ref{eqn:hybridops}).
 

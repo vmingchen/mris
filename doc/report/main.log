@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  14 DEC 2012 23:25
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  15 DEC 2012 00:34
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -512,30 +512,29 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
 )
-(./intro.tex) (./implementation.tex
+(./intro.tex) (./bg.tex [1
+
+
+]
+Underfull \hbox (badness 3068) in paragraph at lines 31--43
+\OT1/ptm/m/n/10 Lev-elDB is log-structured and or-ga-nizes data into
+ []
+
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 52.
+(/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
 File: figures/sstable.eps Graphic file (type eps)
  <figures/sstable.eps>
 File: figures/leveldb-compact.eps Graphic file (type eps)
 
-<figures/leveldb-compact.eps>
-Underfull \hbox (badness 3068) in paragraph at lines 20--32
-\OT1/ptm/m/n/10 Lev-elDB is log-structured and or-ga-nizes data into
- []
-
-[1
-
-
-]
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 41.
- (/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
+<figures/leveldb-compact.eps>) (./implementation.tex [2]
 File: figures/large-space.eps Graphic file (type eps)
 
-<figures/large-space.eps> [2]
+<figures/large-space.eps>
 File: figures/mris-store.eps Graphic file (type eps)
  <figures/mris-store.eps>
-Underfull \hbox (badness 7221) in paragraph at lines 138--147
+Underfull \hbox (badness 7221) in paragraph at lines 74--83
 []\OT1/ptm/m/n/10 When key/value pairs are firstly in-serted into
  []
 
@@ -546,13 +545,16 @@ File: figures/ssd_vs_sata_write.eps Graphic file (type eps)
 
 <figures/ssd_vs_sata_write.eps>
 File: figures/wiki-image.eps Graphic file (type eps)
- <figures/wiki-image.eps> [4]
+ <figures/wiki-image.eps>
+Underfull \vbox (badness 4713) has occurred while \output is active []
+
+ [4]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 177.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 179.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 177.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 179.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 177.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 179.
 File: figures/mris-write-ops.eps Graphic file (type eps)
 
 <figures/mris-write-ops.eps>
@@ -560,40 +562,39 @@ File: figures/mris-write-thput.eps Graphic file (type eps)
  <figures/mris-write-thput.eps>
 File: figures/mris_ratio_ops.eps Graphic file (type eps)
 
-<figures/mris_ratio_ops.eps>
-Underfull \vbox (badness 1558) has occurred while \output is active []
-
- [5]
+<figures/mris_ratio_ops.eps> [5]
 File: figures/ratio_ops_predict.eps Graphic file (type eps)
-
-<figures/ratio_ops_predict.eps>
+ <figures/ratio_ops_predict.eps>
 File: figures/mris_ratio_thput.eps Graphic file (type eps)
- <figures/mris_ratio_thput.eps>
-File: figures/ratio_thput_predict.eps Graphic file (type eps)
 
-<figures/ratio_thput_predict.eps> [6]
+<figures/mris_ratio_thput.eps>
+File: figures/ratio_thput_predict.eps Graphic file (type eps)
+ <figures/ratio_thput_predict.eps> [6]
 File: figures/mris_ratio_iostat_thput.eps Graphic file (type eps)
- <figures/mris_ratio_iostat_thput.eps>)
-(./related.tex) (./conclusion.tex [7]) (./main.bbl
-Underfull \hbox (badness 10000) in paragraph at lines 114--119
+
+<figures/mris_ratio_iostat_thput.eps>) (./related.tex [7]) (./conclusion.tex)
+(./main.bbl [8]
+Underfull \hbox (badness 10000) in paragraph at lines 118--123
 \OT1/ptm/m/n/10 life-time.  $\OT1/ptm/m/sl/8 https : / / groups . google . com 
 / d / topic / leveldb /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 138--140
+Underfull \hbox (badness 10000) in paragraph at lines 146--148
 []\OT1/ptm/m/n/10 Wikipedia.  $\OT1/ptm/m/sl/8 http : / / wikimediafoundation .
  org / wiki /
  []
 
-) [8] (./main.aux) ) 
+) [9
+
+] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 11123 strings out of 495062
- 201716 string characters out of 1182644
- 249721 words of memory out of 3000000
- 14004 multiletter control sequences out of 15000+50000
- 20631 words of font info for 64 fonts, out of 3000000 for 9000
+ 11131 strings out of 495062
+ 201791 string characters out of 1182644
+ 249735 words of memory out of 3000000
+ 14009 multiletter control sequences out of 15000+50000
+ 21689 words of font info for 66 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191
  63i,11n,57p,435b,345s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (8 pages, 59220 bytes).
+Output written on main.dvi (9 pages, 61788 bytes).
