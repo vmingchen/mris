@@ -5,44 +5,47 @@ MRIS is a key/value store designed for multi-resolution image
 workloads using a multi-tier architecture consisting of Flash SSD and
 magnetic HDD.
 
+
 \subsection{Flash SSD}
+
 Flash is a type of non-volatile memory. There are two main types of
 flash memory, which are named after the NAND and NOR logic
 gates~\cite{flashwiki}. NAND is the more popular one used in
-SSDs~\cite{ssdanatomy}.  NAND flash chip is able to trap electrons
-between its gates. The absence of electrons corresponds to a logical
-0. Otherwise, it corresponds to a logical 1. NAND can be furthered
-divided into SLC and MLC by the number of bits can be represented in a
-cell.
+SSDs~\cite{ssdanatomy}. NAND flash chip can trap electrons
+between its gates and use the absence of trapped electrons to record
+a logical bit. NAND can be furthered divided into SLC and MLC by the
+number of bits can be represented in a cell.
 
 NAND Flash has asymmetric read and write performance. Read is fast and
 takes roughly 50$\mu$s for a MLC~\cite{ssdanatomy}. Write is 10-20
 times slower than read. However, write is complicated in the sense
 that bits cannot be simply overwritten. Before writes, a block has to
-undergo an erase procedure which is 2-3 order of magnitude slower than
+be erased, which is a procedure 2-3 order of magnitude slower than
 read. Moreover, NAND Flash cell can endure only limit cycles of
 erasing. Therefore, Flash chips are often used for storage in the form
-of SSD, which also contains internal controller, processor and RAM.
+of SSD, which also contains internal controller, processor, and RAM.
 Algorithms including log-structured writing, wear-leveling, and
 garbage collection are implemented inside SSD to make Flash writes
 faster and endures longer.
 
+
 \subsection{Key/Value Store}
+
 As we implemented MRIS using LevelDB~\cite{leveldb-web}, we use it as
-an example to analyze key/value stroe. LevelDB is an open source
+an example to analyze key/value store. LevelDB is an open source
 key/value database engine developed by Google. LevelDB is
 log-structured and organizes data into Sorted String Table (SSTable).
 SSTable, introduced in Bigtable~\cite{chang06osdi}, is an immutable
 data structure containing a sequence of key/value pairs sorted by the
 key as shown in Figure~\ref{fig:sstable}. Besides key and value, there
-might be optional fields such as CRC, compression type etc. SSTable
-are mostly saved as files and each of them can contains data
+might be optional fields such as CRC, compression type etc. SSTables
+are mostly saved as files and each of them can contain other data
 structures, such as bloomfilter, to facilitate key lookup. SSTable
 have counterpart in the memory called Memtable. The key/value pairs in
-Memtable are often kept in data structures easy for insert and lookup
-such as red/black tree and skiplist.
+Memtable are often kept in data structures of fast insertion and
+lookup speed such as red/black tree and skiplist.
 
-LevelDB, as well as most other key/value engines, use Log-Structured
+LevelDB, as well as many other key/value engines, use Log-Structured
 Merge Trees (LSM)~\cite{lsm} for internal storage. When key/value
 pairs are first added, they are inserted into Memtable.  Once the size
 of the Memtable grows beyond a certain threshold, the whole Memtable
@@ -50,9 +53,9 @@ is flushed out into a SSTable, and a new Memtable is created for
 insertion. When key/value pairs get changed, the new pairs are
 inserted without modifying the old pairs. When a key/value pair is
 deleted, a marker of the deletion is inserted by setting a flag inside
-the key called \texttt{KeyType}. This way key/value can provide large
-insertion throughput because data is written out using sequential
-I/Os, which have good performance on Hard Disk Drives (HDD). 
+the key called \texttt{KeyType}. This enables key/value store to
+provide high insertion throughput because data is written out using
+sequential I/Os, which have good performance on magnetic HDD. 
 
 \begin{figure}[t]
 \begin{centering}
@@ -80,22 +83,25 @@ jobs are launched periodically to sort and merge small SSTables into
 larger ones in the next layer. This is called compaction. Deleted
 pairs are also removed during compaction. Then a lookup iterates the
 SSTables layer by layer and returns once the key is found.  Because
-SSTables are sorted by key, it enables fast lookup algorithm like
-binary search. There is also index for SSTables tells the key range
-covered by a particular SSTable so that it suffice just checking the
-SSTables whose key ranges cover the interested key. Inside each
-SSTable, we can have a bloomfilter to filter negative key lookup and a
-secondary index for faster search.
+SSTables are sorted by key, it allows fast lookup using algorithms
+like binary search. There is also index for SSTables tells the key
+range covered by a particular SSTable so that it suffices just to
+check the SSTables whose key ranges cover the interested key. Inside
+each SSTable, we can have a bloomfilter to filter negative key lookup
+and a secondary index for faster search.
 
 In LevelDB, there are two Memtables, once one is filled, the other one
 is used for further insertion. The filled one is flushed into a
-Memtable in background. Its compaction procedure is illustrated in
-Figure~\ref{fig:compact}. One SSTable (a) at layer $n$ is merged with
-the SSTables at layer $n+1$ that have overlapping keys with (a) into
-new SSTables at layer $n+1$.
+Memtable in background. After the flush, a new Memtable is created.
+Its compaction procedure is illustrated in Figure~\ref{fig:compact}.
+One SSTable (a) at layer $n$ is merged with the SSTables at layer
+$n+1$ that have overlapping keys with (a) into new SSTables at layer
+$n+1$.
+
 
 \subsection{Multi-Resolution Image}
-Multi-Resolution Images are different representations of the same
+
+Multi-Resolution images are different representations of the same
 image at different resolutions. A common form of multi-resolution
 images are images with different pixel resolutions, for instance,
 thumbnails at $100\times100$, small images at $600\times800$, and
@@ -104,13 +110,13 @@ category of techniques used in image processing and
 analysis~\cite{mrisimg}, including image pyramids (e.g., Laplacian
 pyramids), discrete wavelet transform, and wavelet image compression.
 Images are represented and stored with multi-resolution version not
-only because for fast preview but also for extracting different level
-of information from image content.
+only for fast preview but also for extracting different levels of
+information from different resolutions.
 
-As we can see from Figure~\ref{fig:mrisidea}, we see a match of the
-multi-resolution image and the storage tiers. The idea of MRIS is to
-matching the storage system for the objects stored in it. It also
-exploits the strength of different types of storage media.
+From Figure~\ref{fig:mrisidea}, we see a match of the multi-resolution
+images and the storage tiers. MRIS tries to match the storage system
+for the objects stored in it. It also exploits the strength of
+different types of storage media.
 
 \begin{figure}[t]
   \centering

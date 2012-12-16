@@ -4,9 +4,9 @@ We have evaluated our system on a 64-bit Dell server with 1GB memory
 and a one-core Intel(R) Xeon(TM) CPU 2.80GH CPU. The OS, a Ubuntu
 server 8.04 with kernel version 3.2.9, is installed on a Maxtor
 7L250S0 3.5-inch SATA HDD. We used the same but another SATA HDD and
-one Flash based SSD for MRIS store. The HDD is also a Maxtor 7L250S0
-with a capacity of 250GB and a rotational speed of 7200 rpm.  The SSD
-is an Intel SSDSA2CW300G3 2.5-inch with 300G capacity.  The code and
+one Flash SSD for MRIS store. The HDD is also a Maxtor 7L250S0 with a
+capacity of 250GB and a rotational speed of 7200 rpm.  The SSD is an
+Intel SSDSA2CW300G3 2.5-inch drive with 300G capacity.  The code and
 benchmark results are publicly available at
 https://github.com/brianchenming/mris.
 
@@ -33,8 +33,8 @@ Filebench built-in workloads \texttt{singalstreamread} and
 \end{figure}
 
 The performance of read operations are presented in
-Figure~\ref{fig:driveread}. All benchmarks are performed for 3 times,
-and the standard deviation of the 3 runs are shown as error bar in the
+Figure~\ref{fig:driveread}. All benchmarks are performed 3 times, and
+the standard deviation of the 3 runs are shown as error bar in the
 figures. The results are stable and most error bars are imperceptible
 or negligible. As we can see in Figure~\ref{fig:driveread}, SSD is
 much better than that of HDD for random read for small I/O sizes. SSD
@@ -48,7 +48,7 @@ the HDD's specification.
 
 For sequential read, the most interesting observation is that HDD
 provided the same throughput as SSD when I/O size is 4K and 8K. HDD
-throughput stop grow after 8K, whereas SSD throughput grows until
+throughput stop growing after 8K, whereas SSD throughput grows until
 256K. 8K and 256K are the points when HDD and SSD achieve their
 respective maximum bandwidth.
 
@@ -92,21 +92,21 @@ every month~\cite{wikimedia-foundation}. It can reflect workloads of
 many large websites.
 
 Figure~\ref{fig:wikiimage} presents the requests of images made in
-January 2012. They are extracted from request log files from
+January 2012. They were extracted from request log files from
 http://dumps.wikimedia.org/other/pagecounts-raw/2012/2012-01/. We
-extract requests of objects with a suffix of jpg, png, or gif, then
-round up their sizes into power of 2. The frequency of images of
+extracted requests of objects with a suffix of jpg, png, or gif, then
+rounded up their sizes into power of 2. The frequency of images of
 different sizes is counted and plotted in Figure~\ref{fig:wikiimage}.
 All images larger than 256M is counted in the 256M bin. The first
 observation from Figure~\ref{fig:wikiimage} is that the request image
 of different sizes vary widely.  Particularly, images of sizes between
-$(4, 64]$ KB are most popular. They sum to 81.58\% of the total number
-of image requests. Moreover, 94.57\% of the requests are for images
-smaller than or equal to 128KB. Despite the fact that small images
-(smaller than 128KB) are the absolute majority in term of request
-numbers, the traffic (size$\times$frequency) introduced by them is
-just 2.96\% of the total. Although not all the requests make their way
-to the storage layer because of memory cache (such as
+$(4, 64]$ KB are most popular. They sum up to 81.58\% of the total
+number of image requests. Moreover, 94.57\% of the requests are for
+images smaller than or equal to 128KB. Despite the fact that small
+images (smaller than 128KB) are the absolute majority in term of
+request numbers, the traffic (size$\times$frequency) introduced by
+them is just 2.96\% of the total. Although not all the requests make
+their way to the storage layer because of memory cache (such as
 Memcached~\cite{memcached}).  This salient size-tiered property of
 requests still makes size-tiered storage a close match for
 multi-resolution image workloads.
@@ -123,7 +123,7 @@ We now show micro benchmark results on simple workloads of sequential
 and random write of multi-resolution images. Multi-resolution images
 of the same content are often created from a common source. Therefore,
 they are inserted into the image store at the same time. For example,
-In Facebook's Haystack~\cite{beaver2010finding}, four resolutions,
+in Facebook's Haystack~\cite{beaver2010finding}, four resolutions,
 thumbnail, small, medium, and large, are created from each image
 uploaded by customers. As most images are in compressed format, we
 emulate the workload of writing MRI by inserting groups of random
@@ -131,7 +131,7 @@ objects into MRIS with compression disabled. To be simple, each group
 consists of two objects, both of which are random strings. One of the
 two objects is 8KB large representing a small image, whereas the other
 is 128KB large representing a large image. The SizeThreshold is set to
-128KB, so that the large one will be stored in LargeSpace.
+128KB, so that the large ones are stored in LargeSpace.
 
 \begin{table}[tc]
 {\centering \footnotesize
@@ -153,16 +153,16 @@ Figure~\ref{fig:mriswrite} presents the results of the workload of
 inserting 10,000 groups of objects into MRIS. We experimented the
 workload on three different setups in Table~\ref{tbl:setups}. The
 groups were inserted in random and sequential ways considering the
-order of the key of objects. For ops/sec of random insertion, SSD is
+order of the keys of objects. For ops/sec of random insertion, SSD is
 28\% faster than HDD and Hybrid is 8\% faster than HDD. Considering
 only SSD and HDD, the speedup of SSD is much lower than that shown in
 Figure~\ref{fig:drivewrite}. This is because of the Memtable and the
 log-structured feature of MRIS, which turns many random writes into
-fewer large sequential write. It also explains how random writes
+fewer large sequential writes. It also explains how random writes
 achieved a throughput of 23.9mb/sec even for HDD. As we can see in
-Figure~\ref{fig:drivewrite}, SSD is only slightly faster than HDD
-when it is for sequential write of 4K I/O size. Therefore, a slow
-speedup of insertion is reasonable.
+Figure~\ref{fig:drivewrite}, SSD is only slightly faster than HDD when
+it is for sequential write of 4K I/O size. Therefore, a slow speedup
+of insertion is reasonable.
 
 For sequential insertion, SSD is 26\% faster than HDD and Hybrid is
 just 3\% faster than HDD. This is because sequential insertion causes
@@ -184,11 +184,11 @@ happened during the benchmarking. I will do it in the future.}
 % LevelDB writes SSTable using mmap and fdatasync. It is better if we
 % can get some basic drive benchmarks using mmap in the future.
 
-Figure~\ref{fig:mriswrite} (b) also shows throughput in term of
-mb/sec.  However, the speed-up ratio of mb/sec is almost identical to
-that of ops/sec (differ in less than 0.1\%). This is what we are
-expecting because the average size of an operation is the same among
-all setups.
+Figure~\ref{fig:mriswrite} (b) shows throughput of the same
+experiments in term of mb/sec.  The speed-up ratio of mb/sec is almost
+identical to that of ops/sec (differ in less than 0.1\%).  This is
+what we are expecting because the average size of an operation is the
+same among all setups.
 
 \begin{figure}[t]
   \centering

@@ -1,26 +1,31 @@
 \section{Introduction}
 \label{intro}
 
-In many scenarios of storage systems, the access patterns and the
-sizes of structured objects presents a property that matches the
-property of the storage hierarchy. For example, in an image storage
-system, the attributes and thumbnails of stored images are small in
-size but frequently accessed, which makes them fits well in small but
-fast and expensive top-tiered storage devices, such as NVRAM and
-Flash.  Whereas the original images are big but less accessed, which
-makes them suitable for large but slow and inexpensive bottom-tiered
-storage devices, such as HDD and tape.  Moreover, slow seeks can
-usually be amortized by fast sequential access followed.
+In many storage workloads, the access patterns and the sizes of
+structured objects present a property that matches the property of the
+storage hierarchy. For example, in an image storage system, the
+attributes and thumbnails of stored images are small in size but
+frequently accessed, which makes them fits well in small but fast and
+expensive top-tiered storage devices, such as NVRAM and Flash.
+Whereas the original images are big but less accessed, which makes
+them suitable for large but slow and inexpensive bottom-tiered storage
+devices, such as HDD and tape.  Moreover, slow seeks in bottom-tiered
+storage devices can be amortized by fast sequential I/O when large
+objects are accessed.
 
 For small objects, throughput is important in term of op/sec. They
 tend to be accessed randomly because of their small sizes and the
-implication that they are likely to be thumbnails, metadata and
-attributes.  Top-tiered devices, e.g., NVRAM, exhibit great IOPS
-performance, and they allow storage to be used in finer granularity
-which causes less inner fragmentation as well. But for large objects,
-throughput is more important in terms of mb/sec. Their I/Os tend to be
-sequential as well. Bottom-tiered devices, e.g., HDD, are large in
-capacity and exhibit satisfactory throughput for sequential I/Os. 
+implication that they are likely to be metadata and previews (such as
+thumbnails of images and the beginning parts of video).
+Top-tiered devices, e.g., NVRAM, exhibit great IOPS performance, and
+they allow storage to be used in finer granularity which causes less
+inner fragmentation as well. But for large objects, throughput is more
+important in terms of mb/sec. Their I/Os tend to be sequential as
+well. Bottom-tiered devices, e.g., HDD, are large in capacity and
+exhibit satisfactory throughput for sequential I/Os. 
+
+%From the perspective of customer, they often expect accesses of large
+%objects to be slower.
 
 When objects present such a size-tiered property, a corresponding
 size-tiered storage system can provide good trade-off between cost and
@@ -30,18 +35,18 @@ popular out-of-place update optimization, as in log-structured
 filesystems, by turning small in-place updates to revision logs as
 metadata and compacting them into large batched I/O to bottom tiers.
 
-Since multimedia files are primarily accessed sequentially, it may not
-be necessary to provide for efficient random access to every large
-file \cite{evans2002study}.  Facebook researchers also argued that it
-may even be worthwhile to investigate not caching large objects in the
-memory at all, to increase overall cache hit rates
-\cite{kvworkload_sigmetrics}.  We implemented a size-tiered object
-storage system optimized for multi-resolution images, named MRIS
-(Multi-Resolution Image Store).  MRIS aims at storing large amount of
-images, as well as their metadata and smaller versions (such as
-thumbnails), efficiently. However, the strategies employed in MRIS can
-be applied to other storage and web-serving systems as well because
-there also exist salient size characteristics following power-law
+It is argued that it may not be necessary to provide for efficient
+random access to every large file~\cite{evans2002study} because
+multimedia files are primarily accessed sequentially, Facebook
+researchers also argued that it may even be worthwhile to investigate
+not caching large objects in RAM at all, to increase overall cache hit
+rates \cite{kvworkload_sigmetrics}.  We implemented a size-tiered
+object storage system optimized for multi-resolution images, named
+MRIS (Multi-Resolution Image Store).  MRIS aims at storing large
+amount of images, as well as their metadata and smaller versions,
+efficiently. However, the strategies employed in MRIS can be applied
+to other storage and web-serving systems as well because there also
+exist salient size characteristics following power-law
 distributions~\cite{kvworkload_sigmetrics}.
 
 %We plan to use KVDB, which can be aware of multi-tier storage
@@ -61,9 +66,9 @@ distributions~\cite{kvworkload_sigmetrics}.
 %\end{verbatim}
 
 The rest of the paper is organized as follows. Section \ref{sec:bg}
-presents the background of Flash SSD, multi-resolution images, and
-key/value store. Section \ref{sec:implementation} describe our design
-and implementation.
+presents the background of Flash SSD, key/value store, and
+multi-resolution images. Section \ref{sec:implementation} describes
+our design and implementation.
 %Section \ref{sec:trace} presents the study Wikipedia's image requests
 %and shows the size-tiered property in its workloads.  
 We evaluate the performance of our system in Section \ref{sec:eval}.

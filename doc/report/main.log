@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  15 DEC 2012 16:25
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.26)  16 DEC 2012 12:50
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -516,7 +516,7 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 
 
 ]
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 53.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 56.
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
@@ -528,13 +528,13 @@ File: figures/leveldb-compact.eps Graphic file (type eps)
 <figures/leveldb-compact.eps> [2]
 File: figures/pyramid.eps Graphic file (type eps)
  <figures/pyramid.eps>
-Underfull \hbox (badness 10000) in paragraph at lines 118--120
+Underfull \hbox (badness 10000) in paragraph at lines 124--126
 [][]
  []
 
 File: figures/storage-tiers.eps Graphic file (type eps)
 <figures/storage-tiers.eps>
-Underfull \hbox (badness 10000) in paragraph at lines 122--124
+Underfull \hbox (badness 10000) in paragraph at lines 128--130
 [][]
  []
 
@@ -543,7 +543,7 @@ File: figures/large-space.eps Graphic file (type eps)
  <figures/large-space.eps>
 File: figures/mris-store.eps Graphic file (type eps)
  <figures/mris-store.eps>
-Underfull \hbox (badness 7221) in paragraph at lines 74--83
+Underfull \hbox (badness 7221) in paragraph at lines 76--85
 []\OT1/ptm/m/n/10 When key/value pairs are firstly in-serted into
  []
 
@@ -613,4 +613,4 @@ Here is how much of TeX's memory you used:
  29 hyphenation exceptions out of 8191
  63i,11n,57p,435b,351s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (9 pages, 63796 bytes).
+Output written on main.dvi (9 pages, 63932 bytes).

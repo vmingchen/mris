@@ -4,13 +4,13 @@
 \vspace{0mm}
 
 The storage subsystem has been the performance bottleneck in many
-server workloads mostly because of slow mechanical HDDs, the primary
-storage device. Faster storage devices such as Flash are emerging as a
-hope of solving the problem. However, a drop-in replacement approach is
-not feasible because of their high price, asymmetric performance
-characteristics, and short life time.  This project presents a
-multi-tiered object storage system, which integrates good
-characteristics of different kinds of storage devices in speed,
+server workloads mostly because of the slow primary storage medium,
+the mechanical HDD. Faster storage devices such as Flash SSD are
+emerging as a hope of solving the problem. However, a drop-in
+replacement is not feasible because of the high price, asymmetric
+performance characteristics, and short life time of Flash. This
+project presents a multi-tiered key/value storage system, which
+integrates strength of different types of storage devices in speed,
 capacity, and price.  We distribute objects among multiple devices
 based on not only their hotness but also their sizes, so that they can
 be stored efficiently in terms of performance and cost.  We
@@ -18,7 +18,7 @@ implemented the system based on LevelDB, and benchmarked the system
 using a two-tiered store including a Flash tier and a HDD tier.  Our
 system presents up to 5.86$\times$ speedup of throughput over the
 single-tier store using HDD. Particularly, for a workload emulating
-Facebook's photo requests, we observe a speedup of 3.73$\times$ of the
+Facebook's photo workload, we observe a speedup of 3.73$\times$ of the
 throughput using only a small Flash of 5.9\% of the total storage
 capacity.
 

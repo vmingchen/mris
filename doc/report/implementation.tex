@@ -9,9 +9,10 @@ the overall system performance when the I/O traffic is heavy. Reads
 and writes of large pairs make compaction long and in turn introduce
 more negative effect on performance. Therefore, it is desirable to
 reduce the copying of large pairs. Because the log-structured nature
-of key/value store, once written, the pairs will never be updated. So
-it is reasonable to keep large values unmoved especially when the
-reduce of data copying can offset the cost of an extra disk seek.
+of key/value store, once written, the pairs will never be updated
+within SSTable. So it is reasonable to keep large values unmoved
+especially when the reduce of data copying can offset the cost of an
+extra disk seek.
 
 As cloud computing is spreading widely, high throughput storage system
 is required because, in consolidated cloud environment, data are
@@ -32,20 +33,21 @@ alternative solution, which can be cheaper and safer.
 \end{centering}
 \end{figure}
 
-Based on the idea of saving different data on different media, we
+Based on the idea of storing different data on different media, we
 modify LevelDB to save large values separately into a space called
-LargeSpace. LargeSpace is essentially a log and can be saved in media
-different from the SSTables. Upon a request of insertion, the value is
-appended into LargeSpace and an address is returned. The address is
-used for later retrieve of the value. To ease management, LargeSpace
-is splited into files called LargeBlocks. The threshold of split,
-called SplitThreshold, is a configurable parameter with a default
-value of 64MB. Although LargeSpace is split, we enforce that no
-value will be splited among LargeBlocks. Therefore, it is possible
-that a LargeBlock is larger than the split threshold if there is a
-huge value in that LargeBlock.  LargeBlocks are recorded in a metadata
-file called LargeMeta. The formats of LargeMeta and LargeBlock and
-their relationship is illustrated in Figure~\ref{fig:space}.
+\texttt{LargeSpace}. LargeSpace is essentially a log and can be stored
+in media different from the SSTables. Upon a request of insertion, the
+value is appended into LargeSpace and an address is returned. The
+address is used for later retrieve of the value. To ease management,
+LargeSpace is split into files called \texttt{LargeBlocks}. The
+threshold of split, called \texttt{SplitThreshold}, is a configurable
+parameter with a default value of 64MB. Although LargeSpace is split,
+we enforce that no value will be split among multiple LargeBlocks.
+Therefore, it is possible that a LargeBlock is larger than
+SplitThreshold if there is a huge value in that LargeBlock.
+LargeBlocks are recorded in a metadata file called LargeMeta. The
+formats of LargeMeta and LargeBlock and their relationship is
+illustrated in Figure~\ref{fig:space}.
 
 It is worth notice that LargeMeta is an immutable file. A new one is
 created every time it is updated. LargeMeta can be readily rebuilt
