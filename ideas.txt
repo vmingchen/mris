@@ -1,0 +1,7 @@
+12-12-19 10:07:38 Mike:
+
+ ZFS allows you to add "cache" devices (presumably flash) to a pool of disks,
+ and use heuristics at the filesystem level to determine what to move to the
+ cache layer.  How would the same workload function on an unmodified leveldb if
+ the backing store was ZFS for the hdd and you added the flash device as cache
+ to the ZFS pool?
