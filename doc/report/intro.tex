@@ -35,18 +35,18 @@ popular out-of-place update optimization, as in log-structured
 filesystems, by turning small in-place updates to revision logs as
 metadata and compacting them into large batched I/O to bottom tiers.
 
-It is argued that it may not be necessary to provide for efficient
-random access to every large file~\cite{evans2002study} because
-multimedia files are primarily accessed sequentially, Facebook
-researchers also argued that it may even be worthwhile to investigate
-not caching large objects in RAM at all, to increase overall cache hit
-rates \cite{kvworkload_sigmetrics}.  We implemented a size-tiered
-object storage system optimized for multi-resolution images, named
-MRIS (Multi-Resolution Image Store).  MRIS aims at storing large
-amount of images, as well as their metadata and smaller versions,
-efficiently. However, the strategies employed in MRIS can be applied
-to other storage and web-serving systems as well because there also
-exist salient size characteristics following power-law
+It is argued that it may not be necessary to provide efficient random
+access to every large file~\cite{evans2002study} because multimedia
+files are primarily accessed sequentially. Facebook researchers also
+argued that it may even be worthwhile to investigate not caching large
+objects in RAM at all, to increase overall cache hit rates
+\cite{kvworkload_sigmetrics}.  We implemented a size-tiered object
+storage system optimized for multi-resolution images, named MRIS
+(Multi-Resolution Image Store).  MRIS aims at storing large amount of
+images, as well as their metadata and smaller versions, efficiently.
+However, the strategies employed in MRIS can be applied to other
+storage and web-serving systems as well because there also exist
+salient size characteristics following power-law
 distributions~\cite{kvworkload_sigmetrics}.
 
 %We plan to use KVDB, which can be aware of multi-tier storage
