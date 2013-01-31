@@ -3,3 +3,5 @@ Oct.1 - Oct.7:
 	on KV store;
 
 	- Design a simple and small test workload
+
+Targeting Systor 2013, March 14, 2013
