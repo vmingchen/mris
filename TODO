@@ -9,3 +9,6 @@
 	average latency per object, and 2) the Flash characteristics
 [FUTURE] * Use unionfs for differetiating small and large files
 [FUTURE] Come up with models to explain results!
+
+- Argue image store is important by anaylzing the amount of requests for images
+of NASA Web server traces
