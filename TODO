@@ -9,3 +9,11 @@
 	average latency per object, and 2) the Flash characteristics
 [FUTURE] * Use unionfs for differetiating small and large files
 [FUTURE] Come up with models to explain results!
+
+* Also, if you fit a line to data, quote at least a regression coefficient
+
+13-01-29
+- Setup Sauron in MSL for experiment environment
+- Workload generator for Haystack and Wikipedia
+	Benchmarks: micro (ratio), macro (Haystack, Wikipedia)
+- Multi-thread test
