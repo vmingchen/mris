@@ -1,17 +1,81 @@
 Target: Get storage-level traces
 
-1. Wikipedia
+Wiki
+====
+- Wikipedia
 http://dumps.wikimedia.org/other/pagecounts-raw/
 Domas Mituzas: domas@mituzas.lt
 
-2. Citizendium
+- Citizendium
 Pat Palmer: ppalmer@harbormist.com
 
-3. Flickr
-Cannot figure out. Help is a way though.
 
-4. Photobucket
+Government
+==========
+- NASA
+http://images.jsc.nasa.gov/
+9000 NASA images
 
-5. Pinterest
+- National Cancer Institute
+http://visualsonline.cancer.gov/
+2781 images
+cancergovstaff@mail.nih.gov
 
-6. Instagram
+- NOAA Photo Library
+http://www.photolib.noaa.gov/
+
+- Library of Congress
+http://www.loc.gov/pictures/
+Prints & Photographs Online Catalog
+
+
+Public Domain
+=============
+- Photos8
+http://www.photos8.org
+16455 Quality high resolution pictures
+Sam: Using "Contact Us"
+
+-TotallyFreeImages
+http://totallyfreeimages.com/
+509225 Images
+
+- Freestock.ca
+http://freestock.ca/index.php
+5000 high quality free photoes
+Nicolas Raymond: Using "Contact Us"
+
+- freeimagecollection.com
+1442 images
+http://freeimagescollection.com/
+freeimagescollection@gmail.com
+
+- Pulic Domain Pictures
+http://www.publicdomainpictures.net/
+31,128 pictures
+Using "Contack Us"
+
+- BestPhotos.US
+http://www.bestphotos.us
+Millions of public domain high quality images
+Operated by Inform & Prosper, LLC
+Nicholas: bestphotos.us@gmail.com
+
+- Ars Publik
+http://www.arspublik.com/
+
+Large Commercial Photo Hosting Websites:
+========================================
+- Flickr
+
+- Photobucket
+
+- Pinterest
+
+- Instagram
+
+
+More
+====
+http://meta.wikimedia.org/wiki/Free_image_resources
+http://en.wikipedia.org/wiki/Wikipedia:Public_domain_image_resources
