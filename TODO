@@ -19,5 +19,5 @@
 - Multi-thread test
 
 13-01-30 21:32:35
-- Argue image store is important by anaylzing the amount of requests for images
-of NASA Web server traces
+- Argue image store is important by anaylzing the number of requests and data
+volume for images of NASA Web server traces and Wikipedia

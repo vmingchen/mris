@@ -1,0 +1,17 @@
+Target: Get storage-level traces
+
+1. Wikipedia
+http://dumps.wikimedia.org/other/pagecounts-raw/
+Domas Mituzas: domas@mituzas.lt
+
+2. Citizendium
+Pat Palmer: ppalmer@harbormist.com
+
+3. Flickr
+Cannot figure out. Help is a way though.
+
+4. Photobucket
+
+5. Pinterest
+
+6. Instagram
