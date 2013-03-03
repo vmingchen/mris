@@ -1,0 +1,13 @@
+Dear Sir/Madam,
+
+This is Ming and Mike from Stony Brook University.  We are doing research
+improving cost- and performance-efficiency of computer storage systems.  We
+wonder if you have met some performance problems in accessing your large image
+database which we can study and try to solve.  Can you kindly refer us to the
+technical personnel who might be dealing with such problems? 
+
+Thank you very much!
+
+Sincerely,
+Ming Chen  http://www.fsl.cs.sunysb.edu/~mchen/
+Mike Ferdman  http://www.cs.stonybrook.edu/~mferdman/
