@@ -1,0 +1,77 @@
+Studies about bypassing OS block cache for workloads such as streaming
+
+keywords: bypassing OS block cache streaming
+============================================
+-- The Hadoop Distributed Filesystem: Balancing Portability and Performance
+The specific bottlenecks in HDFS can be classified into three categories:
+
+	Portability Limitations - Some performance-enhancing features in the native
+	filesystem are not available in Java in a platform-independent manner. This
+	includes options such as bypassing the filesystem page cache and
+	transferring data directly from disk into user buffers. As such, the HDFS
+	implementation runs less efficiently and has higher processor usage than
+	would otherwise be necessary.
+
+Some performance bottlenecks in HDFS, including file fragmentation and cache
+overhead, are difficult to eliminate via portable means. A number of
+non-portable optimizations can be used if additional performance is desired,
+such as deliv- ering usage hints to the operating system, selecting a specific
+filesystem for best performance, bypassing the filesystem page cache, or
+removing the filesystem altogether
+
+Cache Bypass — In Linux and FreeBSD, the filesystem page cache can be bypassed
+by opening a file with the O DIRECT flag. File data will be directly
+transferred via direct memory access (DMA) between the disk and the user-space
+buffer specified. This will bypass the cache for file data (but not filesystem
+metadata), thus eliminating the processor over- head spent allocating, locking,
+and deallocating pages. While this can improve performance in HDFS, the
+implementation is non-portable. Using DMA transfers to user-space requires that
+the application buffer is aligned to the device block size (typically 512
+bytes), and such support is not provided by JVM.
+
+-- Prefetching with Adaptive Cache Culling for Striped Disk Arrays
+Conventional prefetching schemes regard prediction accuracy as important
+because useless data prefetched by a faulty prediction may pollute the cache.
+If prefetching requires considerably low read cost but the prediction is not
+accurate, it may or may not be beneficial depending on the situation. However,
+the problem of low prediction accuracy can be dramatically reduced if we
+efficiently manage prefetched data by considering the total hit rate for both
+prefetched data and cached data.  To achieve this goal, we propose an adaptive
+strip prefetching (ASP) scheme, which provides low prefetching cost and evicts
+prefetched data at the proper time by using differential feedback that
+maximizes the hit rate of both prefetched data and cached data in a given cache
+management scheme.
+
+keywords: cache bypass streaming
+================================
+-- How multimedia workloads will change processor design High memory bandwidth
+Typical data sets and working sets for many media applications, especially 3D
+graphics, are huge. This implies that processors must provide very high memory
+bandwidth and must tolerate long memory latency.  Existing and even future
+caches will not be large enough to handle these data sets. Cache performance is
+further degraded by the poor or nonexistent locality of the data. While
+handling such media data, the cache gets polluted rapidly, making it less
+effective on other tasks in execution.  Consequently, data prefetch and cache
+bypass schemes become even more important.
+
+-- Dynamic cache partitioning via columnization
+Another solution has data bypass certain levels of the cache, allowing
+pollution to be restricted to a subset of cache levels. The MIPS R8000 14, 27]
+caches oating point data in the L2 cache but not the L1 since oating point data
+tends to have very little temporal data that the L1 could exploit. The QED
+RM7000 25] on the other hand provides caching modes that bypass L2 and L3
+caches on writes, updating only memory and sometimes L1. Some processors, such
+as the Intel IA-64 15] family, provide instructions that can specify in which
+level of the cache accessed data should be cached.
+
+-- Run-time adaptive cache hierarchy management via reference analysis
+In this paper, we presented a method to improve the efficiency of the caches in
+the memory hierarchy, by bypassing data that is expected to have little reuse
+in cache. This allows more frequently accessed data to remain cached longer,
+and therefore have a larger chance of reuse. The bypassing choices are made by
+a Memory Address Table MAT, which performs dynamic reference analysis in a
+location-sensitive manner. An MAT scheme was investigated, which places
+bypassing data in a small 4-way set-associative bu er, allowing exploitation
+of small amounts of temporal locality which may exist in the bypassed data. We
+also introduced the concept of a macroblock, which allows the MAT to feasibly
+characterize the accessed memory locations.  

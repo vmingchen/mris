@@ -33,16 +33,20 @@ Public Domain
 =============
 - Photos8
 http://www.photos8.org
-16455 Quality high resolution pictures
+16,455 Quality high resolution pictures
 Sam: Using "Contact Us"
+
+- sxc.hu
+http://sxc.hu/
+398,705 images
 
 -TotallyFreeImages
 http://totallyfreeimages.com/
-509225 Images
+509,225 Images
 
 - Freestock.ca
 http://freestock.ca/index.php
-5000 high quality free photoes
+5,000 high quality free photoes
 Nicolas Raymond: Using "Contact Us"
 
 - freeimagecollection.com
@@ -64,6 +68,11 @@ Nicholas: bestphotos.us@gmail.com
 - Ars Publik
 http://www.arspublik.com/
 
+- iStockphoto
+http://www.istockphoto.com/
+They have not only images, but also audio and video.
+Great, see photos of different size at different prices.
+
 Large Commercial Photo Hosting Websites:
 ========================================
 - Flickr
@@ -74,8 +83,17 @@ Large Commercial Photo Hosting Websites:
 
 - Instagram
 
+- Pbase
+millions of photos
+
+- Snapfish
 
 More
 ====
 http://meta.wikimedia.org/wiki/Free_image_resources
 http://en.wikipedia.org/wiki/Wikipedia:Public_domain_image_resources
+
+Misc
+====
+bestphoto.us
+
